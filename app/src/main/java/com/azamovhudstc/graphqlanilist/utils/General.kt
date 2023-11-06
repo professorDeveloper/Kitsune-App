@@ -49,18 +49,9 @@ fun TextView.setHtmlText(htmlString: String?) {
     }
 }
 
-//fun ExpandableTextView.setHtmlText(description: String) {
-//    text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//        Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY)
-//    } else {
-//        Html.fromHtml(description)
-//    }
-//}
-//
-//fun TextView.setMarkdownText(string: String) {
-//    text = Markwon.create(this.context)
-//        .toMarkdown(string)
-//}
+/**
+Dismiss Keyboard function added
+**/
 
 fun Int?.or1() = this ?: 1
 
