@@ -18,7 +18,7 @@ class SearchPagingAdapter :
 
 
     fun setOnItemClickListener(listener:((AniListMedia)->Unit)){
-        itemClickListener=listener
+        itemClickListener=listener // Sa,ple
     }
     companion object {
         private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<AniListMedia>() {
