@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.databinding.HomeScreenBinding
 import com.azamovhudstc.graphqlanilist.ui.adapter.SearchPagingAdapter
@@ -27,24 +28,21 @@ class HomeScreen : Fragment(R.layout.home_screen) {
         observeViewModel()
 
 
-        binding.apply {
-            mainSearch.setOnCloseListener {
-                binding.searchRecycler.visibility=View.GONE
-                binding.placeHolde.visibility=View.VISIBLE
 
-            true}
-            mainSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+           binding. mainSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
+
                     dismissKeyboard(binding.mainSearch)
                     return false
                 }
 
                 override fun onQueryTextChange(query: String): Boolean {
+                    println("tushdi")
                     viewModel.onSearchQueryChanged(query)
                     return false
                 }
             })
-        }
+
 
     }
 
@@ -60,6 +58,12 @@ class HomeScreen : Fragment(R.layout.home_screen) {
             adapter.submitData(animeData)
             binding.searchRecycler.adapter = adapter
         }
+
+
+        adapter.setOnItemClickListener {
+            findNavController().navigate(R.id.action_homeScreen_to_detailScreen)
+        }
     }
+
 
 }

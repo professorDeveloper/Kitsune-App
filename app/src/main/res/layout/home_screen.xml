@@ -72,7 +72,6 @@
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
         android:paddingBottom="12dp"
-        android:visibility="gone"
 
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
@@ -84,7 +83,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/animity"
-        android:visibility="visible"
         android:text="Search Any Anime"
         android:textColor="@color/white"
         android:textSize="26sp"

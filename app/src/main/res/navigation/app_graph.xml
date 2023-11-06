@@ -10,5 +10,14 @@
         android:name="com.azamovhudstc.graphqlanilist.ui.screens.HomeScreen"
         android:label="@string/title_explore"
 
-        tools:layout="@layout/home_screen" />
+        tools:layout="@layout/home_screen" >
+        <action
+            android:id="@+id/action_homeScreen_to_detailScreen"
+            app:destination="@id/detailScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailScreen"
+        tools:layout="@layout/detail_screen"
+        android:name="com.azamovhudstc.graphqlanilist.ui.screens.DetailScreen"
+        android:label="DetailScreen" />
 </navigation>

@@ -14,6 +14,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class SearchPagingAdapter :
     PagingDataAdapter<AniListMedia, SearchPagingAdapter.AnimePageVh>(REPO_COMPARATOR) {
+        private lateinit var itemClickListener :((AniListMedia)->Unit)
+
+
+    fun setOnItemClickListener(listener:((AniListMedia)->Unit)){
+        itemClickListener=listener
+    }
     companion object {
         private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<AniListMedia>() {
             override fun areItemsTheSame(oldItem: AniListMedia, newItem: AniListMedia): Boolean =
@@ -50,7 +56,7 @@ class SearchPagingAdapter :
                 binding.title.text =data.title.userPreferred
                 binding.genres.text =data.getGenresToString()
                 bin.root.setOnClickListener {
-
+                    itemClickListener.invoke(data)
                 }
             }
         }

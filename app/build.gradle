@@ -18,6 +18,7 @@ android {
     defaultConfig {
         applicationId "com.azamovhudstc.graphqlanilist"
         minSdk 23
+        //noinspection ExpiredTargetSdkVersion
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -109,4 +110,8 @@ dependencies {
     implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
     implementation "com.airbnb.android:epoxy-paging3:$epoxyVersion"
     kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
+
+    def expandableTextViewVersion = "0.1.4"
+    implementation "com.ms-square:expandableTextView:$expandableTextViewVersion"
+
 }
