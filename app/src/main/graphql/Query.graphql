@@ -1,0 +1,57 @@
+#GetAnime data by searching
+query SearchAnimeQuery(
+    $search: String,
+    $page: Int,
+    $sortType: [MediaSort]
+) {
+    page:Page (page: $page, perPage: 30) {
+        media (
+            search: $search,
+            type: ANIME,
+            sort: $sortType
+        ) {...HomeMedia}
+    }
+}
+fragment HomeMedia on Media {
+    id
+    idMal
+    title {
+        romaji
+        userPreferred
+    }
+    type
+    isFavourite
+
+    status(version: 2)
+    format
+    duration
+    description(asHtml: false)
+    coverImage {
+        extraLarge
+        large
+        medium
+    }
+    streamingEpisodes {
+        title
+        thumbnail
+    }
+    nextAiringEpisode {
+        airingAt
+        episode
+    }
+    bannerImage
+    genres
+
+    averageScore
+    favourites
+    startDate {
+        year
+        month
+        day
+    }
+    mediaListEntry {
+        id
+        status
+    }
+}
+

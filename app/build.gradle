@@ -1,0 +1,112 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id "com.apollographql.apollo3" version("3.7.0")
+
+}
+
+android {
+    compileSdk 32
+    apollo {
+        packageName.set("com.azamovhudstc.graphqlanilist")
+        generateKotlinModels.set(true)
+        excludes.add("**/schema.json.graphql")
+    }
+    defaultConfig {
+        applicationId "com.azamovhudstc.graphqlanilist"
+        minSdk 23
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    kapt {
+        useBuildCache true
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    /**
+     * DI Dagger Hilt
+     * */
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+
+    //Apollo GraphQl
+    def apolloVersion = '3.7.0'
+    implementation "com.apollographql.apollo3:apollo-runtime:$apolloVersion"
+
+    // paging 3
+    def paginationVersion = "3.1.1"
+    implementation "androidx.paging:paging-runtime-ktx:$paginationVersion"
+
+
+    //More Library
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // Retrofit
+    def retrofitVersion = "2.9.0"
+    def interceptor_version = "5.0.0-alpha.4"
+    def dnsOverHttp = "5.0.0-alpha.6"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
+    implementation "com.squareup.okhttp3:okhttp-dnsoverhttps:$dnsOverHttp"
+    def glideVersion = "4.13.2"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation("com.github.bumptech.glide:okhttp3-integration:$glideVersion") {
+        exclude group: 'glide-parent'
+    }
+
+
+    def navigationComponentVersion = '2.5.3'
+    implementation "androidx.navigation:navigation-runtime-ktx:$navigationComponentVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationComponentVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationComponentVersion"
+
+    //splash screen
+    def splashVersion = '1.0.0'
+    implementation "androidx.core:core-splashscreen:$splashVersion"
+
+    def epoxyVersion = "4.6.1"
+    implementation "com.airbnb.android:epoxy:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-databinding:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-paging3:$epoxyVersion"
+    kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
+}

@@ -1,0 +1,62 @@
+<resources>
+
+    <style name="Base.Theme.GraphQLAnilist" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="android:splitMotionEvents">false</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:unfocusedMonthDateColor">@color/darkBlue</item>
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/green_theme</item>
+        <item name="colorSecondaryVariant">@color/green_theme</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/animity</item>
+        <item name="android:textColorHint">@color/grayTextColor</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:colorBackground">@color/colorPrimaryDark
+        </item>        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.MySplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/primaryBlackBackground</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.GraphQLAnilist</item>
+    </style>
+
+    <style name="Theme.GraphQLAnilist" parent="Base.Theme.GraphQLAnilist" />
+
+    <style name="FontRegularClickable">
+        <item name="android:fontFamily">@font/animity</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="Theme.GraphQLAnilist.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="ButtonPrimaryBorder" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/colorPrimaryLight</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/animity</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="ThemeOverlay.SearchView" parent="">
+        <item name="android:editTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="closeIconTint">@color/white</item>
+    </style>
+</resources>
