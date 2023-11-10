@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,319 +7,234 @@
     android:paddingStart="10dp"
     android:paddingEnd="10dp">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            app:toolbarId="@+id/toolbar">
-
-            <LinearLayout
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/result_poster_holder"
-                        android:layout_width="100dp"
-                        android:layout_height="140dp"
-                        android:elevation="10dp"
-                        app:cardCornerRadius="5dp">
-
-                        <ImageView
-                            android:id="@+id/details_poster"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:foreground="@drawable/outline_drawable"
-                            android:scaleType="centerCrop" />
-                    </androidx.cardview.widget.CardView>
-
+                    android:orientation="vertical"
+                    android:weightSum="1">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
 
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/result_poster_holder"
+                            android:layout_width="100dp"
+                            android:layout_height="140dp"
+                            android:layout_marginStart="8dp"
+                            android:elevation="10dp"
+                            android:transitionName="@string/anime_card_detail_transition_name"
+                            app:cardCornerRadius="5dp">
 
+                            <ImageView
+                                android:id="@+id/details_poster"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop" />
+                        </androidx.cardview.widget.CardView>
 
-                        <TextView
-                            android:id="@+id/result_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="50dp"
-                            android:textColor="@color/textColor"
-                            android:textSize="20sp"
-                            android:textStyle="normal"
-                            tools:text="The Perfect " />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:lineSpacingExtra="3sp"
-                                android:paddingTop="3sp"
-                                android:text="@string/released"
-                                android:textColor="@color/grayTextColor"
-                                android:textSize="15sp"
-                                android:textStyle="normal"
-                                tools:text="2021 nda" />
-
-                            <TextView
-                                android:id="@+id/releaseDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:lineSpacingExtra="3sp"
-                                android:paddingTop="3sp"
-                                android:textColor="@color/textColor"
-                                android:textSize="15sp"
-                                android:textStyle="normal"
-                                tools:text="2021 nda" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:lineSpacingExtra="3sp"
-                                android:paddingTop="3sp"
-                                android:text="@string/status"
-                                android:textColor="@color/grayTextColor"
-                                android:textSize="15sp"
-                                android:textStyle="normal"
-                                tools:text="2021 nda" />
-
-                            <TextView
-                                android:id="@+id/status"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:lineSpacingExtra="3sp"
-                                android:paddingTop="3sp"
-                                android:textColor="@color/textColor"
-                                android:textSize="15sp"
-                                android:textStyle="normal"
-                                tools:text="2021 nda" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:lineSpacingExtra="3sp"
-                                android:paddingTop="3sp"
-                                android:text="@string/type"
-                                android:textColor="@color/grayTextColor"
-                                android:textSize="15sp"
-                                android:textStyle="normal"
-                                tools:text="2021 nda" />
-
-                            <TextView
-                                android:id="@+id/type"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:lineSpacingExtra="3sp"
-                                android:paddingTop="3sp"
-                                android:textColor="@color/textColor"
-                                android:textSize="15sp"
-                                android:textStyle="normal"
-                                tools:text="2021 nda" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/nextEpisodeContainer"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
 
                             <TextView
-                                android:id="@+id/episodeToBeReleased"
+                                android:id="@+id/result_title"
+                                style="@style/Headline5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:lineSpacingExtra="3sp"
-                                android:paddingTop="3sp"
-                                android:text="@string/next"
-                                android:textColor="@color/grayTextColor"
-                                android:textSize="15sp"
-                                android:textStyle="normal"
-                                tools:text="Episode 13" />
-
-                            <TextView
-                                android:id="@+id/releaseTime"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:lineSpacingExtra="3sp"
-                                android:paddingTop="3sp"
+                                android:layout_marginEnd="50dp"
                                 android:textColor="@color/textColor"
-                                android:textSize="15sp"
+                                android:textSize="20sp"
                                 android:textStyle="normal"
-                                tools:text=" Monday 13 Dec, 04:00 AM" />
+                                tools:text="The Perfect " />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="3sp"
+                                    android:paddingTop="3sp"
+                                    android:text="@string/released"
+                                    android:textColor="@color/grayTextColor"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    tools:text="2021 nda" />
+
+                                <TextView
+                                    android:id="@+id/releaseDate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:lineSpacingExtra="3sp"
+                                    android:paddingTop="3sp"
+                                    android:textColor="@color/textColor"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    tools:text="2021 nda" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="3sp"
+                                    android:paddingTop="3sp"
+                                    android:text="@string/status"
+                                    android:textColor="@color/grayTextColor"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    tools:text="2021 nda" />
+
+                                <TextView
+                                    android:id="@+id/status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:lineSpacingExtra="3sp"
+                                    android:paddingTop="3sp"
+                                    android:textColor="@color/textColor"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    tools:text="2021 nda" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="3sp"
+                                    android:paddingTop="3sp"
+                                    android:text="@string/type"
+                                    android:textColor="@color/grayTextColor"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    tools:text="2021 nda" />
+
+                                <TextView
+                                    android:id="@+id/type"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:lineSpacingExtra="3sp"
+                                    android:paddingTop="3sp"
+
+                                    android:textColor="@color/textColor"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    tools:text="2021 nda" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/nextEpisodeContainer"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/episodeToBeReleased"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="3sp"
+                                    android:paddingTop="3sp"
+                                    android:text="@string/next"
+                                    android:textColor="@color/grayTextColor"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    tools:text="Episode 13" />
+
+                                <TextView
+                                    android:id="@+id/releaseTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:lineSpacingExtra="3sp"
+                                    android:paddingTop="3sp"
+                                    android:textColor="@color/textColor"
+                                    android:textSize="15sp"
+                                    android:textStyle="normal"
+                                    tools:text=" Monday 13 Dec, 04:00 AM" />
+                            </LinearLayout>
+
                         </LinearLayout>
-
                     </LinearLayout>
-                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/result_plot_header2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/synopsis"
-                    android:textColor="@color/textColor"
-                    android:textSize="17sp"
-                    android:textStyle="normal" />
-
-                <com.ms.square.android.expandabletextview.ExpandableTextView
-                    android:id="@+id/expand_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    app:animDuration="200"
-                    app:maxCollapsedLines="4">
-
-                    <TextView
-                        android:id="@id/expandable_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/grayTextColor"
-                        android:textSize="15sp" />
-
-                    <ImageButton
-                        android:id="@id/expand_collapse"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/setType"
+                        style="@style/GreenButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@android:color/transparent"
-                        android:padding="3dp" />
-                </com.ms.square.android.expandabletextview.ExpandableTextView>
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingEnd="20dp"
+                        android:text="@string/add_to_list"
+                        android:visibility="gone"
+                        app:icon="@drawable/ic_down_arrow"
+                        tools:visibility="visible" />
 
-                <TextView
-                    android:id="@+id/result_tag_holder2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="@string/genre"
-                    android:textColor="@color/textColor"
-                    android:textSize="17sp"
-                    android:textStyle="normal" />
+                    <include
+                        android:id="@+id/animeInfoLayout"
+                        layout="@layout/item_anime_details" />
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/genreGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/genreGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/result_play_movie"
-                    app:backgroundTint="@color/colorPrimaryDark"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="24dp"
+                    </com.google.android.material.chip.ChipGroup>
 
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/play_movie"
-                    android:visibility="gone"
-                    app:icon="@drawable/ic_baseline_play_arrow_24"
-                    tools:visibility="visible" />
+                </LinearLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
-            </LinearLayout>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+        </androidx.cardview.widget.CardView>
 
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nest"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        tools:ignore="SpeakableTextPresentCheck">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/result_episodes_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/textColor"
-                    android:textSize="17sp"
-                    android:textStyle="normal"
-                    android:visibility="gone"
-                    tools:text="@string/episode_num"
-                    tools:visibility="visible" />
-
-                <ImageButton
-                    android:id="@+id/imageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:contentDescription="Reverse Episode List"
-                    android:minWidth="48dp"
-                    android:minHeight="48dp"
-                    android:padding="8dp"
-                    app:srcCompat="@drawable/ic_down_arrow" />
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/episode_list_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:listitem="@layout/item_episode_list"
-                tools:visibility="gone" />
-
-            <ProgressBar
-                android:id="@+id/details_progress"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

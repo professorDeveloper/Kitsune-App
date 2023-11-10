@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.databinding.HomeScreenBinding
 import com.azamovhudstc.graphqlanilist.ui.adapter.SearchPagingAdapter
+import com.azamovhudstc.graphqlanilist.ui.screens.controller.PagingSearchController
 import com.azamovhudstc.graphqlanilist.utils.collectLatest
 import com.azamovhudstc.graphqlanilist.utils.dismissKeyboard
 import com.azamovhudstc.graphqlanilist.viewmodel.SearchViewModel
@@ -19,15 +20,17 @@ class HomeScreen : Fragment(R.layout.home_screen) {
     private var _binding: HomeScreenBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<SearchViewModel>()
-    private val adapter by lazy { SearchPagingAdapter() }
+    private lateinit var pagingController: PagingSearchController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = HomeScreenBinding.bind(view)
+        pagingController = PagingSearchController()
 
         observeViewModel()
 
 
+        binding.searchRecycler.setController(pagingController)
 
            binding. mainSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
@@ -47,22 +50,18 @@ class HomeScreen : Fragment(R.layout.home_screen) {
     }
 
 
+    override fun onPause() {
+        super.onPause()
+    }
     private fun observeViewModel() {
 
         collectLatest(viewModel.searchList) { animeData ->
-            println(animeData.apply {
-                this.toString()
-            })
-            binding.searchRecycler.visibility=View.VISIBLE
-            binding.placeHolde.visibility=View.GONE
-            adapter.submitData(animeData)
-            binding.searchRecycler.adapter = adapter
+            pagingController.submitData(animeData)
+
         }
 
 
-        adapter.setOnItemClickListener {
-            findNavController().navigate(R.id.action_homeScreen_to_detailScreen)
-        }
+
     }
 
 

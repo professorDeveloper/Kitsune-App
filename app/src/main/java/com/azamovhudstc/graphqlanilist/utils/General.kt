@@ -1,7 +1,12 @@
 
 package com.azamovhudstc.graphqlanilist.utils
 
+import android.app.Activity
+import android.content.ClipData.newIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
@@ -18,6 +23,36 @@ fun View.hide() {
 
 fun View.show() {
     visibility = View.VISIBLE
+}
+
+inline fun <reified T : Any> Activity.launchActivity(
+    requestCode: Int = -1,
+    options: Bundle? = null,
+    noinline init: Intent.() -> Unit = {}
+) {
+    val intent = newIntent<T>(this)
+    intent.init()
+    startActivityForResult(intent, requestCode, options)
+}
+inline fun <reified T : Any> newIntent(context: Context): Intent =
+    Intent(context, T::class.java)
+
+inline fun <reified T : Any> Context.launchActivity(
+    options: Bundle? = null,
+    noinline init: Intent.() -> Unit = {}
+) {
+    val intent = newIntent<T>(this)
+    intent.init()
+    startActivity(intent, options)
+}
+
+
+ fun String.removeSource(): String {
+    val regex = Regex("\\(Source:.*\\)")
+    var text = this
+    text = regex.replace(text, "").trim()
+    text = text.replace("\n$", "")
+    return text
 }
 
 /**

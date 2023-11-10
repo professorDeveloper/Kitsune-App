@@ -5,6 +5,7 @@ import com.azamovhudstc.graphqlanilist.data.mapper.MediaStatusAnimity
 import com.azamovhudstc.graphqlanilist.utils.displayInDayDateTimeFormat
 import com.azamovhudstc.graphqlanilist.type.*
 import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 @Parcelize
 data class AniListMedia(
@@ -44,7 +45,7 @@ data class AniListMedia(
 //    val externalLinks: List<MediaExternalLink> = listOf(),
     val siteUrl: String = "",
     val mediaListEntry: MediaStatusAnimity? = null
-) : Parcelable {
+) : Parcelable,Serializable {
 
     fun getGenresToString(): String {
         return if (genres.size < 4) {
@@ -54,6 +55,13 @@ data class AniListMedia(
         } else {
             genres.joinToString { it.name }
         }
+    }
+    private fun String.removeSource(): String {
+        val regex = Regex("\\(Source:.*\\)")
+        var text = this
+        text = regex.replace(text, "").trim()
+        text = text.replace("\n$", "")
+        return text
     }
 
     fun getDateTimeStringFormat(): String? {

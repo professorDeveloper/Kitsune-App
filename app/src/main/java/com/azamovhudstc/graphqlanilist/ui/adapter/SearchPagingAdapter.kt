@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.azamovhudstc.graphqlanilist.bindings.provideImageBinding
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
-import com.azamovhudstc.graphqlanilist.databinding.ItemRvBinding
+import com.azamovhudstc.graphqlanilist.databinding.ItemRvLayoutBinding
 import com.azamovhudstc.graphqlanilist.di.GlideApp
 import com.azamovhudstc.graphqlanilist.utils.loadImage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -39,11 +39,11 @@ class SearchPagingAdapter :
         viewType: Int
     ): SearchPagingAdapter.AnimePageVh {
         val binding =
-            ItemRvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemRvLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AnimePageVh(binding)
     }
 
-    inner class AnimePageVh(val bin: ItemRvBinding) :
+    inner class AnimePageVh(val bin: ItemRvLayoutBinding) :
         RecyclerView.ViewHolder(bin.root) {
         fun onBind(data: AniListMedia) {
             bin.apply {

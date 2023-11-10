@@ -14,13 +14,13 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:paddingTop="4dp"
         android:layout_height="58dp"
-        app:titleTextColor="@color/white"
-        app:title="AniGraph"
+        android:paddingTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="AniGraph"
+        app:titleTextColor="@color/white" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -63,34 +63,19 @@
         </FrameLayout>
     </FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/search_recycler"
         android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="12dp"
-
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        tools:listitem="@layout/item_rv" />
-
-
-    <TextView
-        android:id="@+id/placeHolde"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/animity"
-        android:text="Search Any Anime"
-        android:textColor="@color/white"
-        android:textSize="26sp"
-        android:textStyle="bold"
+        android:layout_marginTop="14dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        tools:listitem="@layout/item_rv_layout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
