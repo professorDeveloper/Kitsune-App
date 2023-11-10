@@ -6,6 +6,7 @@ import com.azamovhudstc.graphqlanilist.utils.displayInDayDateTimeFormat
 import com.azamovhudstc.graphqlanilist.type.*
 import kotlinx.parcelize.Parcelize
 import java.io.Serializable
+import kotlin.random.Random
 
 @Parcelize
 data class AniListMedia(
@@ -47,6 +48,14 @@ data class AniListMedia(
     val mediaListEntry: MediaStatusAnimity? = null
 ) : Parcelable,Serializable {
 
+    fun getAverageScoreToString():String{
+        return if (averageScore>0){
+            (averageScore / 10.0).toString()
+        }else{
+            var score= Random(20).nextInt(1,10) /10.0
+            return score.toString()
+        }
+    }
     fun getGenresToString(): String {
         return if (genres.size < 4) {
             genres.joinToString { it.name }

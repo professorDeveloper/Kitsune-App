@@ -6,15 +6,8 @@ import com.google.android.material.snackbar.Snackbar
 class Constants {
     companion object
     {
-        const val ANIME_TITLE: String = "ANIME_TITLE"
-        const val EPISODE_DETAILS: String = "episodeInfo"
-        const val MAL_ID = "anilist_id"
-
         // Base URLS
         const val GOGO_BASE_URL = "https://gogoanime.gr"
-        const val ENIME_BASE_URL = "https://api.enime.moe"
-        const val BILI_URL = "https://api-vn.kaguya.app/server"
-
 
         // Network Requests Header
         const val USER_AGENT =

@@ -57,7 +57,6 @@
                 app:searchIcon="@drawable/search_icon"
                 tools:ignore="RtlSymmetry">
 
-                <requestFocus />
 
             </androidx.appcompat.widget.SearchView>
         </FrameLayout>
@@ -68,14 +67,19 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="14dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingTop="10dp"
+        android:paddingStart="16dp"
+        android:clipToPadding="false"
+        android:paddingEnd="16dp"
+        app:spanCount="3"
+        tools:itemCount="12"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        tools:listitem="@layout/item_rv_layout" />
+        tools:listitem="@layout/item_vertical_layout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

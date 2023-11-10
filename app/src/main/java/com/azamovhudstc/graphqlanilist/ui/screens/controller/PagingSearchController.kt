@@ -6,6 +6,7 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.RvLayoutBindingModel_
+import com.azamovhudstc.graphqlanilist.VerticalLayoutBindingModel_
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
 import com.azamovhudstc.graphqlanilist.utils.logError
 import kotlinx.coroutines.ObsoleteCoroutinesApi
@@ -24,7 +25,7 @@ class PagingSearchController() :
         currentPosition: Int,
         item: AniListMedia?
     ): EpoxyModel<*> {
-        return RvLayoutBindingModel_().id(item?.idAniList).clickListener { view ->
+        return VerticalLayoutBindingModel_().id(item?.idAniList).clickListener { view ->
             try {
                 item?.let {
                     val bundle = Bundle()

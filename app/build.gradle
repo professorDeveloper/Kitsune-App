@@ -124,5 +124,14 @@ dependencies {
     def jsoupVersion = "1.13.1"
     implementation "org.jsoup:jsoup:$jsoupVersion"
 
+
+    //FragulaCore
+//    implementation 'com.fragula2:fragula-core:2.6'
+
+    //ShowCase View
+    implementation 'com.github.faruktoptas:FancyShowCaseView:1.3.9'
+    implementation 'com.github.mreram:showcaseview:1.4.1'
+
+
 }
 

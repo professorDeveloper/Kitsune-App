@@ -1,19 +1,22 @@
 package com.azamovhudstc.graphqlanilist.ui.screens
 
 import android.os.Bundle
+import android.text.Html
+import android.text.Spannable
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.databinding.HomeScreenBinding
-import com.azamovhudstc.graphqlanilist.ui.adapter.SearchPagingAdapter
 import com.azamovhudstc.graphqlanilist.ui.screens.controller.PagingSearchController
 import com.azamovhudstc.graphqlanilist.utils.collectLatest
 import com.azamovhudstc.graphqlanilist.utils.dismissKeyboard
 import com.azamovhudstc.graphqlanilist.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import smartdevelop.ir.eram.showcaseviewlib.GuideView
+import smartdevelop.ir.eram.showcaseviewlib.config.DismissType
+
 
 @AndroidEntryPoint
 class HomeScreen : Fragment(R.layout.home_screen) {
@@ -26,12 +29,8 @@ class HomeScreen : Fragment(R.layout.home_screen) {
         super.onViewCreated(view, savedInstanceState)
         _binding = HomeScreenBinding.bind(view)
         pagingController = PagingSearchController()
-
         observeViewModel()
-
-
         binding.searchRecycler.setController(pagingController)
-
            binding. mainSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
 

@@ -15,6 +15,7 @@ import androidx.databinding.BindingAdapter
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.Genre
 import com.azamovhudstc.graphqlanilist.di.GlideApp
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.imageview.ShapeableImageView
 import com.ms.square.android.expandabletextview.ExpandableTextView
 
 /**
@@ -32,6 +33,17 @@ fun ImageView.provideImageBinding(url: String?) {
             .into(this)
     }
 }
+
+@BindingAdapter("image")
+fun ShapeableImageView.provideImageBinding(url: String?) {
+    if (!url.isNullOrEmpty()) {
+        GlideApp.with(context)
+            .load(url)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .into(this)
+    }
+}
+
 
 //@BindingAdapter("avatarImage")
 //fun ImageView.setAvatarImage(url: String?) {

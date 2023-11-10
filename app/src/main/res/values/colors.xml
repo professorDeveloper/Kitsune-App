@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimaryLight">#4A4458</color>
     <color name="colorPrimary">#332D41</color>
+    <color name="status">#60494949</color>
     <color name="colorPrimaryDark">#1D192B</color>
 
     <color name="teal_200">#FF03DAC5</color>
