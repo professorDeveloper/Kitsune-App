@@ -1,33 +1,13 @@
 package com.azamovhudstc.graphqlanilist.utils
 
 import android.text.format.DateUtils
-import com.apollographql.apollo3.api.ApolloResponse
-import com.azamovhudstc.graphqlanilist.FavoritesAnimeQuery
-import com.azamovhudstc.graphqlanilist.SaveMediaMutation
-import com.azamovhudstc.graphqlanilist.data.mapper.convert
-import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
-import com.azamovhudstc.graphqlanilist.data.model.ui_models.ChangedMediaResponse
+import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
+import com.azamovhudstc.graphqlanilist.data.model.ui_models.Media
 import java.text.ParseException
 import java.util.*
 
-fun ApolloResponse<SaveMediaMutation.Data>.convert(): ChangedMediaResponse {
-    return ChangedMediaResponse(
-        this.data?.saveMedia?.id,
-        MediaStatusAnimity.stringToMediaListStatus(this.data?.saveMedia?.status?.rawValue)
-    )
-}
-fun ApolloResponse<FavoritesAnimeQuery.Data>.convert(): List<AniListMedia> {
-    return this.data
-        ?.user
-        ?.favourites
-        ?.anime
-        ?.edges
-        ?.mapNotNull {
-            it?.node
-                ?.homeMedia
-                ?.convert()
-        } ?: emptyList()
-}
+
+
 fun Int.parseTime(errorHappened: () -> Unit): CharSequence? {
     return try {
         val now = System.currentTimeMillis()

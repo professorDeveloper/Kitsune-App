@@ -13,6 +13,7 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        android:layout_marginTop="14dp"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:paddingTop="4dp"
@@ -21,6 +22,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="AniGraph"
         app:titleTextColor="@color/white" />
+
+
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -81,5 +84,17 @@
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         tools:listitem="@layout/item_vertical_layout" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progress"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_colorFilter="@color/colorPrimaryLight"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_rawRes="@raw/loading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

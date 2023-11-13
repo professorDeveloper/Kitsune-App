@@ -42,7 +42,7 @@
                 android:layout_height="160dp"
                 android:scaleType="centerCrop"
                 android:transitionName="mediaCover"
-                app:image="@{animeInfo.coverImage.medium}"
+                app:image="@{animeInfo.coverImage.large}"
                 app:shapeAppearanceOverlay="@style/roundedImageView"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 

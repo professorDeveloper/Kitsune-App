@@ -1,13 +1,62 @@
 package com.azamovhudstc.graphqlanilist.data.mapper
 
+import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
+import com.azamovhudstc.graphqlanilist.GetGenersByThumblainQuery
 import com.azamovhudstc.graphqlanilist.SearchAnimeQuery
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.*
 import com.azamovhudstc.graphqlanilist.fragment.HomeMedia
+
+
+fun DetailFullDataQuery.Data.convert(): Media {
+    return this.media!!.convert()
+}
+fun GetGenersByThumblainQuery.Data.convert(): Pages {
+    return Pages(this.Page?.media)
+}
+
+
 
 fun SearchAnimeQuery.Data.convert(): List<AniListMedia> {
     return page?.media?.mapNotNull {
         it?.homeMedia.convert()
     } ?: emptyList()
+}
+
+fun DetailFullDataQuery.Media.convert(): Media {
+    return Media(
+        this.title,
+        this.bannerImage,
+        this.coverImage,
+        this.averageScore,
+        this.meanScore,
+        this.hashtag,
+        this.rankings,
+        this.id,
+        this.mediaListEntry,
+        this.isFavourite,
+        this.siteUrl,
+        this.idMal,
+        this.nextAiringEpisode,
+        this.source,
+        this.countryOfOrigin,
+        this.format,
+        this.duration,
+        this.season,
+        this.seasonYear,
+        this.startDate,
+        this.endDate,
+        this.genres,
+        this.studios,
+        this.description,
+        this.trailer,
+        this.synonyms,
+        this.tags,
+        this.characters,
+        this.relations,
+        this.staffPreview,
+        this.recommendations,
+        this.externalLinks
+    )
 }
 
 fun HomeMedia?.convert(): AniListMedia {

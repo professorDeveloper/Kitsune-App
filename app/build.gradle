@@ -124,14 +124,17 @@ dependencies {
     def jsoupVersion = "1.13.1"
     implementation "org.jsoup:jsoup:$jsoupVersion"
 
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
 
     //FragulaCore
 //    implementation 'com.fragula2:fragula-core:2.6'
 
-    //ShowCase View
-    implementation 'com.github.faruktoptas:FancyShowCaseView:1.3.9'
-    implementation 'com.github.mreram:showcaseview:1.4.1'
-
+    implementation 'com.flaviofaria:kenburnsview:1.0.7'
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
+    implementation 'io.noties.markwon:core:4.6.2'
+    implementation 'com.susion:image-viewer:1.0.2'
+    implementation 'com.github.stfalcon-studio:StfalconImageViewer:v1.0.1'
 
 }
 

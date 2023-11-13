@@ -1,14 +1,11 @@
 package com.azamovhudstc.graphqlanilist.utils
 
 import android.content.Context
-import android.util.Log
 import android.widget.ImageView
 import androidx.annotation.StringRes
-import com.azamovhudstc.graphqlanilist.data.local.Settings
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import okhttp3.OkHttpClient
 import java.io.Serializable
 
 fun Context.getPreferenceKey(@StringRes resourceId: Int): String =

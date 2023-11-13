@@ -137,6 +137,26 @@
     <string name="general">General</string>
     <string name="check_for_update">Check for Updates…</string>
     <string name="check_for_update_key">check_for_update_key</string>
+    <string name="mean_score">Mean Score</string>
+    <string name="format">Format</string>
+    <string name="status_title">Status</string>
+    <string name="total_eps">Total Episodes</string>
+    <string name="total_chaps">Total Chapters</string>
+    <string name="ep_duration">Average Duration</string>
+    <string name="min">" min"</string>
+    <string name="season">Season</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="source">Source</string>
+    <string name="main_studio">Studio</string>
+    <string name="genres">Genres</string>
+    <string name="description">Synopsis</string>
+    <string name="characters">Characters</string>
+    <string name="relations">Relations</string>
+    <string name="author">Author</string>
+    <string name="name">Name</string>
+    <string name="name_romaji">Name Romaji</string>
+    <string name="hash_tag">HashTag</string>
 
 
 </resources>

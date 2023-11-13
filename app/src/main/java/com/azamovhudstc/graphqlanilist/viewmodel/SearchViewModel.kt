@@ -24,7 +24,7 @@ class SearchViewModel @Inject constructor(
     private val _searchList = MutableStateFlow<PagingData<AniListMedia>>(PagingData.empty())
     val searchList: StateFlow<PagingData<AniListMedia>> = _searchList.asStateFlow()
     private val sortTypes = mutableListOf<SortType>()
-    private var lastSearchQuery = ""
+    private var lastSearchQuery = "All"
 
     private val searchQueryChannel = Channel<SearchQuery>(Channel.CONFLATED)
     private val searchFlow = searchQueryChannel
@@ -43,9 +43,9 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onSearchQueryChanged(query: String) {
+    fun onSearchQueryChanged(query: String="",type:MutableList<SortType>?=null) {
         lastSearchQuery = query.trim()
-        searchQueryChannel.trySend(SearchQuery(lastSearchQuery, sortTypes)).isSuccess
+        searchQueryChannel.trySend(SearchQuery(lastSearchQuery, type?:sortTypes)).isSuccess
     }
 
     fun toggleSortType(sortType: SortType) {

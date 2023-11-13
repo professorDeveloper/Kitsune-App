@@ -4,6 +4,11 @@
     <color name="colorPrimary">#332D41</color>
     <color name="status">#60494949</color>
     <color name="colorPrimaryDark">#1D192B</color>
+    <color name="pink_200">#FF5DAE</color>
+    <color name="pink_500">#FF007F</color>
+    <color name="pink_500_25">#40FF007F</color>
+    <color name="pink_700">#C50053</color>
+    <color name="fav">#E63956</color>
 
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
@@ -18,6 +23,7 @@
     <color name="textColor">#e9eaee</color> <!--FFF-->
     <color name="grayTextColor">#C0C7CC</color> <!-- 5e5f62-->
     <color name="gray_selected">#A0AAB5</color> <!-- 5e5f62-->
+    <color name="statusBarColor">#25B8B8B8</color>
     <color name="transparent">#00000000</color>
 
     <color name="itemBackground">#161616</color>

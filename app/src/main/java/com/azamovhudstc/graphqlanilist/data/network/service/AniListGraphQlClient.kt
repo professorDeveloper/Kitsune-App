@@ -1,27 +1,17 @@
 package com.azamovhudstc.graphqlanilist.data.network.service
 
 import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Optional
-import com.azamovhudstc.graphqlanilist.FavoritesAnimeQuery
-import com.azamovhudstc.graphqlanilist.SaveMediaMutation
+import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
+import com.azamovhudstc.graphqlanilist.GetGenersByThumblainQuery
 import com.azamovhudstc.graphqlanilist.SearchAnimeQuery
-import com.azamovhudstc.graphqlanilist.type.MediaListStatus
 import com.azamovhudstc.graphqlanilist.type.MediaSort
 import javax.inject.Inject
 
 class AniListGraphQlClient @Inject constructor(
     private val apolloClient: ApolloClient
 ) : AniListSync {
-    override suspend fun getFavoriteAnimes(
-        userId: Int?,
-        page: Int?
-    ) = apolloClient.query(
-        FavoritesAnimeQuery(
-            Optional.Present(userId),
-            Optional.Present(page)
-        )
-    ).execute()
+
 
     override suspend fun fetchSearchAniListData(
         query: String,
@@ -34,11 +24,16 @@ class AniListGraphQlClient @Inject constructor(
             Optional.present(toMediaSort)
         )
     ).execute()
-    override suspend fun markAnimeStatus(
-        mediaId: Int,
-        status: MediaListStatus
-    ) = apolloClient.mutation(
-        SaveMediaMutation(mediaId, status)
+
+    override suspend fun fetchFullDataById(id: Int) =
+        apolloClient.query(DetailFullDataQuery(Optional.present(id))).execute()
+
+    override suspend fun getImageByGenre(genre: String) = apolloClient.query(
+        GetGenersByThumblainQuery(
+            Optional.present(genre)
+        )
     ).execute()
+//    override suspend fun getThumblain(id: Int) = apolloClient.query(DetailFullDataQuery(Optional.present(id))).execute()
+
 
 }

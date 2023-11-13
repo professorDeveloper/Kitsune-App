@@ -1,20 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable-v24/linear_gradient_bg.xml" value="0.2155" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/ic_back_24.xml" value="0.2155" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/search_background.xml" value="0.2155" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/activity_character_details.xml" value="0.321875" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/activity_genre.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/detail_screen.xml" value="0.321875" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_anime_info_page.xml" value="0.3078125" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_detail_another_screen.xml" value="0.2988679352838745" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_episode_container.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/home_screen.xml" value="0.2988679352838745" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_anime_details.xml" value="0.32083333333333336" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_character.xml" value="0.32083333333333336" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_chip.xml" value="0.32083333333333336" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_episode_large.xml" value="0.32083333333333336" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_episode_list.xml" value="0.321875" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_genre.xml" value="0.32083333333333336" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_media_compat.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_rv.xml" value="0.2988679352838745" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_rv_layout.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_search_layout.xml" value="0.19924529018924966" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_title_chipgroup.xml" value="0.32083333333333336" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_title_recycler.xml" value="0.32083333333333336" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_title_trailer.xml" value="0.32083333333333336" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_vertical_layout.xml" value="0.4528302049755674" />
       </map>
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

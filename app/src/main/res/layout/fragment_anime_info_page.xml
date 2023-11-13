@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:strokeColor="@color/darkBlue"
+    app:strokeWidth="0dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/colorPrimaryDark"
+    app:cardCornerRadius="0dp"
+
+    app:cardElevation="0dp"
+    tools:context=".ui.screens.detail.pages.AnimeInfoPage">
+    <androidx.core.widget.NestedScrollView
+
+        android:id="@+id/mediaInfoScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/mediaInfoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:visibility="visible">
+
+        <TableLayout
+            android:id="@+id/infoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingStart="32dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="32dp"
+            android:paddingBottom="16dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/mean_score"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoMeanScore"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/score_suffix" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/status_title"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mediaInfoTotalTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/total_eps"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/mediaInfoDurationContainer"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/ep_duration"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoDuration"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/min"
+                    android:textAlignment="textEnd" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/format"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoFormat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/source"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoSource"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/mediaInfoStudioContainer"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/main_studio"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoStudio"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white" />
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/mediaInfoSeasonContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/season"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoSeason"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/start_date"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.58"
+                    android:text="@string/end_date"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mediaInfoEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="textEnd" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:orientation="horizontal"/>
+
+            <LinearLayout
+                android:id="@+id/mediaInfoNameRomajiContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:id="@+id/mediaInfoNameContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/mediaInfoDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:gravity="start"
+
+            android:maxLines="5"
+            android:padding="16dp"
+            android:text="@string/description" />
+
+    </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</com.google.android.material.card.MaterialCardView>

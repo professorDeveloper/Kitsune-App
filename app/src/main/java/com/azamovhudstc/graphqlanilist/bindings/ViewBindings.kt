@@ -14,6 +14,7 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.databinding.BindingAdapter
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.Genre
 import com.azamovhudstc.graphqlanilist.di.GlideApp
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.imageview.ShapeableImageView
 import com.ms.square.android.expandabletextview.ExpandableTextView
@@ -27,9 +28,8 @@ import com.ms.square.android.expandabletextview.ExpandableTextView
 @BindingAdapter("image")
 fun ImageView.provideImageBinding(url: String?) {
     if (!url.isNullOrEmpty()) {
-        GlideApp.with(context)
+        Glide.with(context)
             .load(url)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .into(this)
     }
 }
@@ -37,9 +37,8 @@ fun ImageView.provideImageBinding(url: String?) {
 @BindingAdapter("image")
 fun ShapeableImageView.provideImageBinding(url: String?) {
     if (!url.isNullOrEmpty()) {
-        GlideApp.with(context)
+        Glide.with(context)
             .load(url)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .into(this)
     }
 }

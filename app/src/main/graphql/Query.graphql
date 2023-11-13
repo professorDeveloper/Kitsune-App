@@ -4,7 +4,7 @@ query SearchAnimeQuery(
     $page: Int,
     $sortType: [MediaSort]
 ) {
-    page:Page (page: $page, perPage: 30) {
+    page:Page (page: $page, perPage: 50) {
         media (
             search: $search,
             type: ANIME,
@@ -12,39 +12,37 @@ query SearchAnimeQuery(
         ) {...HomeMedia}
     }
 }
-query FavoritesAnimeQuery($id: Int, $page: Int) {
-    user:User(id: $id) {
-        id
-        name
-        favourites {
-            anime(page: $page) {
-                edges {
-                    node {
-                        ...HomeMedia
-                    }
-                    favouriteOrder
-                }
-                pageInfo {
-                    total
-                    perPage
-                    currentPage
-                    lastPage
-                    hasNextPage
-                }
-            }
-        }
+
+    query  getGenersByThumblain($genre:String){
+        Page(perPage: 10){media(genre:$genre, sort: TRENDING_DESC, type: ANIME, countryOfOrigin:"JP") {id bannerImage title{english romaji userPreferred} } }
+
     }
+query DetailFullDataQuery($id:Int){
+    media :Media(id:$id){
+        title{
+            english
+            romaji
+            userPreferred
+        }
+        bannerImage
+        coverImage {
+            large
+        }
+        averageScore
+        meanScore
+
+        hashtag
+
+        rankings {
+            rank
+            allTime
+            id
+        }
+        id mediaListEntry{
+
+            id status score(format:POINT_100) progress private notes repeat customLists updatedAt startedAt{year month day}completedAt{year month day}}isFavourite siteUrl idMal nextAiringEpisode{episode airingAt}source countryOfOrigin format duration season seasonYear startDate{year month day}endDate{year month day}genres studios(isMain:true){nodes{id name siteUrl}}description trailer { site id } synonyms tags { name rank isMediaSpoiler } characters(sort:[ROLE,FAVOURITES_DESC],perPage:25,page:1){edges{role node{id image{medium}name{userPreferred}}}}relations{edges{relationType(version:2)node{id idMal mediaListEntry{progress private score(format:POINT_100) status} episodes chapters nextAiringEpisode{episode} popularity meanScore isAdult isFavourite format title{english romaji userPreferred}type status(version:2)bannerImage coverImage{large}}}}staffPreview: staff(perPage: 8, sort: [RELEVANCE, ID]) {edges{role node{id name{userPreferred}}}}recommendations(sort:RATING_DESC){nodes{mediaRecommendation{id idMal mediaListEntry{progress private score(format:POINT_100) status} episodes chapters nextAiringEpisode{episode}meanScore isAdult isFavourite format title{english romaji userPreferred}type status(version:2)bannerImage coverImage{large}}}}externalLinks{url site}}
 }
 
-mutation SaveMediaMutation ($id: Int!, $status: MediaListStatus!) {
-    saveMedia : SaveMediaListEntry (
-        mediaId: $id,
-        status: $status
-    ) {
-        id
-        status
-    }
-}
 
 fragment HomeMedia on Media {
     id

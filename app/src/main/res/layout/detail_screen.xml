@@ -1,254 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Theme.GraphQLAnilist.Detail"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimaryDark"
+
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mediaAppBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:paddingTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:title="Detail Screen"
-            app:titleTextColor="@color/white" />
+        android:translationZ="5dp">
 
-
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/mediaCollapsing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+            android:fitsSystemWindows="false"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:layout_scrollEffect="compress"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:contentScrim="@color/colorPrimaryDark"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appbar"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_back"
+                    style="@style/ShapeAppearanceOverlayExtended"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+
+                    android:layout_marginTop="28dp"
+                    android:translationZ="7dp"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:borderWidth="0dp"
+                    app:elevation="12dp"
+                    app:fabCustomSize="38dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlayExtended"
+                    app:srcCompat="@drawable/ic_back_24"
+                    app:tint="@color/white"
+                    tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/itemCompactBannerNoKenCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorPrimaryDark"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
 
-                <LinearLayout
+                    <com.flaviofaria.kenburnsview.KenBurnsView
+                        android:id="@+id/itemCompactBannerNoKen"
+                        android:layout_width="408dp"
+                        android:layout_height="384dp"
+                        android:elevation="0dp"
+                        android:scaleType="centerCrop"
+                        app:layout_collapseMode="parallax"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:weightSum="1">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
+                    android:layout_height="0dp"
+                    android:src="@drawable/linear_gradient_bg"
+                    app:layout_constraintBottom_toBottomOf="@+id/itemCompactBannerNoKenCard"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/result_poster_holder"
-                            android:layout_width="100dp"
-                            android:layout_height="140dp"
-                            android:layout_marginStart="8dp"
-                            android:elevation="10dp"
-                            android:transitionName="@string/anime_card_detail_transition_name"
-                            app:cardCornerRadius="5dp">
-
-                            <ImageView
-                                android:id="@+id/details_poster"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop" />
-                        </androidx.cardview.widget.CardView>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/itemDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="2"
+                    android:text="Demon Slayer "
+                    android:textColor="#B1AEAE"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="@+id/title"
+                    app:layout_constraintStart_toStartOf="@+id/title"
+                    app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
-                            <TextView
-                                android:id="@+id/result_title"
-                                style="@style/Headline5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="50dp"
-                                android:textColor="@color/textColor"
-                                android:textSize="20sp"
-                                android:textStyle="normal"
-                                tools:text="The Perfect " />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:lineSpacingExtra="3sp"
-                                    android:paddingTop="3sp"
-                                    android:text="@string/released"
-                                    android:textColor="@color/grayTextColor"
-                                    android:textSize="15sp"
-                                    android:textStyle="normal"
-                                    tools:text="2021 nda" />
-
-                                <TextView
-                                    android:id="@+id/releaseDate"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:lineSpacingExtra="3sp"
-                                    android:paddingTop="3sp"
-                                    android:textColor="@color/textColor"
-                                    android:textSize="15sp"
-                                    android:textStyle="normal"
-                                    tools:text="2021 nda" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:lineSpacingExtra="3sp"
-                                    android:paddingTop="3sp"
-                                    android:text="@string/status"
-                                    android:textColor="@color/grayTextColor"
-                                    android:textSize="15sp"
-                                    android:textStyle="normal"
-                                    tools:text="2021 nda" />
-
-                                <TextView
-                                    android:id="@+id/status"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:lineSpacingExtra="3sp"
-                                    android:paddingTop="3sp"
-                                    android:textColor="@color/textColor"
-                                    android:textSize="15sp"
-                                    android:textStyle="normal"
-                                    tools:text="2021 nda" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:lineSpacingExtra="3sp"
-                                    android:paddingTop="3sp"
-                                    android:text="@string/type"
-                                    android:textColor="@color/grayTextColor"
-                                    android:textSize="15sp"
-                                    android:textStyle="normal"
-                                    tools:text="2021 nda" />
-
-                                <TextView
-                                    android:id="@+id/type"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:lineSpacingExtra="3sp"
-                                    android:paddingTop="3sp"
-
-                                    android:textColor="@color/textColor"
-                                    android:textSize="15sp"
-                                    android:textStyle="normal"
-                                    tools:text="2021 nda" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/nextEpisodeContainer"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/episodeToBeReleased"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:lineSpacingExtra="3sp"
-                                    android:paddingTop="3sp"
-                                    android:text="@string/next"
-                                    android:textColor="@color/grayTextColor"
-                                    android:textSize="15sp"
-                                    android:textStyle="normal"
-                                    tools:text="Episode 13" />
-
-                                <TextView
-                                    android:id="@+id/releaseTime"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:lineSpacingExtra="3sp"
-                                    android:paddingTop="3sp"
-                                    android:textColor="@color/textColor"
-                                    android:textSize="15sp"
-                                    android:textStyle="normal"
-                                    tools:text=" Monday 13 Dec, 04:00 AM" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-                    </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mediaCollapseContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:transitionGroup="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/itemCompactBannerNoKenCard">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/setType"
-                        style="@style/GreenButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="0dp"
-                        android:layout_marginBottom="5dp"
-                        android:paddingEnd="20dp"
-                        android:text="@string/add_to_list"
-                        android:visibility="gone"
-                        app:icon="@drawable/ic_down_arrow"
-                        tools:visibility="visible" />
-
-                    <include
-                        android:id="@+id/animeInfoLayout"
-                        layout="@layout/item_anime_details" />
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/genreGroup"
+                        android:id="@+id/playButtonForBanner"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="58dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:fontFamily="@font/animity"
+                        android:text="Play On Youtube"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:backgroundTint="@color/fav"
+                        app:cornerRadius="10dp"
+                        app:icon="@drawable/play_banner"
+                        app:iconGravity="textStart"
+                        app:iconSize="25dp"
+                        app:iconTint="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeColor="@color/fav" />
 
-                    </com.google.android.material.chip.ChipGroup>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
-            </com.google.android.material.appbar.AppBarLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:translationZ="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fab_back">
 
-        </androidx.cardview.widget.CardView>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/itemCompactImage"
+                        android:layout_width="132dp"
+                        android:layout_height="182dp"
+                        android:scaleType="centerCrop"
+
+                        android:transitionName="mediaCover"
+                        app:shapeAppearanceOverlay="@style/roundedImageView"
+                        tools:ignore="ContentDescription,ImageContrastCheck"
+                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:fontFamily="@font/animity"
+                    android:maxLines="4"
+                    android:scrollHorizontally="false"
+                    android:singleLine="false"
+                    android:text="Demon Slayer Swordsman Village Arc"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView"
+                    app:layout_constraintStart_toStartOf="@+id/cardView"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/page_type"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            android:clipToPadding="false"
+            android:requiresFadingEdge="vertical"
+            android:translationZ="12dp"
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
+
+            app:tabBackground="@null"
+            app:tabIndicator="@color/colorPrimaryDark"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicatorColor="@color/fav"
+            app:tabIndicatorHeight="2dp"
+            app:tabInlineLabel="true"
+            app:tabRippleColor="@null"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="#878787"
+            tools:visibility="visible" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="24dp"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -18,6 +18,15 @@
     <fragment
         android:id="@+id/detailScreen"
         tools:layout="@layout/detail_screen"
-        android:name="com.azamovhudstc.graphqlanilist.ui.screens.DetailScreen"
-        android:label="DetailScreen" />
+        android:name="com.azamovhudstc.graphqlanilist.ui.screens.detail.DetailScreen"
+        android:label="DetailScreen" >
+        <action
+            android:id="@+id/action_detailScreen_to_animeInfoPage"
+            app:destination="@id/animeInfoPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/animeInfoPage"
+        android:name="com.azamovhudstc.graphqlanilist.ui.screens.detail.pages.AnimeInfoPage"
+        android:label="fragment_anime_info_page"
+        tools:layout="@layout/fragment_anime_info_page" />
 </navigation>

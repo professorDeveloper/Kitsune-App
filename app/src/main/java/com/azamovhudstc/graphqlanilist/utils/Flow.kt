@@ -5,7 +5,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.azamovhudstc.graphqlanilist.data.local.Settings
 import com.azamovhudstc.graphqlanilist.type.AnimeTypes
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
@@ -126,22 +125,6 @@ fun <T, R> Flow<T>.ifAnyChanged(transform: (T) -> Array<R>): Flow<T> {
         } else {
             false
         }
-    }
-}
-
-@FlowPreview
-fun <T> providerFlow(
-    settings: Settings,
-    block: suspend FlowCollector<T>.(AnimeTypes) -> Unit
-) = SafeFlow(block, settings)
-
-@FlowPreview
-class SafeFlow<T>(
-    private val block: suspend FlowCollector<T>.(AnimeTypes) -> Unit,
-    private val settings: Settings
-) : AbstractFlow<T>() {
-    override suspend fun collectSafely(collector: FlowCollector<T>) {
-        collector.block(settings.selectedProvider)
     }
 }
 

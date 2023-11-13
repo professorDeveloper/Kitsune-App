@@ -7,3 +7,11 @@ import kotlinx.parcelize.Parcelize
 data class Genre(
     val name: String = ""
 ) : Parcelable
+
+@Parcelize
+data class GenreByImage(
+    val name: String = "",
+    val image: String = "",
+    val time: Long = 0,
+    val id: Int = 0
+) : Parcelable

@@ -1,13 +1,9 @@
 package com.azamovhudstc.graphqlanilist.di
 
 import com.azamovhudstc.graphqlanilist.data.repository.DetailRepositoryImpl
-import com.azamovhudstc.graphqlanilist.data.repository.FavoriteRepositoryImpl
 import com.azamovhudstc.graphqlanilist.data.repository.SearchRepositoryImpl
-import com.azamovhudstc.graphqlanilist.data.repository.UserRepositoryImpl
-import com.azamovhudstc.graphqlanilist.domain.repository.DetailsRepository
-import com.azamovhudstc.graphqlanilist.domain.repository.FavoriteRepository
+import com.azamovhudstc.graphqlanilist.domain.repository.DetailRepository
 import com.azamovhudstc.graphqlanilist.domain.repository.SearchRepository
-import com.azamovhudstc.graphqlanilist.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,13 +16,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun bindUserRepository(repository: UserRepositoryImpl): UserRepository
-
-    @Binds
-    abstract fun bindFavoritesRepository(repository: FavoriteRepositoryImpl): FavoriteRepository
-
-    @Binds
-    abstract fun bindDetailsRepository(repository: DetailRepositoryImpl): DetailsRepository
+    abstract fun bindDetailRepository(repository: DetailRepositoryImpl):DetailRepository
 
     @Binds
     abstract fun bindSearchRepository(repository: SearchRepositoryImpl): SearchRepository

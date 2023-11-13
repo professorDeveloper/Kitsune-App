@@ -1,21 +1,67 @@
 
 package com.azamovhudstc.graphqlanilist.utils
 
+import android.R.attr.translationY
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.app.Activity
-import android.content.ClipData.newIntent
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
 import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.viewpager2.widget.ViewPager2
+import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
+import com.azamovhudstc.graphqlanilist.R
+import com.azamovhudstc.graphqlanilist.application.App
+import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
+
+val Int.dp: Float get() = (this / Resources.getSystem().displayMetrics.density)
+val Float.px: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+ fun DetailFullDataQuery.StartDate.toSortString(): String {
+    if (day == null && year == null && month == null)
+        return "??"
+    val a = if (month != null) DateFormatSymbols().months[month - 1] else ""
+    return (if (day != null) "$day " else "") + a + (if (year != null) ", $year" else "")
+}
+
+fun randomColor(): Int {
+    val color = listOf(
+        Color.parseColor("#24687B"),
+        Color.parseColor("#014037"),
+        Color.parseColor("#7E1416"),
+        Color.parseColor("#989D60"),
+        Color.parseColor("#BF5264"),
+        Color.parseColor("#542437"),
+        Color.parseColor("#329669"),
+        Color.parseColor("#3D3251"),
+        Color.parseColor("#D85C43"),
+        Color.parseColor("#C02944"),
+        Color.parseColor("#D3B042"),
+    )
+    return color.shuffled().first()
+}
+
+fun DetailFullDataQuery.EndDate.toSortString(): String {
+    if (day == null && year == null && month == null)
+        return "??"
+    val a = if (month != null) DateFormatSymbols().months[month - 1] else ""
+    return (if (day != null) "$day " else "") + a + (if (year != null) ", $year" else "")
+}
 
 fun View.hide() {
     visibility = View.GONE
@@ -23,6 +69,44 @@ fun View.hide() {
 
 fun View.show() {
     visibility = View.VISIBLE
+}
+fun localLoadTabTxt(): ArrayList<String> {
+    val list = ArrayList<String>()
+    list.add("More Details")
+    list.add("Anime")
+    return list
+}
+class ZoomOutPageTransformer() : ViewPager2.PageTransformer {
+    override fun transformPage(view: View, position: Float) {
+        if (position == 0.0f ) {
+            setAnimation(view.context, view, 300, floatArrayOf(1.3f, 1f, 1.3f, 1f), 0.5f to 0f)
+            ObjectAnimator.ofFloat(view, "alpha", 0f, 1.0f).setDuration((200 * 1f).toLong()).start()
+        }
+    }
+
+
+}
+fun setAnimation(
+    context: Context?,
+    viewToAnimate: View,
+    duration: Long = 150,
+    list: FloatArray = floatArrayOf(0.0f, 1.0f, 0.0f, 1.0f),
+    pivot: Pair<Float, Float> = 0.5f to 0.5f
+) {
+
+    val anim = ScaleAnimation(
+        list[0],
+        list[1],
+        list[2],
+        list[3],
+        Animation.RELATIVE_TO_SELF,
+        pivot.first,
+        Animation.RELATIVE_TO_SELF,
+        pivot.second
+    )
+    anim.duration = (duration * 1f).toLong()
+    anim.setInterpolator(context, R.anim.over_shoot)
+    viewToAnimate.startAnimation(anim)
 }
 
 inline fun <reified T : Any> Activity.launchActivity(
@@ -108,3 +192,70 @@ fun displayInDayDateTimeFormat(seconds: Int): String {
     val date = Date(seconds * 1000L)
     return dateFormat.format(date)
 }
+fun View.slideTop(animTime: Long, startOffset: Long) {
+    val slideUp = AnimationUtils.loadAnimation(App.instance, R.anim.slide_top).apply {
+        duration = animTime
+        interpolator = FastOutSlowInInterpolator()
+        this.startOffset = startOffset
+    }
+    startAnimation(slideUp)
+}
+
+
+fun View.slideUp(animTime: Long, startOffset: Long) {
+    val slideUp = AnimationUtils.loadAnimation(App.instance, R.anim.slide_up).apply {
+        duration = animTime
+        interpolator = FastOutSlowInInterpolator()
+        this.startOffset = startOffset
+    }
+    startAnimation(slideUp)
+}
+fun View.alpha() {
+    animate().
+    translationY(height.toFloat())
+        .alpha(0.0f)
+        .setDuration(555)
+        .setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                super.onAnimationEnd(animation)
+                visibility = View.GONE
+            }
+        })
+}
+fun DetailFullDataQuery.Trailer.getYoutubeFormat(): String {
+    return if (this.site != null && this.site.toString() == "youtube")
+        "https://www.youtube.com/embed/${this.id.toString().trim('"')}"
+    else ""
+}
+fun View.slideStart(animTime: Long, startOffset: Long,hide:View?=null) {
+    val slideUp = AnimationUtils.loadAnimation(App.instance, R.anim.slide_start).apply {
+        setAnimationListener(object :Animation.AnimationListener{
+            override fun onAnimationStart(animation: Animation?) {
+                hide?.hide()
+
+            }
+            override fun onAnimationEnd(animation: Animation?) {
+                hide?.hide()
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {
+                TODO("Not yet implemented")
+            }
+
+        })
+        duration = animTime
+        interpolator = FastOutSlowInInterpolator()
+        this.startOffset = startOffset
+    }
+    startAnimation(slideUp)
+}
+fun View.slideEnd(animTime: Long, startOffset: Long) {
+    val slideUp = AnimationUtils.loadAnimation(App.instance, R.anim.slide_end).apply {
+        duration = animTime
+        interpolator = FastOutSlowInInterpolator()
+        this.startOffset = startOffset
+    }
+    startAnimation(slideUp)
+}
+
+
