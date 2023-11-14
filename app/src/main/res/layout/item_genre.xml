@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/genreCard"
     android:layout_width="wrap_content"
-    android:layout_height="44dp"
+    android:layout_height="46dp"
     android:layout_margin="8dp"
-    app:cardCornerRadius="16dp">
+
+    app:cardCornerRadius="14dp">
 
     <ImageView
         android:id="@+id/genreImage"
@@ -19,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.6"
-        android:background="@color/colorPrimaryLight" />
+        android:background="@color/black" />
 
     <TextView
         android:id="@+id/genreTitle"

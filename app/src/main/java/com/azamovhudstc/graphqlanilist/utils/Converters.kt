@@ -1,12 +1,22 @@
 package com.azamovhudstc.graphqlanilist.utils
 
 import android.text.format.DateUtils
-import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
-import com.azamovhudstc.graphqlanilist.data.model.ui_models.Media
+import com.azamovhudstc.graphqlanilist.CharacterDataByIDQuery
+import com.azamovhudstc.graphqlanilist.data.model.ui_models.CharacterMedia
 import java.text.ParseException
 import java.util.*
 
 
+fun CharacterDataByIDQuery.Data.convert(): CharacterMedia {
+    return CharacterMedia(
+        this.Character!!.id,
+        this.Character.age,
+        this.Character.gender,
+        this.Character.description,
+        this.Character.dateOfBirth,
+        this.Character.media
+    )
+}
 
 fun Int.parseTime(errorHappened: () -> Unit): CharSequence? {
     return try {

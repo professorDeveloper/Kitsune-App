@@ -1,7 +1,9 @@
 package com.azamovhudstc.graphqlanilist.di
 
+import com.azamovhudstc.graphqlanilist.data.repository.CharacterRepositoryImpl
 import com.azamovhudstc.graphqlanilist.data.repository.DetailRepositoryImpl
 import com.azamovhudstc.graphqlanilist.data.repository.SearchRepositoryImpl
+import com.azamovhudstc.graphqlanilist.domain.repository.CharacterRepository
 import com.azamovhudstc.graphqlanilist.domain.repository.DetailRepository
 import com.azamovhudstc.graphqlanilist.domain.repository.SearchRepository
 import dagger.Binds
@@ -20,4 +22,8 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindSearchRepository(repository: SearchRepositoryImpl): SearchRepository
+
+    @Binds
+    abstract fun bindCharacterRepository(repository: CharacterRepositoryImpl): CharacterRepository
+
 }

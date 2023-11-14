@@ -2,6 +2,7 @@ package com.azamovhudstc.graphqlanilist.data.network.service
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
+import com.azamovhudstc.graphqlanilist.CharacterDataByIDQuery
 import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
 import com.azamovhudstc.graphqlanilist.GetGenersByThumblainQuery
 import com.azamovhudstc.graphqlanilist.SearchAnimeQuery
@@ -33,7 +34,12 @@ class AniListGraphQlClient @Inject constructor(
             Optional.present(genre)
         )
     ).execute()
-//    override suspend fun getThumblain(id: Int) = apolloClient.query(DetailFullDataQuery(Optional.present(id))).execute()
+
+    override suspend fun getCharacterDataById(id: Int) = apolloClient.query(
+        CharacterDataByIDQuery(
+            Optional.present(id)
+        )
+    ).execute()
 
 
 }

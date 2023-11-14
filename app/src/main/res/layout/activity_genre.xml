@@ -28,10 +28,11 @@
         android:paddingStart="16dp"
         android:orientation="horizontal"
         android:paddingEnd="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="49"
+        app:spanCount="1"
+        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/item_genre"
+        tools:orientation="vertical"
         tools:spanCount="2" />
-
 
 </LinearLayout>

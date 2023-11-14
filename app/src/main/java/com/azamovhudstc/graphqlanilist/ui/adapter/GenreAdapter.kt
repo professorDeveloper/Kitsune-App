@@ -4,12 +4,16 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.azamovhudstc.graphqlanilist.GetGenersByThumblainQuery
 import com.azamovhudstc.graphqlanilist.databinding.ItemGenreBinding
+import com.azamovhudstc.graphqlanilist.utils.Constants
+import com.azamovhudstc.graphqlanilist.utils.loadImage
 import com.azamovhudstc.graphqlanilist.utils.randomColor
 
 class GenreAdapter(
     private val type: String,
-    private val genres: List<String?>
+    private val genres: List<String?>,
+    private val imageList:List<GetGenersByThumblainQuery.Medium?>
 ) : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
@@ -20,8 +24,7 @@ class GenreAdapter(
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
         val binding = holder.binding
         binding.genreTitle.text = genres[position]
-//        binding.genreImage.loadImage(genre)
-        binding.root.setCardBackgroundColor(randomColor())
+        binding.genreImage.loadImage(imageList.get(position)?.bannerImage?:Constants.IMAGE_URL)
     }
 
 

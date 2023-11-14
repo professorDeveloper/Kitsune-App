@@ -24,12 +24,11 @@ import java.io.Serializable
 
 class CharacterAdapter(
     private val characterList: List<DetailFullDataQuery.Edge?>,
-    private val imageList:List<String>
 ) : RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder>() {
-    fun setItemClickListener(listener:((ImageView, String, Int,List<String>)->Unit)){
+    fun setItemClickListener(listener:((DetailFullDataQuery.Edge, String, Int)->Unit)){
         listenerClick=listener
     }
-    private lateinit var listenerClick:((ImageView,String,Int,List<String>)->Unit)
+    private lateinit var listenerClick:((DetailFullDataQuery.Edge,String,Int)->Unit)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val binding =
             ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -47,8 +46,8 @@ class CharacterAdapter(
         binding.itemCompactImage.loadImage(character.node?.image?.medium ?: IMAGE_URL)
         binding.itemCompactTitle.text = character.node?.name?.userPreferred
         holder.itemView.setOnClickListener {
-            listenerClick.invoke(binding.itemCompactImage,
-                (character.node?.image?.medium?: IMAGE_URL),position,imageList)
+            listenerClick.invoke(character,
+                (character.node?.image?.medium?: IMAGE_URL),position)
 
         }
     }

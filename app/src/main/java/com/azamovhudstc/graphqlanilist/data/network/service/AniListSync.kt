@@ -1,10 +1,12 @@
 package com.azamovhudstc.graphqlanilist.data.network.service
 
 import com.apollographql.apollo3.api.ApolloResponse
+import com.azamovhudstc.graphqlanilist.CharacterDataByIDQuery
 import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
 import com.azamovhudstc.graphqlanilist.GetGenersByThumblainQuery
 import com.azamovhudstc.graphqlanilist.SearchAnimeQuery
 import com.azamovhudstc.graphqlanilist.type.MediaSort
+import com.azamovhudstc.graphqlanilist.utils.Apollo
 
 interface AniListSync {
     suspend fun fetchSearchAniListData(
@@ -20,4 +22,7 @@ interface AniListSync {
         genre: String,
     ): ApolloResponse<GetGenersByThumblainQuery.Data>
 
+    suspend fun getCharacterDataById(
+        id: Int
+    ):ApolloResponse<CharacterDataByIDQuery.Data>
 }

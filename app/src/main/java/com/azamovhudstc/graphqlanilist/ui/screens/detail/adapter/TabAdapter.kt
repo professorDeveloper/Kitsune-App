@@ -19,7 +19,9 @@ class TabAdapter(var media: Media, var uiData: AniListMedia, fragmentManager: Fr
             0 -> {
                 return AnimeInfoPage(media = media, aniListMedia = uiData)
             }
-            else -> AnimeWatchPage()
+            else -> {
+             return   AnimeWatchPage(media=media, aniListMedia = uiData)
+            }
         }
     }
 }

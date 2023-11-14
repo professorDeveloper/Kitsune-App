@@ -1,6 +1,7 @@
 package com.azamovhudstc.graphqlanilist.ui.screens.detail.pages
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -14,7 +15,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.Media
@@ -23,8 +26,8 @@ import com.azamovhudstc.graphqlanilist.ui.adapter.CharacterAdapter
 import com.azamovhudstc.graphqlanilist.ui.adapter.GenreAdapter
 import com.azamovhudstc.graphqlanilist.ui.adapter.MediaAdaptor
 import com.azamovhudstc.graphqlanilist.utils.*
+import com.azamovhudstc.graphqlanilist.utils.Constants.Companion.IMAGE_URL
 import com.azamovhudstc.graphqlanilist.viewmodel.GenresViewModel
-import com.draggable.library.extension.ImageViewerHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,6 +47,7 @@ class AnimeInfoPage(private val aniListMedia: AniListMedia, private val media: M
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -178,13 +182,17 @@ class AnimeInfoPage(private val aniListMedia: AniListMedia, private val media: M
                 false
             )
             val listorNull = media.genres ?: emptyList<String?>()
-            val adapter = GenreAdapter(
-                "ANIME",
-                listorNull
-            )
+            genreModel.loadGenres()
+            genreModel.genres.observe(viewLifecycleOwner) {
+                val adapter = GenreAdapter("ANIME", listorNull, it)
+                bind.mediaInfoGenresRecyclerView.adapter = adapter
+                bind.mediaInfoGenresRecyclerView.layoutManager =
+                    GridLayoutManager(requireActivity(), 1.toInt(), HORIZONTAL, false)
 
-            bind.mediaInfoGenresRecyclerView.adapter = adapter
-            parent.addView(bind.root)
+                bind.mediaInfoGenresRecyclerView.adapter = adapter
+                parent.addView(bind.root)
+            }
+
         }
 
         if (media.tags!!.isNotEmpty()) {
@@ -202,7 +210,8 @@ class AnimeInfoPage(private val aniListMedia: AniListMedia, private val media: M
                 ).root
                 chip.setTextColor(Color.WHITE)
                 chip.chipBackgroundColor = ColorStateList.valueOf(randomColor())
-                chip.text = media.tags[position]!!.name.toString()
+                val data = media.tags[position]
+                chip.text = "${data?.name} : ${if (data!!.rank != null) "${data.rank}%" else ""}"
                 chip.setOnClickListener {
                 }
                 bind.itemChipGroup.addView(chip)
@@ -217,28 +226,18 @@ class AnimeInfoPage(private val aniListMedia: AniListMedia, private val media: M
                     parent,
                     false
                 )
-                var imagelist = ArrayList<String>()
-                media.characters.edges.forEach {
-                    imagelist.add(
-                        it?.node?.image?.medium ?: Constants.IMAGE_URL
-                    )
-                }
                 bind.itemTitle.setText(R.string.characters)
                 var adapter =
-                    CharacterAdapter(media.characters.edges.toMutableList(), imagelist.toList())
+                    CharacterAdapter(media.characters.edges.toMutableList())
                 bind.itemRecycler.adapter = adapter
-                adapter.setItemClickListener { imageView, cast, i, list ->
-                    val images = ArrayList<ImageViewerHelper.ImageInfo>()
-                    for (index in 0 until imagelist.size) {
-                        images.add(ImageViewerHelper.ImageInfo(imagelist[index]))
-                    }
-                    ImageViewerHelper.showImages(
-                        requireContext(),
-                        listOf(imageView),
-                        images,
-                        i,
-                        showDownLoadBtn = true
-                    )
+                adapter.setItemClickListener { data, title, position ->
+                    var bundle = Bundle()
+
+                    bundle.putInt("id", data.node?.id ?: 0)
+                    bundle.putString("coverImage", data.node?.image?.medium ?: IMAGE_URL)
+                    bundle.putString("characterName", data.node?.name?.userPreferred.toString())
+                    bundle.putString("bannerImage", media.bannerImage?:media.coverImage?.large?:IMAGE_URL)
+                    findNavController().navigate(R.id.characterScreen, bundle)
 
                 }
                 bind.itemRecycler.layoutManager = LinearLayoutManager(
@@ -249,7 +248,7 @@ class AnimeInfoPage(private val aniListMedia: AniListMedia, private val media: M
                 parent.addView(bind.root)
             }
         }
-        if (media.relations != null) {
+        if (media.relations?.edges != null) {
             val bind = ItemTitleRecyclerBinding.inflate(
                 LayoutInflater.from(context),
                 parent,
@@ -264,7 +263,7 @@ class AnimeInfoPage(private val aniListMedia: AniListMedia, private val media: M
                 findNavController().navigate(
                     R.id.detailScreen,
                     bundle,
-                    NavOptions.Builder().setPopUpTo(R.id.detailScreen,true).build()
+                    NavOptions.Builder().setPopUpTo(R.id.detailScreen, true).build()
                 )
             }
             bind.itemRecycler.layoutManager = LinearLayoutManager(

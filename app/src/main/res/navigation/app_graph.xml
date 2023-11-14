@@ -23,10 +23,18 @@
         <action
             android:id="@+id/action_detailScreen_to_animeInfoPage"
             app:destination="@id/animeInfoPage" />
+        <action
+            android:id="@+id/action_detailScreen_to_characterScreen"
+            app:destination="@id/characterScreen" />
     </fragment>
     <fragment
         android:id="@+id/animeInfoPage"
         android:name="com.azamovhudstc.graphqlanilist.ui.screens.detail.pages.AnimeInfoPage"
         android:label="fragment_anime_info_page"
         tools:layout="@layout/fragment_anime_info_page" />
+    <fragment
+        android:id="@+id/characterScreen"
+        tools:layout="@layout/fragment_character_screen"
+        android:name="com.azamovhudstc.graphqlanilist.ui.screens.character.CharacterScreen"
+        android:label="CharacterScreen" />
 </navigation>

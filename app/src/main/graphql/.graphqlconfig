@@ -1,0 +1,14 @@
+{
+  "name": "Untitled GraphQL Schema",
+  "schemaPath": "graphqls.json",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "https://kitsu.io/api/graphql",
+        "headers": {
+        },
+        "introspect": false
+      }
+    }
+  }
+}

@@ -14,9 +14,62 @@ query SearchAnimeQuery(
 }
 
     query  getGenersByThumblain($genre:String){
-        Page(perPage: 10){media(genre:$genre, sort: TRENDING_DESC, type: ANIME, countryOfOrigin:"JP") {id bannerImage title{english romaji userPreferred} } }
+        Page(perPage: 90){media(genre:$genre, sort: TRENDING_DESC, type: ANIME, countryOfOrigin:"JP") {id bannerImage title{english romaji userPreferred} } }
 
+}
+
+query  CharacterDataByID($id:Int){
+Character(id:$id ) {
+    id
+    age
+    gender
+    description
+    dateOfBirth {
+        year
+        month
+        day
     }
+    media(page: 0,sort:[POPULARITY_DESC,SCORE_DESC]) {
+        pageInfo {
+            total
+            perPage
+            currentPage
+            lastPage
+            hasNextPage
+        }
+        edges {
+            id
+            characterRole
+            node {
+                id
+                idMal
+                isAdult
+                status
+                chapters
+                episodes
+                nextAiringEpisode { episode }
+                type
+                meanScore
+                isFavourite
+                bannerImage
+                countryOfOrigin
+                coverImage { large }
+                title {
+                    english
+                    romaji
+                    userPreferred
+                }
+                mediaListEntry {
+                    progress
+                    private
+                    score(format: POINT_100)
+                    status
+                }
+            }
+        }
+    }
+}
+}
 query DetailFullDataQuery($id:Int){
     media :Media(id:$id){
         title{
@@ -86,4 +139,5 @@ fragment HomeMedia on Media {
         status
     }
 }
+
 
