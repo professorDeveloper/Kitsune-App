@@ -10,9 +10,10 @@ import androidx.core.math.MathUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.azamovhudstc.graphqlanilist.R
@@ -64,7 +65,9 @@ class CharacterScreen : Fragment(), AppBarLayout.OnOffsetChangedListener {
             statusBarHeight = insets.top
         }
         screenWidth = resources.displayMetrics.run { widthPixels / density }
-
+        binding.characterCover.setOnClickListener {
+            findNavController().popBackStack()
+        }
         model.loadData(characterID)
         binding.characterAppBar.addOnOffsetChangedListener(this)
         val banner = binding.characterBanner
@@ -128,10 +131,12 @@ class CharacterScreen : Fragment(), AppBarLayout.OnOffsetChangedListener {
                                         }
                                     }
                                 }
+                            mediaAdaptor.setItemClickListener {
+
+                            }
                             binding.characterRecyclerView.adapter = concatAdaptor
                             binding.characterRecyclerView.layoutManager = gridLayoutManager
                         }
-
 
 
                     }

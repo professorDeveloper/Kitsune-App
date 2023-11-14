@@ -32,5 +32,5 @@
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Roles"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 </LinearLayout>
