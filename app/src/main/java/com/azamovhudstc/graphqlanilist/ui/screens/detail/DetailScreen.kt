@@ -122,8 +122,10 @@ class DetailScreen : Fragment(R.layout.detail_screen),AppBarLayout.OnOffsetChang
                 }
 
             }
+
+
             itemCompactImage.setOnClickListener{
-                ImageViewerHelper.showSimpleImage(requireContext(), ImageViewerHelper.ImageInfo(media.coverImage!!.large.toString()), imageView, showDownLoadBtn = true)
+                ImageViewerHelper.showSimpleImage(requireContext(), ImageViewerHelper.ImageInfo(media.coverImage!!.large.toString()), itemCompactBannerNoKen, showDownLoadBtn = false)
             }
         }
 

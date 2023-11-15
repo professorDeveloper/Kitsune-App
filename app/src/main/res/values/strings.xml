@@ -11,6 +11,7 @@
     <string name="search">Search</string>
     <string name="settings">Settings</string>
 
+    <string name="not_supported">%1$s is not supported yet!</string>
 
     <string name="retry">Retry</string>
     <string name="next_episode">Next Episode</string>

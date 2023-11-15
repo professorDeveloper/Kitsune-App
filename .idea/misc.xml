@@ -9,6 +9,7 @@
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/search_background.xml" value="0.2155" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/activity_character_details.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/activity_genre.xml" value="0.321875" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/anime_watch_item.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/detail_screen.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_anime_info_page.xml" value="0.3078125" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_anime_watch_page.xml" value="0.321875" />
@@ -20,6 +21,7 @@
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_character.xml" value="0.32083333333333336" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_character_detail.xml" value="0.32083333333333336" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_chip.xml" value="0.32083333333333336" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_dropdown.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_episode_large.xml" value="0.32083333333333336" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_episode_list.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_genre.xml" value="0.32083333333333336" />

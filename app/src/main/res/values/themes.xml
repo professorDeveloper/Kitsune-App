@@ -26,6 +26,7 @@
         <!--        <item name="fgl_parallax_factor">1.3</item>-->
         <!--        <item name="fgl_anim_duration">500</item>-->
         <!--        <item name="fgl_elevation">3dp</item>-->
+        <item name="windowSplashScreenAnimationDuration">1500</item>
         <item name="windowSplashScreenBackground">@color/primaryBlackBackground</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="android:colorBackground">@color/colorPrimaryDark

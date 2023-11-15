@@ -12,11 +12,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.azamovhudstc.graphqlanilist.R
+import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
 import com.azamovhudstc.graphqlanilist.databinding.FragmentCharacterScreenBinding
 import com.azamovhudstc.graphqlanilist.ui.screens.character.adapter.CharacterAdapter
 import com.azamovhudstc.graphqlanilist.ui.screens.character.adapter.CharacterItemAdapter
@@ -65,7 +66,7 @@ class CharacterScreen : Fragment(), AppBarLayout.OnOffsetChangedListener {
             statusBarHeight = insets.top
         }
         screenWidth = resources.displayMetrics.run { widthPixels / density }
-        binding.characterCover.setOnClickListener {
+        binding.characterClose.setOnClickListener {
             findNavController().popBackStack()
         }
         model.loadData(characterID)
@@ -132,7 +133,20 @@ class CharacterScreen : Fragment(), AppBarLayout.OnOffsetChangedListener {
                                     }
                                 }
                             mediaAdaptor.setItemClickListener {
+                                val bundle = Bundle()
+                                bundle.putSerializable(
+                                    "data",
+                                    AniListMedia(
+                                        it.node!!.id,
+                                        it.node!!.idMal,
+                                    )
+                                )
 
+                                findNavController().navigate(
+                                    R.id.detailScreen,
+                                    bundle,
+                                    NavOptions.Builder().setPopUpTo(R.id.characterScreen, true).build()
+                                )
                             }
                             binding.characterRecyclerView.adapter = concatAdaptor
                             binding.characterRecyclerView.layoutManager = gridLayoutManager

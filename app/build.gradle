@@ -4,6 +4,7 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'kotlinx-serialization'
     id "com.apollographql.apollo3" version("3.7.0")
 
 }
@@ -129,7 +130,7 @@ dependencies {
 
     //FragulaCore
 //    implementation 'com.fragula2:fragula-core:2.6'
-
+    implementation 'com.github.brahmkshatriya:NiceHttp:1.1.0'
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
     implementation 'io.noties.markwon:core:4.6.2'

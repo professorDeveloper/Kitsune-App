@@ -29,6 +29,7 @@ import com.azamovhudstc.graphqlanilist.application.App
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.CancellationException
 
 val Int.dp: Float get() = (this / Resources.getSystem().displayMetrics.density)
 val Float.px: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
@@ -37,6 +38,16 @@ val Float.px: Int get() = (this * Resources.getSystem().displayMetrics.density).
         return "??"
     val a = if (month != null) DateFormatSymbols().months[month - 1] else ""
     return (if (day != null) "$day " else "") + a + (if (year != null) ", $year" else "")
+}
+suspend fun <T> tryWithSuspend(post: Boolean = false, snackbar: Boolean = true, call: suspend () -> T): T? {
+    return try {
+        call.invoke()
+    } catch (e: Throwable) {
+        logError(e)
+        null
+    } catch (e: CancellationException) {
+        null
+    }
 }
 
 fun randomColor(): Int {

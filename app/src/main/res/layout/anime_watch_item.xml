@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginStart="-24dp"
+    android:layout_marginEnd="-24dp"
+    android:clipToPadding="false"
+    android:layout_height="wrap_content"
+    tools:context=".ui.screens.detail.pages.AnimeWatchPage">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/colorPrimaryLight"
+        app:strokeWidth="1dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:textColorHint="@color/white"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:endIconTint="@color/white"
+            app:hintAnimationEnabled="true"
+            app:startIconDrawable="@drawable/ic_round_source_24"
+            app:startIconTint="@color/white">
+
+            <AutoCompleteTextView
+                android:id="@+id/animeSource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_bold"
+                android:freezesText="false"
+                android:inputType="none"
+
+                android:padding="8dp"
+                android:text="Episode Source"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                tools:ignore="LabelFor,TextContrastCheck,DuplicateSpeakableTextCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <TextView
+            android:id="@+id/sourceTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Episodes"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/animeSourceList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.33"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_round_view_list_24"
+            app:tint="@color/grayTextColor"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        <ImageView
+            android:id="@+id/animeSourceGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.33"
+            android:padding="8dp"
+            app:srcCompat="@drawable/ic_round_grid_view_24"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        <ImageView
+            android:id="@+id/animeSourceTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:alpha="1"
+            android:padding="8dp"
+            android:rotation="90"
+            app:srcCompat="@drawable/ic_round_arrow_back_ios_new_24"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/animeWatchChipScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/animeSourceChipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleLine="true"
+            app:singleSelection="true" />
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
