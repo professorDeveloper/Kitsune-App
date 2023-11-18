@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.azamovhudstc.graphqlanilist.utils.Constants
+import com.azamovhudstc.graphqlanilist.utils.initializeNetwork
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -17,6 +18,7 @@ class App:Application() {
         super.onCreate()
         instance=this
         disableNightMode()
+        initializeNetwork(this)
 
     }
     private fun disableNightMode() {

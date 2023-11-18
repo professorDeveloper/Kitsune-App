@@ -4,7 +4,6 @@ package com.azamovhudstc.graphqlanilist.ui.screens.detail
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -15,10 +14,14 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.Media
 import com.azamovhudstc.graphqlanilist.databinding.DetailScreenBinding
+import com.azamovhudstc.graphqlanilist.source.AnimeSource
+import com.azamovhudstc.graphqlanilist.source.SourceSelector
 import com.azamovhudstc.graphqlanilist.ui.screens.detail.adapter.TabAdapter
 import com.azamovhudstc.graphqlanilist.utils.*
 import com.azamovhudstc.graphqlanilist.viewmodel.DetailsViewModel
@@ -32,17 +35,17 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.BlurTransformation
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import java.lang.Math.abs
 import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class DetailScreen : Fragment(R.layout.detail_screen),AppBarLayout.OnOffsetChangedListener {
+class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChangedListener {
 
     private lateinit var media: Media
     private val viewModel: DetailsViewModel by viewModels()
+
     private val animeDetails get() = requireArguments().getSerializable("data") as AniListMedia
     private var binding: DetailScreenBinding? = null
     private lateinit var adapter: TabAdapter
@@ -84,6 +87,9 @@ class DetailScreen : Fragment(R.layout.detail_screen),AppBarLayout.OnOffsetChang
                     is Result.Success -> {
                         media = it.data
                         val media = it.data
+                        binding!!.fabBack.setOnClickListener {
+                            findNavController().popBackStack()
+                        }
                         mediaAppBar.show()
                         viewPager.show()
                         progress.hide()
@@ -116,7 +122,7 @@ class DetailScreen : Fragment(R.layout.detail_screen),AppBarLayout.OnOffsetChang
 
                             val genres =
                                 "Format :${media.format!!.name} \n${genresL}"
-                            itemDescription.text=genres
+                            itemDescription.text = genres
                         }
                     }
                 }
@@ -124,26 +130,32 @@ class DetailScreen : Fragment(R.layout.detail_screen),AppBarLayout.OnOffsetChang
             }
 
 
-            itemCompactImage.setOnClickListener{
-                ImageViewerHelper.showSimpleImage(requireContext(), ImageViewerHelper.ImageInfo(media.coverImage!!.large.toString()), itemCompactBannerNoKen, showDownLoadBtn = false)
+            itemCompactImage.setOnClickListener {
+                ImageViewerHelper.showSimpleImage(
+                    requireContext(),
+                    ImageViewerHelper.ImageInfo(media.coverImage!!.large.toString()),
+                    itemCompactBannerNoKen,
+                    showDownLoadBtn = false
+                )
             }
         }
 
         setAnimations()
 
     }
-    private fun setAnimations(){
-        var animationDuration:Long=880
-        binding?.cardView?.slideStart(animTime = animationDuration,0)
-        binding?.fabBack?.slideUp(animTime = animationDuration,0)
-        binding?.itemDescription?.slideStart(animTime = animationDuration,0)
-        binding?.playButtonForBanner?.slideUp(animTime = animationDuration,0)
-        binding?.title?.slideStart(animTime = animationDuration,0)
 
-        binding?.pageType?.slideStart(animTime = animationDuration,0)
+
+
+    private fun setAnimations() {
+        var animationDuration: Long = 880
+        binding?.cardView?.slideStart(animTime = animationDuration, 0)
+        binding?.fabBack?.slideUp(animTime = animationDuration, 0)
+        binding?.itemDescription?.slideStart(animTime = animationDuration, 0)
+        binding?.playButtonForBanner?.slideUp(animTime = animationDuration, 0)
+        binding?.title?.slideStart(animTime = animationDuration, 0)
+
+        binding?.pageType?.slideStart(animTime = animationDuration, 0)
     }
-
-
 
 
     private fun setTab(data: Media, uiData: AniListMedia) {
@@ -152,9 +164,9 @@ class DetailScreen : Fragment(R.layout.detail_screen),AppBarLayout.OnOffsetChang
 
             mMaxScrollSize = binding!!.mediaAppBar.totalScrollRange
             binding!!.mediaAppBar.addOnOffsetChangedListener(this@DetailScreen)
-            adapter = TabAdapter(media = data, uiData = uiData,requireActivity())
+            adapter = TabAdapter(media = data, uiData = uiData, requireActivity())
             viewPager.adapter = adapter
-            viewPager.isUserInputEnabled=false
+            viewPager.isUserInputEnabled = false
             TabLayoutMediator(pageType, viewPager) { _, _ ->
 
             }.attach()
@@ -174,7 +186,8 @@ class DetailScreen : Fragment(R.layout.detail_screen),AppBarLayout.OnOffsetChang
 
     override fun onDestroyView() {
         super.onDestroyView()
-        this.requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.statusBarColor)
+        this.requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.statusBarColor)
         binding = null
 
     }
@@ -191,12 +204,14 @@ class DetailScreen : Fragment(R.layout.detail_screen),AppBarLayout.OnOffsetChang
         if (percentage >= percent && !isCollapsed) {
             isCollapsed = true
             binding!!.itemCompactBannerNoKen.pause()
-            this.requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
+            this.requireActivity().window.statusBarColor =
+                ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
         }
         if (percentage <= percent && isCollapsed) {
             isCollapsed = false
-             binding!!.itemCompactBannerNoKen.resume()
-            this.requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.statusBarColor)
+            binding!!.itemCompactBannerNoKen.resume()
+            this.requireActivity().window.statusBarColor =
+                ContextCompat.getColor(requireContext(), R.color.statusBarColor)
 
         }
     }

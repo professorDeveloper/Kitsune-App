@@ -4,6 +4,7 @@ import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
 import com.azamovhudstc.graphqlanilist.type.MediaFormat
 import com.azamovhudstc.graphqlanilist.type.MediaSeason
 import com.azamovhudstc.graphqlanilist.type.MediaSource
+import java.io.Serializable
 
 public data class Media(
     /**
@@ -136,6 +137,6 @@ public data class Media(
      * External links to another site related to the media
      */
     public val externalLinks: List<DetailFullDataQuery.ExternalLink?>?,
-) {
+) :Serializable{
 
 }

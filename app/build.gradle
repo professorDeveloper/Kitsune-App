@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
     apollo {
         packageName.set("com.azamovhudstc.graphqlanilist")
         generateKotlinModels.set(true)
@@ -20,7 +20,7 @@ android {
         applicationId "com.azamovhudstc.graphqlanilist"
         minSdk 23
         //noinspection ExpiredTargetSdkVersion
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -59,6 +59,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.media3:media3-database:1.1.1'
+    implementation 'androidx.media3:media3-common:1.1.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -136,6 +138,15 @@ dependencies {
     implementation 'io.noties.markwon:core:4.6.2'
     implementation 'com.susion:image-viewer:1.0.2'
     implementation 'com.github.stfalcon-studio:StfalconImageViewer:v1.0.1'
+
+
+    // ExoPlayer + HLS + UI + MediaSession
+    def exo_version = "2.19.1"
+    implementation "com.google.android.exoplayer:exoplayer:$exo_version"
+    implementation "com.google.android.exoplayer:exoplayer-ui:$exo_version"
+    implementation "com.google.android.exoplayer:exoplayer-hls:$exo_version"
+    implementation "com.google.android.exoplayer:extension-mediasession:$exo_version"
+    implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
 
 }
 

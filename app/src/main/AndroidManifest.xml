@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.azamovhudstc.graphqlanilist">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,11 +17,25 @@
         android:theme="@style/Theme.GraphQLAnilist"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.activity.PlayerActivity"
+            android:configChanges="uiMode|orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:screenOrientation="sensorLandscape"
+            android:supportsPictureInPicture="true">
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.activity.CharacterDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.MainActivity"
-            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|layoutDirection"
             android:exported="true"
             android:windowSoftInputMode="adjustResize|adjustPan">
             <intent-filter>

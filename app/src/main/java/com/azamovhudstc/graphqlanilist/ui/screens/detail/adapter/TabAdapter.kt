@@ -1,5 +1,6 @@
 package com.azamovhudstc.graphqlanilist.ui.screens.detail.adapter
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -17,10 +18,15 @@ class TabAdapter(var media: Media, var uiData: AniListMedia, fragmentManager: Fr
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                return AnimeInfoPage(media = media, aniListMedia = uiData)
+                AnimeInfoPage(media = media, aniListMedia = uiData)
             }
             else -> {
-             return   AnimeWatchPage(media=media, aniListMedia = uiData)
+                val animeWatchPage  = AnimeWatchPage()
+
+                val bundle =Bundle()
+                bundle.putSerializable("data",uiData)
+                animeWatchPage.arguments=bundle
+                animeWatchPage
             }
         }
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GraphQl Tutorial</string>
+    <string name="app_name">Kitsune</string>
     <string name="title_home">Home</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_explore">Explore</string>
@@ -10,8 +10,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">Search</string>
     <string name="settings">Settings</string>
+    <string name="source_not_found">
+        Couldn\'t find anything X( \n
+        Try another source.
+    </string>
+    <string name="episode">Episode %1$s</string>
 
-    <string name="not_supported">%1$s is not supported yet!</string>
+    <string name="not_supported">JIKAN Not Loaded Source :(</string>
+    <string name="seek_seconds_forward">+%d seconds</string>
+    <string name="seek_seconds_backward">-%d seconds</string>
 
     <string name="retry">Retry</string>
     <string name="next_episode">Next Episode</string>

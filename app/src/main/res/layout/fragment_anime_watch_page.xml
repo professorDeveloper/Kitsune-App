@@ -4,16 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/animeNotSupported"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="32dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/not_supported"
-        android:textSize="16sp"
-        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/mediaInfoProgressBar"
@@ -27,6 +17,19 @@
         android:indeterminate="true"
         android:visibility="gone"
         tools:visibility="gone" />
+    <TextView
+        android:id="@+id/animeNotSupported"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="32dp"
+        android:gravity="center"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginTop="120dp"
+        android:text="@string/source_not_found"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/animeSourceRecycler"

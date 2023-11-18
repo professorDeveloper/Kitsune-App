@@ -13,4 +13,5 @@ interface JikanApi {
         @Path("id") id: Int,
         @Query("page") page: Int
     ): Call<JikanResponse>
+
 }

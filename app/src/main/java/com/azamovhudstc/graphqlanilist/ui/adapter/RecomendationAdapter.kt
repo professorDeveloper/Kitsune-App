@@ -39,7 +39,7 @@ class RecommendationAdapter (private val list :List<DetailFullDataQuery.Node4?>)
             }
 
             b.itemCompactImage.loadImage(media.mediaRecommendation?.coverImage?.large)
-            b.itemCompactTitle.text = media.mediaRecommendation!!.title!!.userPreferred
+            b.itemCompactTitle.text = media.mediaRecommendation!!.title!!.userPreferred?:"UNKNOWN"
             b.itemCompactScore.text =
                 ((if (media.mediaRecommendation.meanScore != 0) (media.mediaRecommendation.meanScore
                     ?: 0) else 0) / 10.0).toString()

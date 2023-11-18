@@ -1,25 +1,22 @@
 package com.azamovhudstc.graphqlanilist.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.azamovhudstc.graphqlanilist.R
-import com.azamovhudstc.graphqlanilist.data.network.rest.jikan.Data
 import com.azamovhudstc.graphqlanilist.databinding.AnimeWatchItemBinding
-import com.azamovhudstc.graphqlanilist.databinding.ItemEpisodeListBinding
 import com.azamovhudstc.graphqlanilist.ui.screens.detail.pages.AnimeWatchPage
-import com.azamovhudstc.graphqlanilist.utils.Constants
-import com.azamovhudstc.graphqlanilist.utils.setAnimation
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.model.GlideUrl
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
-class AnimeWatchAdapter(private val fragment:AnimeWatchPage) :  RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var isDoubleClick =false
-    private var reversed =false
+class AnimeWatchAdapter(private val fragment: AnimeWatchPage) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var isDoubleClick = false
+    private var reversed = false
+    private var oldPosition = -1
+    private var style = 0
+    private var _binding: AnimeWatchItemBinding? = null
     private lateinit var listener: ((Int) -> Unit)
     fun setItemClickListener(itemListener: ((Int) -> Unit)) {
         listener = itemListener
@@ -44,19 +41,98 @@ class AnimeWatchAdapter(private val fragment:AnimeWatchPage) :  RecyclerView.Ada
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = (holder as MediaViewHolder).binding
+        _binding = binding
         binding.animeSourceTop.setOnClickListener {
-            reversed = !reversed
+            reversed = true
             binding.animeSourceTop.rotation = if (reversed) -90f else 90f
-            fragment.onIconPressed( reversed)
+            fragment.onIconPressed(style, reversed)
         }
-        binding.animeSource.setAdapter(ArrayAdapter(fragment.requireContext(), R.layout.item_dropdown, listOf("JIKAN")))
+        binding.animeSource.setAdapter(
+            ArrayAdapter(
+                fragment.requireContext(),
+                R.layout.item_dropdown,
+                listOf("JIKAN", "ALLANIME")
+            )
+        )
         binding.animeSource.setOnItemClickListener { _, _, i, _ ->
-            if (!isDoubleClick){
+            if (!isDoubleClick || i != oldPosition) {
                 listener.invoke(i)
-                isDoubleClick=true
+                isDoubleClick = true
+                oldPosition = i
             }
         }
+        var selected = when (style) {
+            0 -> binding.animeSourceList
+            1 -> binding.animeSourceGrid
+            else -> binding.animeSourceList
+        }
+        selected.alpha = 1f
+        fun selected(it: ImageView) {
+            selected.alpha = 0.33f
+            selected = it
+            selected.alpha = 1f
+        }
+        binding.animeSourceList.setOnClickListener {
+            selected(it as ImageView)
+            style = 0
+            fragment.onIconPressedForStyle(style)
+        }
+        binding.animeSourceGrid.setOnClickListener {
+            selected(it as ImageView)
+            style = 1
+            fragment.onIconPressedForStyle(style)
+        }
 
+
+    }
+
+    //Chips
+    @SuppressLint("SetTextI18n")
+    fun updateChips(totalPage: Int, defaultSize: Int, lastListSize: Int) {
+//        val binding = _binding
+//        if (binding != null) {
+//
+//            val screenWidth = fragment.screenWidth
+//            var select: Chip? = null
+//            var arr =ArrayList<String>()
+//            for ()
+//
+//            for (position in arr.indices) {
+//                val chip =
+//                    ItemChipBinding.inflate(
+//                        LayoutInflater.from(fragment.context),
+//                        binding.animeSourceChipGroup,
+//                        false
+//                    ).root
+//                chip.isCheckable = true
+//                fun selected() {
+//                    chip.isChecked = true
+//                    binding.animeWatchChipScroll.smoothScrollTo(
+//                        (chip.left - screenWidth / 2) + (chip.width / 2),
+//                        0
+//                    )
+//                }
+//
+//                chip.setOnClickListener {
+//                    selected()
+//                    fragment.onChipClicked(position, limit * (position), last - 1)
+//                }
+//                binding.animeSourceChipGroup.addView(chip)
+//                if (selected == position) {
+//                    selected()
+//                    select = chip
+//                }
+//            }
+//            if (select != null)
+//                binding.animeWatchChipScroll.apply {
+//                    post {
+//                        scrollTo(
+//                            (select.left - screenWidth / 2) + (select.width / 2),
+//                            0
+//                        )
+//                    }
+//                }
+//    }
     }
 
     override fun getItemCount(): Int {

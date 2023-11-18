@@ -8,6 +8,7 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import java.io.Serializable
 
+
 fun Context.getPreferenceKey(@StringRes resourceId: Int): String =
     resources.getString(resourceId)
 fun ImageView.loadImage(url: String?, size: Int = 0) {

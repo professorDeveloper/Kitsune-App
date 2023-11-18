@@ -9,6 +9,8 @@
     <color name="pink_500_25">#40FF007F</color>
     <color name="pink_700">#C50053</color>
     <color name="fav">#E63956</color>
+    <color name="playerDoubleTapTouch">#18FFFFFF</color>
+    <color name="playerDoubleTapBackground">#20EEEEEE</color>
 
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>

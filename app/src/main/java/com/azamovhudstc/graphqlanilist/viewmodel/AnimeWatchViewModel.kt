@@ -12,19 +12,25 @@ import javax.inject.Inject
 @HiltViewModel
 class AnimeWatchViewModel @Inject constructor(private val repositoryImpl: EpisodesRepositoryImpl) :
     ViewModel() {
-    var lastPage=0
+    var lastPage = 0
+    var totalChips = 0
     val episodeListLiveData: MutableLiveData<Result<JikanResponse>> = MutableLiveData()
+    val imageList: MutableLiveData<Result<JikanResponse>> = MutableLiveData()
     fun loadEpisodesById(id: Int) {
         episodeListLiveData.postValue(Result.Loading)
         repositoryImpl.getEpisodesById(id)
         repositoryImpl.loadSuccessListener {
-            lastPage= it.pagination.last_visible_page
+            lastPage = it.pagination.last_visible_page
             repositoryImpl.getEpisodesByIdPage(
                 id,
                 if (it.pagination.last_visible_page != 1) it.pagination.last_visible_page else it.pagination.last_visible_page
             )
         }
+        repositoryImpl.loadErrorListener {
+            episodeListLiveData.postValue(Result.Error(Exception(it.toString())))
+        }
         repositoryImpl.loadPageSuccessListener {
+            logMessage(it.toString())
             if (it.data.isEmpty() && !it.pagination.has_next_page) {
                 repositoryImpl.getEpisodesByIdPage(id, lastPage - 1)
             } else {
@@ -33,4 +39,34 @@ class AnimeWatchViewModel @Inject constructor(private val repositoryImpl: Episod
             }
         }
     }
+
+
+    fun loadEpisodesImg(id: Int) {
+        if (id!=0){
+            repositoryImpl.getEpisodesById(id)
+            repositoryImpl.loadSuccessListener {
+                lastPage = it.pagination.last_visible_page
+                repositoryImpl.getEpisodesByIdPage(
+                    id,
+                    if (it.pagination.last_visible_page != 1) it.pagination.last_visible_page else it.pagination.last_visible_page
+                )
+            }
+            repositoryImpl.loadErrorListener {
+                imageList.postValue(Result.Error(Exception(it.toString())))
+            }
+            repositoryImpl.loadPageSuccessListener {
+                logMessage(it.toString())
+                if (it.data.isEmpty() && !it.pagination.has_next_page) {
+                    repositoryImpl.getEpisodesByIdPage(id, lastPage - 1)
+                } else {
+                    imageList.postValue(Result.Success(it))
+                    logMessage(it.toString())
+                }
+            }
+
+        }else{
+            imageList.value =Result.Error()
+        }
+    }
+
 }

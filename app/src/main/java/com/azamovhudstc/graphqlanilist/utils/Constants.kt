@@ -19,9 +19,75 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
 
-class Constants {
-    companion object {
 
+val defaultHeaders = mapOf(
+    "User-Agent" to
+            "Mozilla/5.0 (Linux; Android %s; %s) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Mobile Safari/537.36"
+                .format(Build.VERSION.RELEASE, Build.MODEL)
+)
+lateinit var cache: Cache
+
+lateinit var okHttpClient: OkHttpClient
+lateinit var client: Requests
+
+fun initializeNetwork(context: Context) {
+    cache = Cache(
+        File(context.cacheDir, "http_cache"),
+        5 * 1024L * 1024L // 5 MiB
+    )
+    okHttpClient = OkHttpClient.Builder()
+        .followRedirects(true)
+        .followSslRedirects(true)
+        .cache(cache)
+        .apply {
+            addGenericDns(
+                "https://dns.google/dns-query",
+                listOf(
+                    "8.8.4.4",
+                    "8.8.8.8"
+                )
+            )
+        }
+        .build()
+    client = Requests(
+        okHttpClient,
+        defaultHeaders,
+        defaultCacheTime = 6,
+        defaultCacheTimeUnit = TimeUnit.HOURS,
+        responseParser = Mapper
+    )
+}
+
+object Mapper : ResponseParser {
+
+    @OptIn(ExperimentalSerializationApi::class)
+    val json = Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+        explicitNulls = false
+    }
+
+    @OptIn(InternalSerializationApi::class)
+    override fun <T : Any> parse(text: String, kClass: KClass<T>): T {
+        return json.decodeFromString(kClass.serializer(), text)
+    }
+
+    override fun <T : Any> parseSafe(text: String, kClass: KClass<T>): T? {
+        return try {
+            parse(text, kClass)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    inline fun <reified T> parse(text: String): T {
+        return json.decodeFromString(text)
+    }
+}
+
+class Constants {
+
+    companion object {
 
 
         // Network Requests Header
