@@ -10,22 +10,35 @@
         android:name="com.azamovhudstc.graphqlanilist.ui.screens.HomeScreen"
         android:label="@string/title_explore"
 
-        tools:layout="@layout/home_screen" >
+        tools:layout="@layout/home_screen">
         <action
             android:id="@+id/action_homeScreen_to_detailScreen"
-            app:destination="@id/detailScreen" />
+            app:destination="@id/detailScreen"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/detailScreen"
-        tools:layout="@layout/detail_screen"
         android:name="com.azamovhudstc.graphqlanilist.ui.screens.detail.DetailScreen"
-        android:label="DetailScreen" >
+        android:label="DetailScreen"
+        tools:layout="@layout/detail_screen">
         <action
             android:id="@+id/action_detailScreen_to_animeInfoPage"
-            app:destination="@id/animeInfoPage" />
+            app:destination="@id/animeInfoPage"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_detailScreen_to_characterScreen"
-            app:destination="@id/characterScreen" />
+            app:destination="@id/characterScreen"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/animeInfoPage"
@@ -34,7 +47,7 @@
         tools:layout="@layout/fragment_anime_info_page" />
     <fragment
         android:id="@+id/characterScreen"
-        tools:layout="@layout/fragment_character_screen"
         android:name="com.azamovhudstc.graphqlanilist.ui.screens.character.CharacterScreen"
-        android:label="CharacterScreen" />
+        android:label="CharacterScreen"
+        tools:layout="@layout/fragment_character_screen" />
 </navigation>

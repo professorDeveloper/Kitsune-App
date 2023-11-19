@@ -25,6 +25,7 @@ import androidx.core.math.MathUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.navigation.NavOptions
 import androidx.viewpager2.widget.ViewPager2
 import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
 import com.azamovhudstc.graphqlanilist.R
@@ -302,6 +303,20 @@ fun getCurrentBrightnessValue(context: Context): Float {
     }
 
     return brightnessConverter(getCur() / getMax(), true)
+}
+fun animationTransactionClearStack(clearFragmentID: Int): NavOptions.Builder {
+    val navBuilder = NavOptions.Builder()
+    navBuilder.setEnterAnim(R.anim.from_right).setExitAnim(R.anim.to_left)
+        .setPopEnterAnim(R.anim.from_left).setPopExitAnim(R.anim.to_right)
+        .setPopUpTo(clearFragmentID, true)
+    return navBuilder
+}
+
+fun animationTransaction(): NavOptions.Builder {
+    val navBuilder = NavOptions.Builder()
+    navBuilder.setEnterAnim(R.anim.from_right).setExitAnim(R.anim.to_left)
+        .setPopEnterAnim(R.anim.from_left).setPopExitAnim(R.anim.to_right)
+    return navBuilder
 }
 
 fun brightnessConverter(it: Float, fromLog: Boolean) =

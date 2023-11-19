@@ -26,11 +26,8 @@ import com.azamovhudstc.graphqlanilist.ui.adapter.CharacterAdapter
 import com.azamovhudstc.graphqlanilist.ui.adapter.GenreAdapter
 import com.azamovhudstc.graphqlanilist.ui.adapter.MediaAdaptor
 import com.azamovhudstc.graphqlanilist.ui.adapter.RecommendationAdapter
+import com.azamovhudstc.graphqlanilist.utils.*
 import com.azamovhudstc.graphqlanilist.utils.Constants.Companion.IMAGE_URL
-import com.azamovhudstc.graphqlanilist.utils.getYoutubeFormat
-import com.azamovhudstc.graphqlanilist.utils.randomColor
-import com.azamovhudstc.graphqlanilist.utils.slideUp
-import com.azamovhudstc.graphqlanilist.utils.toSortString
 import com.azamovhudstc.graphqlanilist.viewmodel.GenresViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -195,124 +192,123 @@ class AnimeInfoPage(private val aniListMedia: AniListMedia, private val media: M
 
                 bind.mediaInfoGenresRecyclerView.adapter = adapter
                 parent.addView(bind.root)
-            }
 
-        }
-
-        if (media.tags!!.isNotEmpty()) {
-            val bind = ItemTitleChipgroupBinding.inflate(
-                LayoutInflater.from(context),
-                parent,
-                false
-            )
-            bind.itemTitle.setText("Tags")
-            for (position in media.tags.indices) {
-                val chip = ItemChipBinding.inflate(
-                    LayoutInflater.from(context),
-                    bind.itemChipGroup,
-                    false
-                ).root
-                chip.setTextColor(Color.WHITE)
-                chip.chipBackgroundColor = ColorStateList.valueOf(randomColor())
-                val data = media.tags[position]
-                chip.text = "${data?.name} : ${if (data!!.rank != null) "${data.rank}%" else ""}"
-                chip.setOnClickListener {
-                }
-                bind.itemChipGroup.addView(chip)
-            }
-            parent.addView(bind.root)
-
-        }
-        if (media.characters != null) {
-            if (media.characters.edges!!.isNotEmpty()) {
-                val bind = ItemTitleRecyclerBinding.inflate(
-                    LayoutInflater.from(context),
-                    parent,
-                    false
-                )
-                bind.itemTitle.setText(R.string.characters)
-                var adapter =
-                    CharacterAdapter(media.characters.edges.toMutableList())
-                bind.itemRecycler.adapter = adapter
-                adapter.setItemClickListener { data, title, position ->
-                    var bundle = Bundle()
-
-                    bundle.putInt("id", data.node?.id ?: 0)
-                    bundle.putString("coverImage", data.node?.image?.medium ?: IMAGE_URL)
-                    bundle.putString("characterName", data.node?.name?.userPreferred.toString())
-                    bundle.putString(
-                        "bannerImage",
-                        media.bannerImage ?: media.coverImage?.large ?: IMAGE_URL
+                if (media.tags!!.isNotEmpty()) {
+                    val bind = ItemTitleChipgroupBinding.inflate(
+                        LayoutInflater.from(context),
+                        parent,
+                        false
                     )
-                    findNavController().navigate(R.id.characterScreen, bundle)
+                    bind.itemTitle.setText("Tags")
+                    for (position in media.tags.indices) {
+                        val chip = ItemChipBinding.inflate(
+                            LayoutInflater.from(context),
+                            bind.itemChipGroup,
+                            false
+                        ).root
+                        chip.setTextColor(Color.WHITE)
+                        chip.chipBackgroundColor = ColorStateList.valueOf(randomColor())
+                        val data = media.tags[position]
+                        chip.text = "${data?.name} : ${if (data!!.rank != null) "${data.rank}%" else ""}"
+                        chip.setOnClickListener {
+                        }
+                        bind.itemChipGroup.addView(chip)
+                    }
+                    parent.addView(bind.root)
 
                 }
-                bind.itemRecycler.layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-                parent.addView(bind.root)
-            }
-        }
-        if (media.relations?.edges != null) {
-            if (media.relations.edges.isNotEmpty()) {
-                val bind = ItemTitleRecyclerBinding.inflate(
-                    LayoutInflater.from(context),
-                    parent,
-                    false
-                )
-                bind.itemTitle.setText(R.string.relations)
-                val adapter = MediaAdaptor(list = media.relations.edges!!.toMutableList())
-                bind.itemRecycler.adapter = adapter
-                adapter.setItemClickListener {
-                    val bundle = Bundle()
-                    bundle.putSerializable("data", AniListMedia(it.node!!.id, it.node!!.idMal))
-                    findNavController().navigate(
-                        R.id.detailScreen,
-                        bundle,
-                        NavOptions.Builder().setPopUpTo(R.id.detailScreen, true).build()
-                    )
+                if (media.characters != null) {
+                    if (media.characters.edges!!.isNotEmpty()) {
+                        val bind = ItemTitleRecyclerBinding.inflate(
+                            LayoutInflater.from(context),
+                            parent,
+                            false
+                        )
+                        bind.itemTitle.setText(R.string.characters)
+                        var adapter =
+                            CharacterAdapter(media.characters.edges.toMutableList())
+                        bind.itemRecycler.adapter = adapter
+                        adapter.setItemClickListener { data, title, position ->
+                            var bundle = Bundle()
+
+                            bundle.putInt("id", data.node?.id ?: 0)
+                            bundle.putString("coverImage", data.node?.image?.medium ?: IMAGE_URL)
+                            bundle.putString("characterName", data.node?.name?.userPreferred.toString())
+                            bundle.putString(
+                                "bannerImage",
+                                media.bannerImage ?: media.coverImage?.large ?: IMAGE_URL
+                            )
+                            findNavController().navigate(R.id.characterScreen, bundle,
+                                animationTransaction().build())
+
+                        }
+                        bind.itemRecycler.layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        parent.addView(bind.root)
+                    }
                 }
-                bind.itemRecycler.layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
+                if (media.relations?.edges != null) {
+                    if (media.relations.edges.isNotEmpty()) {
+                        val bind = ItemTitleRecyclerBinding.inflate(
+                            LayoutInflater.from(context),
+                            parent,
+                            false
+                        )
+                        bind.itemTitle.setText(R.string.relations)
+                        val adapter = MediaAdaptor(list = media.relations.edges!!.toMutableList())
+                        bind.itemRecycler.adapter = adapter
+                        adapter.setItemClickListener {
+                            val bundle = Bundle()
+                            bundle.putSerializable("data", AniListMedia(it.node!!.id, it.node!!.idMal))
+                            findNavController().navigate(
+                                R.id.detailScreen,
+                                bundle,
+                                animationTransactionClearStack(R.id.detailScreen).build()
+                            )
+                        }
+                        bind.itemRecycler.layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
 
-                parent.addView(bind.root)
-            }
-        }
-        if (media.recommendations?.nodes != null) {
-            if (media.recommendations.nodes.isNotEmpty()) {
-                val bind = ItemTitleRecyclerBinding.inflate(
-                    LayoutInflater.from(context),
-                    parent,
-                    false
-                )
-                bind.itemTitle.setText("Recommendation")
-                val adapter = RecommendationAdapter(list = media.recommendations.nodes)
-                bind.itemRecycler.adapter=adapter
-                bind.itemRecycler.layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-                adapter.setItemClickListener {
-                    val bundle = Bundle()
-                    bundle.putSerializable("data", AniListMedia(it.mediaRecommendation!!.id, it.mediaRecommendation!!.idMal))
-                    findNavController().navigate(
-                        R.id.detailScreen,
-                        bundle,
-                        NavOptions.Builder().setPopUpTo(R.id.detailScreen, true).build()
-                    )
-
+                        parent.addView(bind.root)
+                    }
                 }
-                parent.addView(bind.root)
+                if (media.recommendations?.nodes != null) {
+                    if (media.recommendations.nodes.isNotEmpty()) {
+                        val bind = ItemTitleRecyclerBinding.inflate(
+                            LayoutInflater.from(context),
+                            parent,
+                            false
+                        )
+                        bind.itemTitle.setText("Recommendation")
+                        val adapter = RecommendationAdapter(list = media.recommendations.nodes)
+                        bind.itemRecycler.adapter=adapter
+                        bind.itemRecycler.layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        adapter.setItemClickListener {
+                            val bundle = Bundle()
+                            bundle.putSerializable("data", AniListMedia(it.mediaRecommendation!!.id, it.mediaRecommendation!!.idMal))
+                            findNavController().navigate(
+                                R.id.detailScreen,
+                                bundle,
+                                animationTransactionClearStack(R.id.detailScreen).build())
+
+                        }
+                        parent.addView(bind.root)
+                    }
+                }
             }
+
         }
 
-        binding.infoContainer.slideUp(700, 0)
 
     }
 

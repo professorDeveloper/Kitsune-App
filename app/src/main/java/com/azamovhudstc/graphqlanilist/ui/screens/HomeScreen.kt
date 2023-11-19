@@ -3,6 +3,8 @@ package com.azamovhudstc.graphqlanilist.ui.screens
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +14,8 @@ import com.azamovhudstc.graphqlanilist.type.SortType
 import com.azamovhudstc.graphqlanilist.ui.screens.controller.PagingSearchController
 import com.azamovhudstc.graphqlanilist.utils.collectLatest
 import com.azamovhudstc.graphqlanilist.utils.dismissKeyboard
+import com.azamovhudstc.graphqlanilist.utils.slideStart
+import com.azamovhudstc.graphqlanilist.utils.slideUp
 import com.azamovhudstc.graphqlanilist.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,6 +30,11 @@ class HomeScreen : Fragment(R.layout.home_screen) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = HomeScreenBinding.bind(view)
+        val window = requireActivity().window
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        binding.frameLayout.slideUp(700,0)
+        binding.toolbar.slideUp(700,0)
+        binding.searchRecycler.slideUp(700,0)
         pagingController = PagingSearchController()
         val list = ArrayList<SortType>()
         list.add(SortType.TRENDING)

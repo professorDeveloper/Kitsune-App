@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.RequestOptions
+import com.draggable.library.extension.ImageViewerHelper
 import com.flaviofaria.kenburnsview.RandomTransitionGenerator
 import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -113,6 +114,14 @@ class CharacterScreen : Fragment(), AppBarLayout.OnOffsetChangedListener {
                             .into(banner)
                         banner.setTransitionGenerator(generator)
                         binding.characterCoverImage.loadImage(coverImage)
+                        binding.characterCover.setOnClickListener {
+                            ImageViewerHelper.showSimpleImage(
+                                requireContext(),
+                                ImageViewerHelper.ImageInfo(coverImage.toString()),
+                                binding.characterCover,
+                                showDownLoadBtn = false
+                            )
+                        }
                         binding.characterTitle.text = characterName
                         if (character.media?.edges != null) {
                             val mediaAdaptor = CharacterItemAdapter(character.media.edges)
@@ -145,7 +154,8 @@ class CharacterScreen : Fragment(), AppBarLayout.OnOffsetChangedListener {
                                 findNavController().navigate(
                                     R.id.detailScreen,
                                     bundle,
-                                    NavOptions.Builder().setPopUpTo(R.id.characterScreen, true).build()
+                                    NavOptions.Builder().setPopUpTo(R.id.characterScreen, true)
+                                        .build()
                                 )
                             }
                             binding.characterRecyclerView.adapter = concatAdaptor

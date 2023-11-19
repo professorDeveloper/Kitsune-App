@@ -6,6 +6,7 @@ query SearchAnimeQuery(
 ) {
     page:Page (page: $page, perPage: 50) {
         media (
+            isAdult:false,
             search: $search,
             type: ANIME,
             sort: $sortType
@@ -21,6 +22,7 @@ query SearchAnimeQuery(
 query  CharacterDataByID($id:Int){
 Character(id:$id ) {
     id
+
     age
     gender
     description

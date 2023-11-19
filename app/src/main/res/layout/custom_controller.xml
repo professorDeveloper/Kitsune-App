@@ -213,7 +213,7 @@
 
                 <ImageView
                     android:id="@+id/exo_play_pause"
-                    style="@style/ExoStyledControls.Button.Center.PlayPause"
+                    style="@style/ExoMediaButton.Play"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@drawable/background_selector" />
@@ -371,7 +371,7 @@
 
             </LinearLayout>
 
-            <com.google.android.exoplayer2.ui.DefaultTimeBar
+            <view class="com.azamovhudstc.graphqlanilist.ui.activity.PlayerActivity$ExtendedTimeBar"
                 android:id="@+id/exo_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -382,7 +382,7 @@
                 android:padding="4dp"
                 app:bar_height="2dp"
                 app:buffered_color="#BCB9B9"
-                app:played_color="?attr/colorPrimary"
+                app:played_color="?attr/colorPrimaryDark"
                 app:scrubber_dragged_size="20dp"
                 app:unplayed_color="#66B5B5B5" />
         </LinearLayout>

@@ -38,6 +38,7 @@ import com.azamovhudstc.graphqlanilist.ui.adapter.CustomAdapter
 import com.azamovhudstc.graphqlanilist.utils.hideSystemBars
 import com.azamovhudstc.graphqlanilist.utils.widgets.DoubleTapPlayerView
 import com.azamovhudstc.graphqlanilist.viewmodel.PlayerViewModel
+import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.CaptionStyleCompat
@@ -82,6 +83,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var videoEpTextView: TextView
     private lateinit var exoPip: ImageButton
     private lateinit var exoSpeed: ImageButton
+    private lateinit var exoProgress: ExtendedTimeBar
     private lateinit var exoLock: ImageButton
     private var isInit: Boolean = false
     private var isTV: Boolean = false
@@ -143,11 +145,12 @@ class PlayerActivity : AppCompatActivity() {
         exoVolume = findViewById(R.id.exo_volume)
         exoBrightnessCont = findViewById(R.id.exo_brightness_cont)
         exoVolumeCont = findViewById(R.id.exo_volume_cont)
+        exoProgress = findViewById(R.id.exo_progress)
         updateEpisodeName()
         playerView.keepScreenOn = true
         playerView.player = model.player
         playerView.subtitleView?.visibility = View.VISIBLE
-        playerView.findViewById<DefaultTimeBar>(R.id.exo_progress).setKeyTimeIncrement(10000)
+        playerView.findViewById<ExtendedTimeBar>(R.id.exo_progress).setKeyTimeIncrement(10000)
         prepareButtons()
 
         initSubStyle()
@@ -260,11 +263,11 @@ class PlayerActivity : AppCompatActivity() {
 
 
         val subStyle = CaptionStyleCompat(
-            primaryColor,
-            subBackground,
-            subWindow,
+            Color.RED,
+            Color.GREEN,
+            Color.RED,
             outline,
-            secondaryColor,
+            Color.RED,
             font
         )
         playerView.subtitleView?.setStyle(subStyle)
@@ -463,8 +466,11 @@ class PlayerActivity : AppCompatActivity() {
 
 
         exoPlay.setOnClickListener {
-            if (model.player.isPlaying) pauseVideo()
-            else playVideo()
+            if (isInit){
+                if (model.player.isPlaying) pauseVideo()
+                else playVideo()
+
+            }
         }
         nextEpBtn.setOnClickListener {
             setNewEpisode(1)
@@ -473,6 +479,7 @@ class PlayerActivity : AppCompatActivity() {
             setNewEpisode(-1)
         }
 
+
         // Back Button
         playerView.findViewById<ImageButton>(R.id.exo_back).apply {
             setOnClickListener {
@@ -480,6 +487,8 @@ class PlayerActivity : AppCompatActivity() {
                 finish()
             }
         }
+        handleController()
+
     }
 
 
@@ -557,7 +566,9 @@ class PlayerActivity : AppCompatActivity() {
             exoTopControllers.visibility = View.INVISIBLE
             exoMiddleControllers.visibility = View.INVISIBLE
             exoBottomControllers.visibility = View.INVISIBLE
+            exoProgress.setForceDisabled(true)
         } else {
+            exoProgress.setForceDisabled(false)
             exoTopControllers.visibility = View.VISIBLE
             exoMiddleControllers.visibility = View.VISIBLE
             exoBottomControllers.visibility = View.VISIBLE

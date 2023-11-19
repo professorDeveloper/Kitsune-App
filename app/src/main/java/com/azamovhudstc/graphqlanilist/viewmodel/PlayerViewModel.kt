@@ -6,13 +6,16 @@ import android.net.Uri
 import android.support.v4.media.session.MediaSessionCompat
 import android.widget.Toast
 import androidx.lifecycle.*
-import androidx.media3.database.StandaloneDatabaseProvider
 import com.azamovhudstc.graphqlanilist.data.model.AnimeStreamLink
 import com.azamovhudstc.graphqlanilist.source.AnimeSource
 import com.azamovhudstc.graphqlanilist.source.SourceSelector
+import com.azamovhudstc.graphqlanilist.utils.logMessage
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
-import com.google.android.exoplayer2.source.*
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.MergingMediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.source.SingleSampleMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
@@ -54,7 +57,8 @@ class PlayerViewModel @Inject constructor(
     private var mediaSessionConnector: MediaSessionConnector = MediaSessionConnector(mediaSession)
 
     private var simpleCache: SimpleCache? = null
-    private val databaseProvider = com.google.android.exoplayer2.database.StandaloneDatabaseProvider(app)
+    private val databaseProvider =
+        com.google.android.exoplayer2.database.StandaloneDatabaseProvider(app)
 
     private val savedDone = savedStateHandle.getStateFlow("done", false)
 
@@ -227,6 +231,7 @@ class PlayerViewModel @Inject constructor(
         }
 
         if (animeStreamLink.value!!.subsLink.isNotBlank()) {
+            logMessage(animeStreamLink.value!!.subsLink)
             showSubsBtn.postValue(true)
             val subtitleMediaSource = SingleSampleMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(
