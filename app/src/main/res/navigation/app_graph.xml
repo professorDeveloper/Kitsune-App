@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_graph"
-    app:startDestination="@id/homeScreen">
+    app:startDestination="@id/splashScreen">
 
     <fragment
         android:id="@+id/homeScreen"
@@ -50,4 +50,13 @@
         android:name="com.azamovhudstc.graphqlanilist.ui.screens.character.CharacterScreen"
         android:label="CharacterScreen"
         tools:layout="@layout/fragment_character_screen" />
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.azamovhudstc.graphqlanilist.ui.screens.SplashScreen"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreen_to_homeScreen"
+            app:destination="@id/homeScreen" />
+    </fragment>
 </navigation>

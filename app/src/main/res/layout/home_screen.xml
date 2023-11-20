@@ -22,9 +22,11 @@
             android:id="@+id/toolbar"
             android:layout_marginTop="14dp"
             android:layout_width="match_parent"
+            android:paddingHorizontal="10dp"
             app:layout_scrollEffect="compress"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap"
-
+            app:menu="@menu/home_menu"
+            app:titleCentered="false"
             android:layout_height="?actionBarSize"
             android:paddingTop="4dp"
             app:title="Kitsune"
