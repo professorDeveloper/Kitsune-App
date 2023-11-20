@@ -203,7 +203,6 @@ class AnimeWatchPage() :
 
     fun onIconPressedForStyle(style: Int) {
         episodeAdapter.updateType(style)
-
         episodeAdapter.notifyDataSetChanged()
 
     }

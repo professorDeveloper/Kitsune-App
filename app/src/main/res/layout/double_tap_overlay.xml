@@ -35,21 +35,21 @@
                 android:id="@+id/icon_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/anim_pause_to_play"
+                app:srcCompat="@drawable/anim_play_to_pause"
                 tools:alpha="0.18" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/icon_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/anim_pause_to_play"
+                app:srcCompat="@drawable/anim_play_to_pause"
                 tools:alpha="0.5" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/icon_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/icon_triangle"
+                app:srcCompat="@drawable/anim_play_to_pause"
                 tools:alpha="1" />
 
         </LinearLayout>

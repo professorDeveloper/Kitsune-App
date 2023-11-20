@@ -31,7 +31,8 @@ fun ImageView.loadImage(file: FileUrl?, size: Int = 0) {
 data class FileUrl(
     val url: String,
     val headers: Map<String, String> = mapOf()
-) : Serializable {
+) :
+    Serializable {
     companion object {
         operator fun get(url: String?, headers: Map<String, String> = mapOf()): FileUrl? {
             return FileUrl(url ?: return null, headers)

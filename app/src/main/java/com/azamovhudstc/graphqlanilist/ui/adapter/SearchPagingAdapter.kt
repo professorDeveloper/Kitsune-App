@@ -12,8 +12,7 @@ import com.azamovhudstc.graphqlanilist.di.GlideApp
 import com.azamovhudstc.graphqlanilist.utils.loadImage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-class SearchPagingAdapter :
-    PagingDataAdapter<AniListMedia, SearchPagingAdapter.AnimePageVh>(REPO_COMPARATOR) {
+class SearchPagingAdapter : PagingDataAdapter<AniListMedia, SearchPagingAdapter.AnimePageVh>(REPO_COMPARATOR) {
         private lateinit var itemClickListener :((AniListMedia)->Unit)
 
 

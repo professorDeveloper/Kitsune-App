@@ -1,25 +1,14 @@
 package com.azamovhudstc.graphqlanilist.ui.adapter
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
-import androidx.core.util.Pair
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
 import com.azamovhudstc.graphqlanilist.databinding.ItemCharacterBinding
-import com.azamovhudstc.graphqlanilist.ui.activity.CharacterDetailsActivity
 import com.azamovhudstc.graphqlanilist.utils.Constants.Companion.IMAGE_URL
 import com.azamovhudstc.graphqlanilist.utils.loadImage
 import com.azamovhudstc.graphqlanilist.utils.setAnimation
-import com.draggable.library.extension.ImageViewerHelper
-import java.io.Serializable
 
 
 class CharacterAdapter(
