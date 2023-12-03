@@ -5,7 +5,7 @@ Includes all functionalities!
 
 ## 🛠 Main Collection 🤞🛠 
 
-- 
+- Anilist Graphql
 - Apollo Android
 - Android GraphQl
 - Jsoup Web Parsing
@@ -49,10 +49,9 @@ Includes all functionalities!
 ## Authors
 
 - [@stc_android](https://t.me/stc_android)
-
-
+## Channels on Tg
+-  [AndroidVlog](https://t.me/native_applications)
 ## Tech Stack
-
 **Platform:** Android Studio,
 
 **Language:** Kotlin,
