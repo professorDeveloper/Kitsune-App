@@ -1,3 +1,11 @@
+<!--
+  ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+  ~  Copyright (c) 2023 . All rights reserved.
+  ~  Last modified 11/21/23, 2:02 AM
+  ~
+  ~
+  -->
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="#0A0A0A"/>
     <corners  android:topLeftRadius="5dp" />

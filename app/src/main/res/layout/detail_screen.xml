@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+  ~  Copyright (c) 2023 . All rights reserved.
+  ~  Last modified 11/21/23, 2:02 AM
+  ~
+  ~
+  -->
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-
         android:translationZ="5dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout

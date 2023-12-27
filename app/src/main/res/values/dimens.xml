@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+  ~  Copyright (c) 2023 . All rights reserved.
+  ~  Last modified 11/21/23, 2:02 AM
+  ~
+  ~
+  -->
+
 <resources>
     <dimen name="fontNormal">14dp</dimen>
     <dimen name="fontSmall">12dp</dimen>

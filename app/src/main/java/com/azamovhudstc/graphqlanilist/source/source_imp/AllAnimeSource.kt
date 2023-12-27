@@ -1,3 +1,11 @@
+/*
+ *  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+ *  Copyright (c) 2023 . All rights reserved.
+ *  Last modified 11/21/23, 2:02 AM
+ *
+ *
+ */
+
 package com.azamovhudstc.graphqlanilist.source.source_imp
 
 import com.azamovhudstc.graphqlanilist.data.model.AnimeStreamLink
@@ -61,7 +69,6 @@ class AllAnimeSource : AnimeSource {
     override suspend fun searchAnime(searchedText: String) = withContext(Dispatchers.IO) {
         val animeList = arrayListOf<Pair<String, String>>()
         val hash = "06327bc10dd682e1ee7e07b6db9c16e9ad2fd56c1b769e47513128cd5c9fc77a"
-
         val url =
             """$mainAPIUrl?variables=%7B%22search%22%3A%7B%22allowAdult%22%3Afalse%2C%22allowUnknown%22%3Afalse%2C%22query%22%3A%22${
                 searchedText.replace(

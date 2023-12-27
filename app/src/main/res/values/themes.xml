@@ -1,9 +1,19 @@
+<!--
+  ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+  ~  Copyright (c) 2023 . All rights reserved.
+  ~  Last modified 11/21/23, 2:02 AM
+  ~
+  ~
+  -->
+
 <resources>
 
     <style name="Theme.GraphQLAnilist" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="android:splitMotionEvents">false</item>
-        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="android:unfocusedMonthDateColor">@color/darkBlue</item>
         <item name="colorAccent">#ADFFFFFF</item>
         <item name="android:statusBarColor">#25B8B8B8</item>

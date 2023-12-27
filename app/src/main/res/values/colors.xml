@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+  ~  Copyright (c) 2023 . All rights reserved.
+  ~  Last modified 11/21/23, 2:02 AM
+  ~
+  ~
+  -->
+
 <resources>
     <color name="colorPrimaryLight">#4A4458</color>
     <color name="colorPrimary">#332D41</color>
-    <color name="status">#60494949</color>
+        <color name="status">#60494949</color>
     <color name="colorPrimaryDark">#1D192B</color>
     <color name="pink_200">#FF5DAE</color>
     <color name="pink_500">#FF007F</color>

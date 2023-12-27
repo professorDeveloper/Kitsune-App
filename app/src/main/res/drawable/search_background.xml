@@ -1,3 +1,11 @@
+<!--
+  ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+  ~  Copyright (c) 2023 . All rights reserved.
+  ~  Last modified 11/21/23, 2:02 AM
+  ~
+  ~
+  -->
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
     <corners android:radius="10dp" />
     <solid android:color="@color/colorPrimaryLight"/>

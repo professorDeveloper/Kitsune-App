@@ -72,6 +72,8 @@ Character(id:$id ) {
     }
 }
 }
+
+
 query DetailFullDataQuery($id:Int){
     media :Media(id:$id){
         title{

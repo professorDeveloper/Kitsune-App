@@ -1,3 +1,11 @@
+<!--
+  ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+  ~  Copyright (c) 2023 . All rights reserved.
+  ~  Last modified 11/21/23, 2:02 AM
+  ~
+  ~
+  -->
+
 <vector android:height="28dp" android:viewportHeight="48"
     android:viewportWidth="48" android:width="28dp" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillColor="@color/white" android:pathData="M16,37.85v-28l22,14Z"/>

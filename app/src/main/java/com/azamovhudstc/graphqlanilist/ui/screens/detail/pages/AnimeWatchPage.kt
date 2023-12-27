@@ -1,3 +1,11 @@
+/*
+ *  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+ *  Copyright (c) 2023 . All rights reserved.
+ *  Last modified 11/21/23, 2:02 AM
+ *
+ *
+ */
+
 package com.azamovhudstc.graphqlanilist.ui.screens.detail.pages
 
 import android.os.Bundle
@@ -85,8 +93,7 @@ class AnimeWatchPage() :
                     val list = animeSource.searchAnime("${media.title!!.userPreferred}")
                     val episodeListForAdapter = ArrayList<Data>()
                     if (list.isNotEmpty()) {
-                        val animeEpisodesMap =
-                            animeSource.animeDetails(list.get(0).second)
+                        val animeEpisodesMap = animeSource.animeDetails(list.get(0).second)
                         epType = animeEpisodesMap.keys.first()
                         epList = animeEpisodesMap[epType]!!.keys.toMutableList()
                         epIndex = epList.first()

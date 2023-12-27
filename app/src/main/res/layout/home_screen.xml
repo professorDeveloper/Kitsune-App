@@ -1,4 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+  ~  Copyright (c) 2023 . All rights reserved.
+  ~  Last modified 11/21/23, 2:02 AM
+  ~
+  ~
+  -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,29 +15,29 @@
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     tools:context=".ui.screens.HomeScreen">
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        app:elevation="0dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp">
 
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            android:layout_marginTop="14dp"
             android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_marginTop="14dp"
             android:paddingHorizontal="10dp"
+            android:paddingTop="4dp"
             app:layout_scrollEffect="compress"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap"
             app:menu="@menu/home_menu"
-            app:titleCentered="false"
-            android:layout_height="?actionBarSize"
-            android:paddingTop="4dp"
             app:title="Kitsune"
+            app:titleCentered="false"
             app:titleTextColor="@color/white" />
-
 
 
         <FrameLayout
@@ -42,8 +48,7 @@
             android:background="@drawable/search_background"
             android:padding="5dp"
             android:requiresFadingEdge="vertical"
-            android:visibility="visible"
-        >
+            android:visibility="visible">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -79,31 +84,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:paddingStart="16dp"
         android:clipToPadding="false"
-        android:requiresFadingEdge="vertical"
+        android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        app:spanCount="3"
-        tools:itemCount="12"
+        android:requiresFadingEdge="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:spanCount="3"
+        tools:itemCount="12"
         tools:listitem="@layout/item_vertical_layout" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progress"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:lottie_colorFilter="@color/colorPrimaryLight"
         app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="@color/colorPrimaryLight"
+        app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

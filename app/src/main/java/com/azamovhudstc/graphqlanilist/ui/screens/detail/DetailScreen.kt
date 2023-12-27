@@ -1,3 +1,11 @@
+/*
+ *  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
+ *  Copyright (c) 2023 . All rights reserved.
+ *  Last modified 11/21/23, 2:02 AM
+ *
+ *
+ */
+
 @file:OptIn(FlowPreview::class)
 
 package com.azamovhudstc.graphqlanilist.ui.screens.detail
@@ -9,19 +17,17 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
+import androidx.core.math.MathUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.Media
 import com.azamovhudstc.graphqlanilist.databinding.DetailScreenBinding
-import com.azamovhudstc.graphqlanilist.source.AnimeSource
-import com.azamovhudstc.graphqlanilist.source.SourceSelector
 import com.azamovhudstc.graphqlanilist.ui.screens.detail.adapter.TabAdapter
 import com.azamovhudstc.graphqlanilist.utils.*
 import com.azamovhudstc.graphqlanilist.viewmodel.DetailsViewModel
@@ -35,7 +41,8 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.BlurTransformation
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import java.lang.Math.abs
 import kotlin.properties.Delegates
 
@@ -195,11 +202,20 @@ class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChan
     private var isCollapsed = false
     private val percent = 50
     private var mMaxScrollSize = 0
+    private var screenWidth: Float = 0f
 
     @SuppressLint("ResourceType")
     override fun onOffsetChanged(appBar: AppBarLayout?, i: Int) {
         if (mMaxScrollSize == 0) mMaxScrollSize = appBar!!.totalScrollRange
-        val percentage = abs(i) * 100 / mMaxScrollSize
+        val percentage = kotlin.math.abs(i) * 100 / mMaxScrollSize
+        val cap = MathUtils.clamp((percent - percentage) / percent.toFloat(), 0f, 1f)
+
+        binding!!.cardView.scaleX = 1f * cap
+        binding!!.cardView.scaleY = 1f * cap
+        binding!!.cardView.cardElevation = 32f * cap
+
+        binding!!.cardView.visibility =
+            if (binding!!.cardView.scaleX == 0f) View.GONE else View.VISIBLE
 
         if (percentage >= percent && !isCollapsed) {
             isCollapsed = true
