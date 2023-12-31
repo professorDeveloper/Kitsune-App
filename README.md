@@ -1,5 +1,5 @@
 
-# Kitsune App 
+# Kitsune App  ![app_logo-playstore-removebg-preview](https://github.com/professorDeveloper/Kitsune-App/assets/108933534/e3e1833d-a6e9-4d8a-848c-6684f9e1feb3)
 
 Includes all functionalities!
 
