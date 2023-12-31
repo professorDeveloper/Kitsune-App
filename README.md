@@ -26,6 +26,10 @@ Includes all functionalities!
 ![image](https://github.com/professorDeveloper/ApolloAndroid/assets/108933534/de7170e7-eb6c-4965-baa8-7a76581d7a7a)
 ![image](https://github.com/professorDeveloper/ApolloAndroid/assets/108933534/b6a4c965-32e5-4ad9-9460-a9866aaef82e)
 
+## VISITORS
+
+<img src="https://count.getloli.com/get/@:professorDeveloperkitsune-app" alt=":professorDeveloperkitsune-app" />
+
 
 ## Authors
 
