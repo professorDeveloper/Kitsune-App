@@ -3,25 +3,6 @@
 
 Includes all functionalities!
 
-## 🛠 Main Collection 🤞🛠 
-
-- Anilist Graphql
-- Apollo Android
-- Android GraphQl
-- Jsoup Web Parsing
-- ·Paging3  
-- EpoxyRecyclerView
-- DataBinding
-- Okhttp3
-- Retrofit2
-- MVVM
-- Jetpack Navigation
-- NiceHttp
-- Android Media3
-- NiceHttp
-- NiceHttp
-
-
 #  🎯Main Features 🛠
   
   - 📌 Comfort Search 
