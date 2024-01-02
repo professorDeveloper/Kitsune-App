@@ -1,7 +1,7 @@
 
 # Kitsune App  ![app_logo-playstore-removebg-preview](https://github.com/professorDeveloper/Kitsune-App/assets/108933534/e3e1833d-a6e9-4d8a-848c-6684f9e1feb3)
 <p align="center">
-   <a href="https://discord.gg/2T7TunuwFZ"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"></a>
+   <a href="https://discord.gg/7fUhW6taS9"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"></a>
    <a href="https://telegram.me/kitsune_app" ><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"></a> 
    <a href="https://github.com/professorDeveloper/Kitsune-App/releases"><img src="https://img.shields.io/github/downloads/professorDeveloper/Kitsune-App/total?color=%233DDC84&logo=android&logoColor=%23fff&style=for-the-badge"></a>
 </p>
