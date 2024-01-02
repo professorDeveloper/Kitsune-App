@@ -39,6 +39,14 @@ Kitsune is crafted based on simplistic yet state-of-the-art elegance. It is an [
 ![image](https://github.com/professorDeveloper/ApolloAndroid/assets/108933534/b6a4c965-32e5-4ad9-9460-a9866aaef82e)
 
 
+### Official Discord Server
+ 
+<p align="center">
+ <a href="https://discord.gg/7fUhW6taS9">
+  <img src="https://invidget.switchblade.xyz/7fUhW6taS9">
+ </a>
+</p>
+
 ## VISITORS
 <img src="https://count.getloli.com/get/@:professorDeveloperkitsune-app" alt=":professorDeveloperkitsune-app" />
   
