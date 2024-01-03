@@ -9,7 +9,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/more"
-        android:title="Exit"
+        android:title="Contact Us"
         android:icon="@drawable/baseline_exit_to_app_24"
         />
     <item android:id="@+id/info"

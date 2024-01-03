@@ -157,5 +157,13 @@ dependencies {
     implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
     implementation 'com.github.nardanacorp:LinearProgress:1.0.4'
 
+    implementation 'com.github.rubensousa:previewseekbar:3.1.1'
+    // Media3 extension that contains a TimeBar.
+    implementation 'com.github.rubensousa:previewseekbar-media3:1.1.1.0'
+    implementation "androidx.media3:media3-ui:1.0.2"
+    implementation "androidx.media3:media3-exoplayer-hls:1.0.2"
+
+    implementation 'com.github.rubensousa:previewseekbar:0.3'
+
 }
 

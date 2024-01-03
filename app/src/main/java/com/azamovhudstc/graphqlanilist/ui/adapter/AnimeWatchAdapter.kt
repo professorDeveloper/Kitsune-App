@@ -59,7 +59,7 @@ class AnimeWatchAdapter(private val fragment: AnimeWatchPage) :
             ArrayAdapter(
                 fragment.requireContext(),
                 R.layout.item_dropdown,
-                listOf("JIKAN", "ALLANIME")
+                listOf("YUGEN", "ALLANIME")
             )
         )
         binding.animeSource.setOnItemClickListener { _, _, i, _ ->

@@ -18,10 +18,10 @@ import com.azamovhudstc.graphqlanilist.fragment.HomeMedia
 fun DetailFullDataQuery.Data.convert(): Media {
     return this.media!!.convert()
 }
+
 fun GetGenersByThumblainQuery.Data.convert(): Pages {
     return Pages(this.Page?.media)
 }
-
 
 
 fun SearchAnimeQuery.Data.convert(): List<AniListMedia> {
@@ -31,7 +31,16 @@ fun SearchAnimeQuery.Data.convert(): List<AniListMedia> {
 }
 
 fun DetailFullDataQuery.Media.convert(): Media {
-    return Media(
+    var youtube = ""
+    this.externalLinks?.onEach {
+        when (it?.site?.lowercase()) {
+            "youtube" -> {
+                youtube = it.url
+            }
+        }
+    }
+    val media = Media(
+        youtube,
         this.title,
         this.bannerImage,
         this.coverImage,
@@ -65,6 +74,7 @@ fun DetailFullDataQuery.Media.convert(): Media {
         this.recommendations,
         this.externalLinks
     )
+    return media
 }
 
 fun HomeMedia?.convert(): AniListMedia {

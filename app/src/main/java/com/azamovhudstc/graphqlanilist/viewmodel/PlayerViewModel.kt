@@ -17,6 +17,7 @@ import androidx.lifecycle.*
 import com.azamovhudstc.graphqlanilist.data.model.AnimeStreamLink
 import com.azamovhudstc.graphqlanilist.source.AnimeSource
 import com.azamovhudstc.graphqlanilist.source.SourceSelector
+import com.azamovhudstc.graphqlanilist.ui.activity.PlayerActivity
 import com.azamovhudstc.graphqlanilist.utils.logMessage
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
@@ -138,6 +139,7 @@ class PlayerViewModel @Inject constructor(
     }
 
     fun setAnimeLink(
+        sourceType :String,
         animeUrl: String,
         animeEpCode: String,
         extras: List<String>,
@@ -146,7 +148,7 @@ class PlayerViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 println("STREAM GET LINK")
-                val animeSource: AnimeSource = SourceSelector(app).getSelectedSource("allanime")
+                val animeSource: AnimeSource = SourceSelector(app).getSelectedSource(PlayerActivity.sourceType)
                 animeSource.streamLink(animeUrl, animeEpCode, extras).apply {
                     _animeStreamLink.postValue(this@apply)
                     withContext(Dispatchers.Main) {

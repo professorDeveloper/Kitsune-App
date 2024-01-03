@@ -76,6 +76,12 @@ Character(id:$id ) {
 
 query DetailFullDataQuery($id:Int){
     media :Media(id:$id){
+
+        externalLinks {
+            site
+            url
+        }
+
         title{
             english
             romaji

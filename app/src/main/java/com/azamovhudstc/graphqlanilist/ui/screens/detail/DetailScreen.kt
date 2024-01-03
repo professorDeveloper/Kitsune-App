@@ -12,6 +12,8 @@ package com.azamovhudstc.graphqlanilist.ui.screens.detail
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -43,7 +45,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import java.lang.Math.abs
 import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
@@ -98,6 +99,16 @@ class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChan
                             findNavController().popBackStack()
                         }
                         mediaAppBar.show()
+
+                        if (it.data!!.youtubeLink != null) {
+                            binding!!.playButtonForBanner.visibility = View.VISIBLE
+                            binding!!.playButtonForBanner.setOnClickListener {
+                                val intent =
+                                    Intent(Intent.ACTION_VIEW, Uri.parse(media.youtubeLink))
+                                requireContext().startActivity(intent)
+                            }
+                        }
+
                         viewPager.show()
                         progress.hide()
                         setTab(media, animeDetails)
@@ -150,7 +161,6 @@ class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChan
         setAnimations()
 
     }
-
 
 
     private fun setAnimations() {

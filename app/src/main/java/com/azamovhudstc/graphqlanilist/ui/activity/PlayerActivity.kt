@@ -15,38 +15,33 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
+import android.graphics.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.view.OrientationEventListener
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.isVisible
+import androidx.core.view.*
+import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.C
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AnimePlayingDetails
 import com.azamovhudstc.graphqlanilist.databinding.ActivityPlayerBinding
 import com.azamovhudstc.graphqlanilist.ui.adapter.CustomAdapter
+import com.azamovhudstc.graphqlanilist.utils.dp
 import com.azamovhudstc.graphqlanilist.utils.hideSystemBars
+import com.azamovhudstc.graphqlanilist.utils.px
 import com.azamovhudstc.graphqlanilist.utils.widgets.DoubleTapPlayerView
 import com.azamovhudstc.graphqlanilist.viewmodel.PlayerViewModel
-import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.CaptionStyleCompat
@@ -57,12 +52,16 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.net.CookieHandler
 import java.net.CookieManager
 import java.net.CookiePolicy
+import kotlin.math.min
 
 @AndroidEntryPoint
 class PlayerActivity : AppCompatActivity() {
+    private var notchHeight: Int = 0
 
     private val model by viewModels<PlayerViewModel>()
     private var quality: String = "Auto"
@@ -103,6 +102,22 @@ class PlayerActivity : AppCompatActivity() {
     var rotation = 0
 
 
+    override fun onAttachedToWindow() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val displayCutout = window.decorView.rootWindowInsets.displayCutout
+            if (displayCutout != null) {
+                if (displayCutout.boundingRects.size > 0) {
+                    notchHeight = min(
+                        displayCutout.boundingRects[0].width(),
+                        displayCutout.boundingRects[0].height()
+                    )
+                    checkNotch()
+                }
+            }
+        }
+        super.onAttachedToWindow()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -131,6 +146,10 @@ class PlayerActivity : AppCompatActivity() {
 
         //Initialize
         hideSystemBars()
+        onBackPressedDispatcher.addCallback(this) {
+            finishAndRemoveTask()
+        }
+
 
         mCookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
         CookieHandler.setDefault(mCookieManager)
@@ -181,6 +200,7 @@ class PlayerActivity : AppCompatActivity() {
         }
         if (!isInit) {
             model.setAnimeLink(
+                sourceType,
                 animePlayingDetails.animeUrl,
                 animePlayingDetails.animeEpisodeMap[animePlayingDetails.animeEpisodeIndex] as String,
                 listOf(animePlayingDetails.epType)
@@ -324,6 +344,20 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
+
+        val gestureSpeed = (300 * 1f).toLong()
+        //Player UI Visibility Handler
+        val brightnessRunnable = Runnable {
+            if (exoBrightnessCont.alpha == 1f)
+                lifecycleScope.launch {
+                    ObjectAnimator.ofFloat(exoBrightnessCont, "alpha", 1f, 0f)
+                        .setDuration(gestureSpeed).start()
+                    delay(gestureSpeed)
+                    exoBrightnessCont.visibility = View.GONE
+                    checkNotch()
+                }
+        }
+        brightnessRunnable.run()
         // Custom player views
         exoLock.setOnClickListener {
             if (!isLocked) {
@@ -445,6 +479,9 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
+
+
+
         scaleBtn.setOnClickListener {
             if (isFullscreen < 1) isFullscreen += 1 else isFullscreen = 0
             when (isFullscreen) {
@@ -474,7 +511,7 @@ class PlayerActivity : AppCompatActivity() {
 
 
         exoPlay.setOnClickListener {
-            if (isInit){
+            if (isInit) {
                 if (model.player.isPlaying) pauseVideo()
                 else playVideo()
 
@@ -497,6 +534,34 @@ class PlayerActivity : AppCompatActivity() {
         }
         handleController()
 
+    }
+
+    private fun checkNotch() {
+        if (notchHeight != 0) {
+            val orientation = resources.configuration.orientation
+            playerView.findViewById<View>(R.id.exo_controller_cont)
+                .updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        marginStart = notchHeight
+                        marginEnd = notchHeight
+                        topMargin = 0
+                    } else {
+                        topMargin = notchHeight
+                        marginStart = 0
+                        marginEnd = 0
+                    }
+                }
+            playerView.findViewById<View>(androidx.media3.ui.R.id.exo_buffering).translationY =
+                (if (orientation == Configuration.ORIENTATION_LANDSCAPE) 0 else (notchHeight + 8f.px)).dp
+            exoBrightnessCont.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                marginEnd =
+                    if (orientation == Configuration.ORIENTATION_LANDSCAPE) notchHeight else 0
+            }
+            exoVolumeCont.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                marginStart =
+                    if (orientation == Configuration.ORIENTATION_LANDSCAPE) notchHeight else 0
+            }
+        }
     }
 
 
@@ -591,6 +656,7 @@ class PlayerActivity : AppCompatActivity() {
         if (animePlayingDetails.animeEpisodeIndex.toInt() > animePlayingDetails.animeTotalEpisode.toInt() || animePlayingDetails.animeEpisodeIndex.toInt() < 1)
         else {
             model.setAnimeLink(
+                sourceType,
                 animePlayingDetails.animeUrl,
                 animePlayingDetails.animeEpisodeMap[animePlayingDetails.animeEpisodeIndex] as String,
                 listOf(animePlayingDetails.epType),
@@ -669,9 +735,43 @@ class PlayerActivity : AppCompatActivity() {
             this.forceDisabled = forceDisabled
             isEnabled = enabled
         }
+        private var previewBitmap: Bitmap? = null
+        private val previewPaint = Paint()
+
+        init {
+            // Preview image paint settings
+            previewPaint.isFilterBitmap = true
+            // Load or generate the preview image
+            // Replace R.drawable.preview_image with your actual image resource
+            previewBitmap = BitmapFactory.decodeResource(resources, R.drawable.anime_img)
+        }
+
+        override fun onDraw(canvas: Canvas) {
+            super.onDraw(canvas)
+
+            // Preview image display logic during seek
+            val duration = 0L
+            if (duration > 0) {
+                val position = 3L
+                val relativePos = if (duration == 0L) 0f else (position.toFloat() / duration.toFloat())
+                val width = width
+                val previewWidth = previewBitmap?.width ?: 0
+                val previewHeight = previewBitmap?.height ?: 0
+
+                // Calculate the position to draw the preview image
+                val previewX = (relativePos * width - previewWidth / 2).toInt()
+                val previewY = height - previewHeight
+
+                // Display the preview image
+                previewBitmap?.let {
+                    canvas.drawBitmap(it, previewX.toFloat(), previewY.toFloat(), previewPaint)
+                }
+            }
+        }
     }
 
     companion object {
+        var sourceType = ""
         var pipStatus: Boolean = false
         private var isLocked: Boolean = false
         fun newIntent(
@@ -714,7 +814,27 @@ class PlayerActivity : AppCompatActivity() {
         super.onDestroy()
 
         pipStatus = false
+        model.player.stop()
         model.player.release()
+        finishAndRemoveTask()
+    }
+
+    private val keyMap: MutableMap<Int, (() -> Unit)?> = mutableMapOf(
+        KeyEvent.KEYCODE_DPAD_RIGHT to null,
+        KeyEvent.KEYCODE_DPAD_LEFT to null,
+        KeyEvent.KEYCODE_SPACE to { exoPlay.performClick() },
+        KeyEvent.KEYCODE_N to { nextEpBtn.performClick() },
+        KeyEvent.KEYCODE_B to { prevEpBtn.performClick() }
+    )
+
+    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        return if (keyMap.containsKey(event.keyCode)) {
+            (event.action == KeyEvent.ACTION_UP).also {
+                if (isInit && it) keyMap[event.keyCode]?.invoke()
+            }
+        } else {
+            super.dispatchKeyEvent(event)
+        }
     }
 
     private fun ImageView.setImageViewEnabled(enabled: Boolean) = if (enabled) {

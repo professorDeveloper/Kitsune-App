@@ -10,11 +10,14 @@ package com.azamovhudstc.graphqlanilist.source
 
 import android.content.Context
 import com.azamovhudstc.graphqlanilist.source.source_imp.AllAnimeSource
+import com.azamovhudstc.graphqlanilist.source.source_imp.YugenSource
 
 class SourceSelector(context: Context) {
     val sourceMap: Map<String, AnimeSource> = mapOf(
+        "yugen" to YugenSource(),
         "allanime" to AllAnimeSource(),
-    )
+
+        )
 
     fun getSelectedSource(selectedSource: String): AnimeSource {
         if (selectedSource in sourceMap.keys) {

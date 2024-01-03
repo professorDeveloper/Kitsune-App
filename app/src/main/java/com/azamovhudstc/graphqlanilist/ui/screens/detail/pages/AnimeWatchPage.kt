@@ -19,13 +19,13 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AnimePlayingDetails
-import com.azamovhudstc.graphqlanilist.data.model.ui_models.Media
 import com.azamovhudstc.graphqlanilist.data.network.rest.jikan.Data
 import com.azamovhudstc.graphqlanilist.data.network.rest.jikan.Images
 import com.azamovhudstc.graphqlanilist.data.network.rest.jikan.Jpg
 import com.azamovhudstc.graphqlanilist.databinding.FragmentAnimeWatchPageBinding
 import com.azamovhudstc.graphqlanilist.source.AnimeSource
 import com.azamovhudstc.graphqlanilist.source.SourceSelector
+import com.azamovhudstc.graphqlanilist.source.source_imp.YugenSource
 import com.azamovhudstc.graphqlanilist.ui.activity.PlayerActivity
 import com.azamovhudstc.graphqlanilist.ui.adapter.AnimeWatchAdapter
 import com.azamovhudstc.graphqlanilist.ui.adapter.EpisodesAdapter
@@ -62,14 +62,11 @@ class AnimeWatchPage() :
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var media  =requireArguments().getSerializable("data") as AniListMedia
+        var media = requireArguments().getSerializable("data") as AniListMedia
         headerAdapter = AnimeWatchAdapter(this)
         episodeAdapter = EpisodesAdapter(emptyList(), 0)
-        val animeSource: AnimeSource =
-            SourceSelector(requireContext()).getSelectedSource("allanime")
 
         lifecycleScope.launch {
             episodeAdapter.setItemClickListener {
@@ -80,11 +77,9 @@ class AnimeWatchPage() :
         }
         headerAdapter.setItemClickListener {
             if (it == 0) {
-                episodeAdapter.list = emptyList()
-                model.loadEpisodesById(media.idMal ?: 0)
-            } else {
-
                 lifecycleScope.launch {
+                    val animeSource: YugenSource =
+                        SourceSelector(requireContext()).getSelectedSource("yugen") as YugenSource
 
                     binding.animeSourceRecycler.hide()
                     binding.animeNotSupported.hide()
@@ -125,6 +120,71 @@ class AnimeWatchPage() :
                                 epType = epType
                             )
                             PlayerActivity.pipStatus = true
+                            PlayerActivity.sourceType="yugen"
+
+                            val intent = PlayerActivity.newIntent(
+                                requireContext(),
+                                data
+                            )
+                            startActivity(intent)
+
+                        }
+
+                    } else {
+                        binding.animeSourceRecycler.show()
+                        binding.animeNotSupported.show()
+                        binding.mediaInfoProgressBar.hide()
+                        episodeAdapter.list = emptyList()
+                        episodeAdapter.notifyDataSetChanged()
+                    }
+
+                }
+            } else {
+
+                lifecycleScope.launch {
+                    val animeSource: AnimeSource =
+                        SourceSelector(requireContext()).getSelectedSource("allanime")
+
+                    binding.animeSourceRecycler.hide()
+                    binding.animeNotSupported.hide()
+                    episodeAdapter.list = emptyList()
+                    binding.mediaInfoProgressBar.show()
+                    val list = animeSource.searchAnime("${media.title!!.userPreferred}")
+                    val episodeListForAdapter = ArrayList<Data>()
+                    if (list.isNotEmpty()) {
+                        val animeEpisodesMap = animeSource.animeDetails(list.get(0).second)
+                        epType = animeEpisodesMap.keys.first()
+                        epList = animeEpisodesMap[epType]!!.keys.toMutableList()
+                        epIndex = epList.first()
+                        epList.onEach {
+                            episodeListForAdapter.add(
+                                Data(
+                                    " Episode ${it}",
+                                    Images(Jpg(media.coverImage!!.large!!)),
+                                    it.toInt(),
+                                    "${list.get(0).first} $it",
+                                    "?NIULLLLAAABLEEE"
+                                )
+                            )
+                        }
+                        binding.animeSourceRecycler.show()
+                        binding.animeNotSupported.hide()
+                        binding.mediaInfoProgressBar.hide()
+                        episodeAdapter.list = episodeListForAdapter
+                        episodeAdapter.notifyDataSetChanged()
+
+                        episodeAdapter.setItemClickListener {
+                            epIndex = epList[it.mal_id - 1]
+                            val data = AnimePlayingDetails(
+                                animeName = media.title!!.userPreferred!!,
+                                animeUrl = list.get(0).second!!,
+                                animeEpisodeIndex = epIndex,
+                                animeEpisodeMap = animeEpisodesMap[epType] as HashMap<String, String>,
+                                animeTotalEpisode = animeEpisodesMap[epType]!!.size.toString(),
+                                epType = epType
+                            )
+                            PlayerActivity.pipStatus = true
+                            PlayerActivity.sourceType="allanime"
 
                             val intent = PlayerActivity.newIntent(
                                 requireContext(),

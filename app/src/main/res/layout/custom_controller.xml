@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
   ~  Copyright (c) 2023 . All rights reserved.
   ~  Last modified 11/21/23, 2:02 AM
@@ -152,13 +151,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#fff"
+                    android:backgroundTintMode="src_atop"
                     android:ellipsize="marquee"
                     android:focusableInTouchMode="true"
-                    android:marqueeRepeatLimit="1"
-                    android:scrollHorizontally="true"
-                    android:backgroundTintMode="src_atop"
                     android:fontFamily="@font/roboto_bold"
                     android:includeFontPadding="false"
+                    android:marqueeRepeatLimit="1"
+                    android:scrollHorizontally="true"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     tools:ignore="SpeakableTextPresentCheck"
@@ -225,7 +224,6 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@drawable/background_selector" />
-
 
 
                 <ProgressBar
@@ -345,6 +343,7 @@
                     android:background="@drawable/background_selector"
                     android:src="@drawable/ic_baseline_screen_rotation_24"
                     android:visibility="gone" />
+
                 <ImageButton
                     android:id="@+id/exo_quality"
                     android:layout_width="wrap_content"
@@ -355,6 +354,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
                 <ImageButton
                     android:id="@+id/exo_rotate"
                     android:layout_width="wrap_content"
@@ -379,8 +379,10 @@
 
             </LinearLayout>
 
-            <view class="com.azamovhudstc.graphqlanilist.ui.activity.PlayerActivity$ExtendedTimeBar"
+
+            <view
                 android:id="@+id/exo_progress"
+                class="com.azamovhudstc.graphqlanilist.ui.activity.PlayerActivity$ExtendedTimeBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -394,6 +396,8 @@
                 app:scrubber_dragged_size="20dp"
                 app:unplayed_color="#66B5B5B5" />
         </LinearLayout>
+
+
     </FrameLayout>
 
 </FrameLayout>

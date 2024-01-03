@@ -16,6 +16,12 @@ import java.io.Serializable
 
 public data class Media(
     /**
+     * Youtube Playlist
+     ***/
+
+    public val youtubeLink :String,
+
+    /**
      * The official titles of the media in various languages
      */
     public val title: DetailFullDataQuery.Title?,
