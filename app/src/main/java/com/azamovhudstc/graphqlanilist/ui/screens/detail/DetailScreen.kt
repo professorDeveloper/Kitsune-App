@@ -57,7 +57,6 @@ class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChan
     private val animeDetails get() = requireArguments().getSerializable("data") as AniListMedia
     private var binding: DetailScreenBinding? = null
     private lateinit var adapter: TabAdapter
-    private var check by Delegates.notNull<Boolean>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val window = requireActivity().window
@@ -76,8 +75,6 @@ class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChan
         binding = DetailScreenBinding.bind(view)
 
 
-
-        check = animeDetails.isFavourite
         binding!!.apply {
             viewModel.loadDataById(animeDetails.idAniList)
             viewModel.responseData.observe(viewLifecycleOwner) {
@@ -100,7 +97,7 @@ class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChan
                         }
                         mediaAppBar.show()
 
-                        if (it.data!!.youtubeLink != null) {
+                        if (it.data.youtubeLink != null) {
                             binding!!.playButtonForBanner.visibility = View.VISIBLE
                             binding!!.playButtonForBanner.setOnClickListener {
                                 val intent =

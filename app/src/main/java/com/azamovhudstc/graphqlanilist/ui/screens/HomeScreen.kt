@@ -9,90 +9,234 @@
 package com.azamovhudstc.graphqlanilist.ui.screens
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.isVisible
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.azamovhudstc.graphqlanilist.R
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.azamovhudstc.graphqlanilist.data.model.SearchResults
 import com.azamovhudstc.graphqlanilist.databinding.HomeScreenBinding
-import com.azamovhudstc.graphqlanilist.type.SortType
-import com.azamovhudstc.graphqlanilist.ui.screens.controller.PagingSearchController
-import com.azamovhudstc.graphqlanilist.utils.collectLatest
-import com.azamovhudstc.graphqlanilist.utils.dismissKeyboard
-import com.azamovhudstc.graphqlanilist.utils.slideStart
-import com.azamovhudstc.graphqlanilist.utils.slideUp
+import com.azamovhudstc.graphqlanilist.ui.adapter.AllAnimePageAdapter
+import com.azamovhudstc.graphqlanilist.ui.adapter.ProgressAdapter
+import com.azamovhudstc.graphqlanilist.utils.Resource
+import com.azamovhudstc.graphqlanilist.utils.hide
+import com.azamovhudstc.graphqlanilist.utils.show
 import com.azamovhudstc.graphqlanilist.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
 
 
 @AndroidEntryPoint
-class HomeScreen : Fragment(R.layout.home_screen) {
+class HomeScreen : Fragment() {
     private var _binding: HomeScreenBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<SearchViewModel>()
-    private lateinit var pagingController: PagingSearchController
+    lateinit var result: SearchResults
+    private lateinit var progressAdapter: ProgressAdapter
+    private var screenWidth: Float = 0f
+    private lateinit var allAnimePageAdapter: AllAnimePageAdapter
+    private lateinit var concatAdapter: ConcatAdapter
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = HomeScreenBinding.inflate(
+            inflater,
+            container,
+            false
+        )
+        return _binding?.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        screenWidth = resources.displayMetrics.run { widthPixels / density }
+        initUIWithLocalData()
+        result = viewModel.searchResults
+        initProgress()
+        allAnimePageAdapter =
+            AllAnimePageAdapter(viewModel.searchResults.results, true, this)
+        concatAdapter = ConcatAdapter(allAnimePageAdapter, progressAdapter)
+        binding.searchRecycler.adapter = concatAdapter
         super.onViewCreated(view, savedInstanceState)
-        _binding = HomeScreenBinding.bind(view)
-        val window = requireActivity().window
-        WindowCompat.setDecorFitsSystemWindows(window, true)
-        binding.frameLayout.slideUp(700,0)
-        binding.toolbar.slideUp(700,0)
-        binding.searchRecycler.slideUp(700,0)
-        pagingController = PagingSearchController()
-        val list = ArrayList<SortType>()
-        list.add(SortType.TRENDING)
 
-        binding.progress.isVisible =false
-        binding.searchRecycler.isVisible=true
-        viewModel.onSearchQueryChanged(query = "Trending", type = list.toMutableList())
+        binding.searchRecycler.layoutManager =
+            GridLayoutManager(requireContext(), (screenWidth / 124f).toInt())
 
-        observeViewModel()
-        binding.searchRecycler.setController(pagingController)
-        binding.mainSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
+        initPagination()
+        observerLoadData()
+    }
 
-                dismissKeyboard(binding.mainSearch)
-                return false
-            }
+    private fun initUIWithLocalData() {
+        if (viewModel.notSet) {
+            viewModel.notSet = false
+            viewModel.searchResults = SearchResults(
+                "ANIME",
+                isAdult = false,
+                onList = false,
+                results = arrayListOf(),
+                hasNextPage = true,
+                sort = "TRENDING_DESC"
+            )
+        }
+    }
 
-            override fun onQueryTextChange(query: String): Boolean {
-                println("tushdi")
-                if (query.toString().isNotEmpty()){
-                    binding.progress.isVisible = true
-                    binding.searchRecycler.isVisible = false
-                    viewModel.onSearchQueryChanged(query)
-                }else{
-                    binding.progress.isVisible =false
-                    binding.searchRecycler.isVisible=true
+
+    private fun observerLoadData() {
+        viewModel.searchResult.observe(viewLifecycleOwner) {
+            when (it) {
+                Resource.Loading -> {
+                    binding.progress.show()
+                    binding.searchRecycler.hide()
                 }
-                return false
+                is Resource.Error -> {
+
+                }
+                is Resource.Success -> {
+                    binding.progress.hide()
+                    binding.searchRecycler.show()
+                    val it = it.data
+                    if (it != null) {
+                        viewModel.searchResults.results!!.clear()
+                        allAnimePageAdapter.submitList(it!!.results!!)
+                        progressAdapter.bar!!.hide()
+                        viewModel.searched = true
+                    }
+
+                }
+            }
+        }
+        viewModel.result.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Error -> {
+                }
+                Resource.Loading -> {
+                }
+                is Resource.Success -> {
+                    val it = it.data
+                    if (it != null) {
+                        viewModel.searchResults.apply {
+                            onList = it.onList
+                            isAdult = it.isAdult
+                            perPage = it.perPage
+                            search = it.search
+                            sort = it.sort
+                            genres = it.genres
+                            excludedGenres = it.excludedGenres
+                            excludedTags = it.excludedTags
+                            tags = it.tags
+                            season = it.season
+                            seasonYear = it.seasonYear
+                            format = it.format
+                            page = it.page
+                            hasNextPage = it.hasNextPage
+                        }
+
+                        val prev = viewModel.searchResults.results!!.size
+                        viewModel.searchResults.results!!.addAll(it.results!!)
+                        allAnimePageAdapter.notifyItemRangeInserted(
+                            prev,
+                            it.results!!.size
+                        )
+                        progressAdapter.bar?.visibility =
+                            if (it.hasNextPage) View.VISIBLE else View.GONE
+
+                        binding.apply {
+                            this.mainSearch.setOnCloseListener {
+                                viewModel.loadNextPage(viewModel.searchResults)
+                                true
+                            }
+                            this.mainSearch.setOnQueryTextListener(object :
+                                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                                override fun onQueryTextSubmit(query: String?): Boolean {
+                                    if (query.toString().isNotEmpty())
+                                        viewModel.onSearchQueryChanged(query.toString())
+                                    else viewModel.loadNextPage(viewModel.searchResults)
+
+                                    return true
+                                }
+
+                                override fun onQueryTextChange(newText: String?): Boolean {
+                                    if (newText.toString().isNotEmpty())
+                                        viewModel.onSearchQueryChanged(newText.toString())
+                                    else viewModel.loadNextPage(viewModel.searchResults)
+
+                                    return true
+
+                                }
+                            }
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initPagination() {
+        binding.searchRecycler.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrolled(v: RecyclerView, dx: Int, dy: Int) {
+                if (!v.canScrollVertically(1)) {
+                    if (viewModel.searchResults.hasNextPage && viewModel.searchResults.results!!.isNotEmpty() && !loading && !viewModel.searched) {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.loadNextPage(viewModel.searchResults)
+                        }
+                    }
+                }
+                super.onScrolled(v, dx, dy)
             }
         })
-
-
     }
 
+    private fun initProgress() {
+        val notSet = viewModel.notSet
+        progressAdapter = ProgressAdapter(searched = viewModel.searched)
 
-    override fun onPause() {
-        super.onPause()
-    }
-
-    private fun observeViewModel() {
-
-        collectLatest(viewModel.searchList) { animeData ->
-
-            binding.progress.isVisible = false
-            binding.searchRecycler.isVisible = true
-            pagingController . submitData (animeData)
-
+        progressAdapter.ready.observe(viewLifecycleOwner) {
+            if (it == true) {
+                if (!notSet) {
+                    if (!viewModel.searched) {
+                        viewModel.searched = true
+                    }
+                }
+                loadData()
+            }
         }
 
+    }
 
+
+    private var searchTimer = Timer()
+    private var loading = false
+
+    fun loadData() {
+        val size = viewModel.searchResults.results!!.size
+        viewModel.searchResults.results!!.clear()
+        requireActivity().runOnUiThread {
+            allAnimePageAdapter.notifyItemRangeRemoved(0, size)
+        }
+        progressAdapter.bar?.visibility = View.VISIBLE
+
+        searchTimer.cancel()
+        searchTimer.purge()
+        val timerTask: TimerTask = object : TimerTask() {
+            override fun run() {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    loading = true
+                    viewModel.loadAllAnimeList()
+                    loading = false
+                }
+            }
+        }
+        searchTimer = Timer()
+        searchTimer.schedule(timerTask, 500)
     }
 
 

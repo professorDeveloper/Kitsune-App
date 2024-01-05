@@ -8,11 +8,18 @@
 
 package com.azamovhudstc.graphqlanilist.domain.repository
 
+import android.app.appsearch.SearchResults
 import androidx.paging.PagingData
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
 import com.azamovhudstc.graphqlanilist.type.SortType
 import kotlinx.coroutines.flow.Flow
 
 interface SearchRepository {
-    fun fetchSearchData(query:String,sortType:List<SortType>,):Flow<PagingData<AniListMedia>>
+    fun fetchSearchData(query: String, sortType: List<SortType>): Flow<PagingData<AniListMedia>>
+    fun randomAnimeList(): Flow<Result<com.azamovhudstc.graphqlanilist.data.model.SearchResults>>
+    fun getSearch(r: com.azamovhudstc.graphqlanilist.data.model.SearchResults): Flow<com.azamovhudstc.graphqlanilist.data.model.SearchResults>
+    fun fetchSearchAniListData(
+        query: String = "",
+        page: Int,
+    ): Flow<com.azamovhudstc.graphqlanilist.data.model.SearchResults>
 }

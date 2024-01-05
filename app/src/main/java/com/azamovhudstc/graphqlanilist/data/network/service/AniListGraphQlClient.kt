@@ -9,11 +9,9 @@
 package com.azamovhudstc.graphqlanilist.data.network.service
 
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.Optional
-import com.azamovhudstc.graphqlanilist.CharacterDataByIDQuery
-import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
-import com.azamovhudstc.graphqlanilist.GetGenersByThumblainQuery
-import com.azamovhudstc.graphqlanilist.SearchAnimeQuery
+import com.azamovhudstc.graphqlanilist.*
 import com.azamovhudstc.graphqlanilist.type.MediaSort
 import javax.inject.Inject
 
@@ -22,17 +20,33 @@ class AniListGraphQlClient @Inject constructor(
 ) : AniListSync {
 
 
+    suspend fun search(
+        query: String = "",
+        page: Int = 1,
+        perPage: Int = 50,
+        toMediaSort: List<String>
+    ) = apolloClient.query(
+        SearchByAnyQuery(
+            Optional.present(perPage),
+            page = Optional.present(page),
+            sort = Optional.present(
+                listOf<MediaSort>(
+                    MediaSort.POPULARITY_DESC,
+                    MediaSort.SCORE_DESC
+                )
+            ),
+        )
+    ).execute()
+
     override suspend fun fetchSearchAniListData(
         query: String,
         page: Int,
-        toMediaSort: List<MediaSort>
-    ) = apolloClient.query(
-        SearchAnimeQuery(
-            Optional.presentIfNotNull(query),
-            Optional.presentIfNotNull(page),
-            Optional.present(toMediaSort)
-        )
-    ).execute()
+        toMediaSort: List<String>
+    ): ApolloResponse<SearchAnimeQuery.Data> {
+        return apolloClient.query(SearchAnimeQuery(Optional.present(query), Optional.present(1)))
+            .execute()
+    }
+
 
     override suspend fun fetchFullDataById(id: Int) =
         apolloClient.query(DetailFullDataQuery(Optional.present(id))).execute()

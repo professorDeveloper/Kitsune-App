@@ -2,75 +2,98 @@
 query SearchAnimeQuery(
     $search: String,
     $page: Int,
-    $sortType: [MediaSort]
 ) {
-    page:Page (page: $page, perPage: 50) {
+    page:Page (page: $page, perPage: 80) {
+        pageInfo {
+            perPage,
+            total,
+            perPage
+        }
         media (
             isAdult:false,
             search: $search,
             type: ANIME,
-            sort: $sortType
+
         ) {...HomeMedia}
     }
 }
 
-    query  getGenersByThumblain($genre:String){
-        Page(perPage: 90){media(genre:$genre, sort: TRENDING_DESC, type: ANIME, countryOfOrigin:"JP") {id bannerImage title{english romaji userPreferred} } }
+
+query  SearchByAny(
+    $perPage:Int,
+    $page:Int
+    $sort:[MediaSort]
+){
+    page:Page(page: $page,perPage: $perPage){
+        pageInfo {
+            perPage,
+            hasNextPage,
+            currentPage,
+            total
+        }
+        media(sort:$sort) {
+            ...HomeMedia
+        }
+    }
+}
+
+query  getGenersByThumblain($genre:String){
+    Page(perPage: 90){media(genre:$genre, sort: TRENDING_DESC, type: ANIME, countryOfOrigin:"JP") {id bannerImage title{english romaji userPreferred} } }
 
 }
 
 query  CharacterDataByID($id:Int){
-Character(id:$id ) {
-    id
+    Character(id:$id ) {
+        id
 
-    age
-    gender
-    description
-    dateOfBirth {
-        year
-        month
-        day
-    }
-    media(page: 0,sort:[POPULARITY_DESC,SCORE_DESC]) {
-        pageInfo {
-            total
-            perPage
-            currentPage
-            lastPage
-            hasNextPage
+        age
+        gender
+        description
+        dateOfBirth {
+            year
+            month
+            day
         }
-        edges {
-            id
-            characterRole
-            node {
+        media(page: 0,sort:[POPULARITY_DESC,SCORE_DESC]) {
+            pageInfo {
+                total
+                perPage
+                currentPage
+                lastPage
+                hasNextPage
+            }
+            edges {
                 id
-                idMal
-                isAdult
-                status
-                chapters
-                episodes
-                nextAiringEpisode { episode }
-                type
-                meanScore
-                isFavourite
-                bannerImage
-                countryOfOrigin
-                coverImage { large }
-                title {
-                    english
-                    romaji
-                    userPreferred
-                }
-                mediaListEntry {
-                    progress
-                    private
-                    score(format: POINT_100)
+                characterRole
+                node {
+                    id
+                    idMal
+                    isAdult
                     status
+                    chapters
+                    episodes
+                    nextAiringEpisode { episode }
+                    type
+                    meanScore
+                    isFavourite
+                    bannerImage
+                    countryOfOrigin
+                    coverImage { large }
+                    title {
+                        english
+                        romaji
+                        userPreferred
+                    }
+                    mediaListEntry {
+                        progress
+                        private
+                        score(format: POINT_100)
+                        status
+                    }
                 }
             }
         }
     }
-}
 }
 
 

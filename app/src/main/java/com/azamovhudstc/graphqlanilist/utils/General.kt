@@ -9,35 +9,36 @@
 
 package com.azamovhudstc.graphqlanilist.utils
 
-import android.R.attr.translationY
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.RoundRectShape
 import android.os.*
 import android.provider.Settings
 import android.text.Html
 import android.util.Log
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.ScaleAnimation
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.math.MathUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.navigation.NavOptions
 import androidx.viewpager2.widget.ViewPager2
 import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.application.App
+import com.google.android.material.snackbar.Snackbar
 import java.lang.reflect.Field
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
@@ -48,13 +49,18 @@ import kotlin.math.pow
 
 val Int.dp: Float get() = (this / Resources.getSystem().displayMetrics.density)
 val Float.px: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
- fun DetailFullDataQuery.StartDate.toSortString(): String {
+fun DetailFullDataQuery.StartDate.toSortString(): String {
     if (day == null && year == null && month == null)
         return "??"
     val a = if (month != null) DateFormatSymbols().months[month - 1] else ""
     return (if (day != null) "$day " else "") + a + (if (year != null) ", $year" else "")
 }
-suspend fun <T> tryWithSuspend(post: Boolean = false, snackbar: Boolean = true, call: suspend () -> T): T? {
+
+suspend fun <T> tryWithSuspend(
+    post: Boolean = false,
+    snackbar: Boolean = true,
+    call: suspend () -> T
+): T? {
     return try {
         call.invoke()
     } catch (e: Throwable) {
@@ -96,15 +102,17 @@ fun View.hide() {
 fun View.show() {
     visibility = View.VISIBLE
 }
+
 fun localLoadTabTxt(): ArrayList<String> {
     val list = ArrayList<String>()
     list.add("More Details")
     list.add("Anime")
     return list
 }
+
 class ZoomOutPageTransformer() : ViewPager2.PageTransformer {
     override fun transformPage(view: View, position: Float) {
-        if (position == 0.0f ) {
+        if (position == 0.0f) {
             setAnimation(view.context, view, 300, floatArrayOf(1.3f, 1f, 1.3f, 1f), 0.5f to 0f)
             ObjectAnimator.ofFloat(view, "alpha", 0f, 1.0f).setDuration((200 * 1f).toLong()).start()
         }
@@ -112,6 +120,7 @@ class ZoomOutPageTransformer() : ViewPager2.PageTransformer {
 
 
 }
+
 fun setAnimation(
     context: Context?,
     viewToAnimate: View,
@@ -144,6 +153,7 @@ inline fun <reified T : Any> Activity.launchActivity(
     intent.init()
     startActivityForResult(intent, requestCode, options)
 }
+
 inline fun <reified T : Any> newIntent(context: Context): Intent =
     Intent(context, T::class.java)
 
@@ -157,7 +167,7 @@ inline fun <reified T : Any> Context.launchActivity(
 }
 
 
- fun String.removeSource(): String {
+fun String.removeSource(): String {
     val regex = Regex("\\(Source:.*\\)")
     var text = this
     text = regex.replace(text, "").trim()
@@ -194,9 +204,63 @@ fun TextView.setHtmlText(htmlString: String?) {
     }
 }
 
+
+
+fun <T> randomSelectFromList(list: List<T>): T? {
+    val filteredList = list.filter { it != "HENTAI" }
+    if (filteredList.isEmpty()) {
+        return null
+    }
+    return filteredList[Random().nextInt(filteredList.size)]
+
+}
+
+
+
+fun snackString(s: String?, activity: Activity? = null, clipboard: String? = null) {
+    if (s != null) {
+        (activity)?.apply {
+            runOnUiThread {
+                val snackBar = Snackbar.make(
+                    window.decorView.findViewById(android.R.id.content),
+                    s,
+                    Snackbar.LENGTH_LONG
+                )
+                snackBar.view.apply {
+                    updateLayoutParams<FrameLayout.LayoutParams> {
+                        gravity = (Gravity.CENTER_HORIZONTAL or Gravity.TOP)
+                        width = ViewGroup.LayoutParams.WRAP_CONTENT
+                    }
+                    translationY = (24f + 32f)
+                    translationZ = 32f
+                    val shapeDrawable = ShapeDrawable()
+                    shapeDrawable.paint.color =
+                        Color.parseColor("#9E120F0F") // Set the background color if needed
+                    shapeDrawable.paint.style = Paint.Style.FILL
+                    shapeDrawable.shape = RoundRectShape(
+                        floatArrayOf(20f, 20f, 20f, 20f, 20f, 20f, 20f, 20f),
+                        null,
+                        null
+                    )
+
+                    this.background = shapeDrawable
+                    setOnClickListener {
+                        snackBar.dismiss()
+                    }
+                    setOnLongClickListener {
+                        true
+                    }
+                }
+                snackBar.show()
+            }
+        }
+    }
+}
+
+
 /**
 Dismiss Keyboard function added
-**/
+ **/
 
 fun Int?.or1() = this ?: 1
 
@@ -218,6 +282,7 @@ fun displayInDayDateTimeFormat(seconds: Int): String {
     val date = Date(seconds * 1000L)
     return dateFormat.format(date)
 }
+
 fun View.slideTop(animTime: Long, startOffset: Long) {
     val slideUp = AnimationUtils.loadAnimation(App.instance, R.anim.slide_top).apply {
         duration = animTime
@@ -226,6 +291,7 @@ fun View.slideTop(animTime: Long, startOffset: Long) {
     }
     startAnimation(slideUp)
 }
+
 abstract class GesturesListener : GestureDetector.SimpleOnGestureListener() {
     private var timer: Timer? = null //at class level;
     private val delay: Long = 200
@@ -245,7 +311,12 @@ abstract class GesturesListener : GestureDetector.SimpleOnGestureListener() {
         return super.onDoubleTap(e)
     }
 
-    override fun onScroll(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
+    override fun onScroll(
+        e1: MotionEvent,
+        e2: MotionEvent,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
         onScrollYClick(distanceY)
         onScrollXClick(distanceX)
         return super.onScroll(e1, e2, distanceX, distanceY)
@@ -307,11 +378,16 @@ fun getCurrentBrightnessValue(context: Context): Float {
     }
 
     fun getCur(): Float {
-        return Settings.System.getInt(context.contentResolver, Settings.System.SCREEN_BRIGHTNESS, 127).toFloat()
+        return Settings.System.getInt(
+            context.contentResolver,
+            Settings.System.SCREEN_BRIGHTNESS,
+            127
+        ).toFloat()
     }
 
     return brightnessConverter(getCur() / getMax(), true)
 }
+
 fun animationTransactionClearStack(clearFragmentID: Int): NavOptions.Builder {
     val navBuilder = NavOptions.Builder()
     navBuilder.setEnterAnim(R.anim.from_right).setExitAnim(R.anim.to_left)
@@ -343,18 +419,21 @@ fun View.slideUp(animTime: Long, startOffset: Long) {
     }
     startAnimation(slideUp)
 }
+
 fun DetailFullDataQuery.Trailer.getYoutubeFormat(): String {
     return if (this.site != null && this.site.toString() == "youtube")
         "https://www.youtube.com/embed/${this.id.toString().trim('"')}"
     else ""
 }
-fun View.slideStart(animTime: Long, startOffset: Long,hide:View?=null) {
+
+fun View.slideStart(animTime: Long, startOffset: Long, hide: View? = null) {
     val slideUp = AnimationUtils.loadAnimation(App.instance, R.anim.slide_start).apply {
-        setAnimationListener(object :Animation.AnimationListener{
+        setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
                 hide?.hide()
 
             }
+
             override fun onAnimationEnd(animation: Animation?) {
                 hide?.hide()
             }
@@ -370,6 +449,7 @@ fun View.slideStart(animTime: Long, startOffset: Long,hide:View?=null) {
     }
     startAnimation(slideUp)
 }
+
 fun View.slideEnd(animTime: Long, startOffset: Long) {
     val slideUp = AnimationUtils.loadAnimation(App.instance, R.anim.slide_end).apply {
         duration = animTime

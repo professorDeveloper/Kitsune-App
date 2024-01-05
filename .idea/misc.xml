@@ -22,7 +22,7 @@
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/activity_character_details.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/activity_genre.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/activity_main.xml" value="0.2111111111111111" />
-        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/activity_player.xml" value="0.2264151024877837" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/activity_player.xml" value="0.1267924573931589" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/alert_item.xml" value="0.15396226969169294" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/anime_watch_item.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/custom_controller.xml" value="0.19924529018924966" />
@@ -35,6 +35,7 @@
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_episode_container.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_splash_screen.xml" value="0.24140625" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/home_screen.xml" value="0.18113208199022698" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_all_anime.xml" value="0.24140625" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_anime_details.xml" value="0.32083333333333336" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_character.xml" value="0.32083333333333336" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_character_detail.xml" value="0.32083333333333336" />
@@ -52,6 +53,7 @@
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_title_recycler.xml" value="0.32083333333333336" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_title_trailer.xml" value="0.2988679352838745" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_vertical_layout.xml" value="0.4528302049755674" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/progress_ittem.xml" value="0.2988679352838745" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/menu/home_menu.xml" value="0.24140625" />
       </map>
     </option>

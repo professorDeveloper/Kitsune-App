@@ -31,7 +31,7 @@ class SearchAniListPagingSource(
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
             val response =
-                apiClient.fetchSearchAniListData(query, page, sortType.map(SortType::toMediaSort))
+                apiClient.fetchSearchAniListData(query, page, listOf("ONA"))
             val listOfAniListMedia = response.data?.convert() ?: emptyList()
             LoadResult.Page(
                 data = listOfAniListMedia,

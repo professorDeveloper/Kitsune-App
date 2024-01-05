@@ -13,14 +13,13 @@ import com.azamovhudstc.graphqlanilist.CharacterDataByIDQuery
 import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
 import com.azamovhudstc.graphqlanilist.GetGenersByThumblainQuery
 import com.azamovhudstc.graphqlanilist.SearchAnimeQuery
-import com.azamovhudstc.graphqlanilist.type.MediaSort
 import com.azamovhudstc.graphqlanilist.utils.Apollo
 
 interface AniListSync {
     suspend fun fetchSearchAniListData(
-        query: String,
+        query: String="",
         page: Int,
-        toMediaSort: List<MediaSort>
+        toMediaSort: List<String>
     ): ApolloResponse<SearchAnimeQuery.Data>
 
     suspend fun fetchFullDataById(

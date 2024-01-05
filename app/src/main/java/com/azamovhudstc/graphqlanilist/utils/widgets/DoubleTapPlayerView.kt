@@ -25,6 +25,20 @@ class DoubleTapPlayerView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : StyledPlayerView(context, attrs, defStyleAttr) {
 
+    lateinit var setActionUpListener: (() -> Unit)
+
+    lateinit var onLongPressListener: (() -> Unit)
+
+
+    fun setLongPressListenerEvent(itemListenerActionUp: () -> Unit) {
+        onLongPressListener = itemListenerActionUp
+    }
+
+    fun setActionUpListener(itemListenerActionUp: (() -> Unit)) {
+        setActionUpListener = itemListenerActionUp
+    }
+
+
     companion object {
         const val SEEK_SECONDS = 10
         const val SEEK_MILLISECONDS = SEEK_SECONDS * 1000
@@ -63,6 +77,16 @@ class DoubleTapPlayerView @JvmOverloads constructor(
             return true
         }
 
+        override fun onLongPress(e: MotionEvent) {
+            super.onLongPress(e)
+            println("TUSHDIIIIIIIIIIIIIIIII {}$ % D")
+            onLongPressListener.invoke()
+        }
+
+        override fun onDown(e: MotionEvent): Boolean {
+            return super.onDown(e)
+        }
+
         fun cancelDoubleTap() {
             handler.removeCallbacks(stopDoubleTap)
             isDoubleTapping = false
@@ -79,6 +103,12 @@ class DoubleTapPlayerView @JvmOverloads constructor(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         gestureDetector.onTouchEvent(event)
+        when (event.action) {
+            MotionEvent.ACTION_UP -> {
+                setActionUpListener.invoke()
+
+            }
+        }
         return true
     }
 

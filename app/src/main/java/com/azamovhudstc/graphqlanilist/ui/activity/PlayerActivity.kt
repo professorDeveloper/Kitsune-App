@@ -40,6 +40,7 @@ import com.azamovhudstc.graphqlanilist.ui.adapter.CustomAdapter
 import com.azamovhudstc.graphqlanilist.utils.dp
 import com.azamovhudstc.graphqlanilist.utils.hideSystemBars
 import com.azamovhudstc.graphqlanilist.utils.px
+import com.azamovhudstc.graphqlanilist.utils.snackString
 import com.azamovhudstc.graphqlanilist.utils.widgets.DoubleTapPlayerView
 import com.azamovhudstc.graphqlanilist.viewmodel.PlayerViewModel
 import com.google.android.exoplayer2.PlaybackParameters
@@ -73,6 +74,8 @@ class PlayerActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private var isFullscreen: Int = 0
     private var orientationListener: OrientationEventListener? = null
+
+    private var isNormal = true
 
 
     // Top buttons
@@ -326,6 +329,7 @@ class PlayerActivity : AppCompatActivity() {
         return trackDialog
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun prepareButtons() {
         // For Screen Rotation
@@ -357,6 +361,27 @@ class PlayerActivity : AppCompatActivity() {
                     checkNotch()
                 }
         }
+
+        playerView.setLongPressListenerEvent {
+            val currentSpeed = model.player.playbackParameters.speed
+            if (currentSpeed == 1f && model.player.playWhenReady && isNormal) {
+                val params = PlaybackParameters(2f)
+                model.player.setPlaybackParameters(params)
+                snackString("Speed 2x", this@PlayerActivity)
+            }
+        }
+
+
+
+        playerView.setActionUpListener {
+            val currentSpeed = model.player.playbackParameters.speed
+            if (currentSpeed == 2f && model.player.playWhenReady && isNormal) {
+                val params = PlaybackParameters(1f)
+                model.player.setPlaybackParameters(params)
+                snackString("Speed 1x", this@PlayerActivity)
+            }
+        }
+
         brightnessRunnable.run()
         // Custom player views
         exoLock.setOnClickListener {
@@ -375,6 +400,8 @@ class PlayerActivity : AppCompatActivity() {
         nextEpBtn = playerView.findViewById(R.id.exo_next_ep)
         subsToggleButton = playerView.findViewById(R.id.subs_toggle_btn)
 
+
+//        model.player.playbackParameters =
 
         qualityBtn.setOnClickListener {
             initPopupQuality().show()
@@ -400,22 +427,28 @@ class PlayerActivity : AppCompatActivity() {
 
                 when (which) {
                     0 -> {
+                        isNormal = false
                         adapter.setSelected(0)
                         changeVideoSpeed(0.25f)
                     }
                     1 -> {
+                        isNormal = false
                         adapter.setSelected(1)
                         changeVideoSpeed(0.5f)
                     }
                     2 -> {
+                        isNormal = true
+
                         adapter.setSelected(2)
                         changeVideoSpeed(1f)
                     }
                     3 -> {
+                        isNormal = false
                         adapter.setSelected(3)
                         changeVideoSpeed(1.5f)
                     }
                     else -> {
+                        isNormal = false
                         adapter.setSelected(4)
                         changeVideoSpeed(2f)
 
@@ -532,6 +565,9 @@ class PlayerActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+
+
         handleController()
 
     }
@@ -565,6 +601,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun handleController() {
         val overshoot = AnimationUtils.loadInterpolator(this, R.anim.over_shoot)
         val controllerDuration = (1f * 200).toLong()
@@ -600,7 +637,11 @@ class PlayerActivity : AppCompatActivity() {
                 )
                     .apply { interpolator = overshoot;duration = controllerDuration;start() }
                 playerView.postDelayed({ playerView.hideController() }, controllerDuration)
+
+
             } else {
+
+
                 playerView.showController()
                 ObjectAnimator.ofFloat(
                     playerView.findViewById(R.id.exo_controller),
@@ -718,6 +759,13 @@ class PlayerActivity : AppCompatActivity() {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
     }
 
+    override fun onStop() {
+        model.player.pause()
+
+        super.onStop()
+
+    }
+
 
     @SuppressLint("ViewConstructor")
     class ExtendedTimeBar(
@@ -735,6 +783,7 @@ class PlayerActivity : AppCompatActivity() {
             this.forceDisabled = forceDisabled
             isEnabled = enabled
         }
+
         private var previewBitmap: Bitmap? = null
         private val previewPaint = Paint()
 
@@ -753,7 +802,8 @@ class PlayerActivity : AppCompatActivity() {
             val duration = 0L
             if (duration > 0) {
                 val position = 3L
-                val relativePos = if (duration == 0L) 0f else (position.toFloat() / duration.toFloat())
+                val relativePos =
+                    if (duration == 0L) 0f else (position.toFloat() / duration.toFloat())
                 val width = width
                 val previewWidth = previewBitmap?.width ?: 0
                 val previewHeight = previewBitmap?.height ?: 0
