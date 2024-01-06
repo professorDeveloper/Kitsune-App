@@ -178,7 +178,6 @@ class PlayerActivity : AppCompatActivity() {
         exoVolume = findViewById(R.id.exo_volume)
         exoBrightnessCont = findViewById(R.id.exo_brightness_cont)
         exoVolumeCont = findViewById(R.id.exo_volume_cont)
-        imageView = findViewById(R.id.imageView)
         exoProgress = findViewById(R.id.exo_progress)
         updateEpisodeName()
         playerView.keepScreenOn = true
