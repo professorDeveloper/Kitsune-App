@@ -62,14 +62,7 @@ class AnimeWatchAdapter(private val fragment: AnimeWatchPage) :
                 listOf("YUGEN", "ALLANIME")
             )
         )
-        binding.animeSource.setText(
-            binding.animeSource.getAdapter().getItem(0).toString(),
-            false
-        );
         binding.animeSource.setOnItemClickListener { _, view, i, _ ->
-            binding.animeSource.setText(
-                binding.animeSource.getAdapter().getItem(i).toString(),
-            )
             if (!isDoubleClick || i != oldPosition) {
                 listener.invoke(i)
                 isDoubleClick = true

@@ -58,7 +58,7 @@
                 android:inputType="none"
 
                 android:padding="8dp"
-                android:text="Episode Source"
+                android:text="YUGEN"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="14sp"

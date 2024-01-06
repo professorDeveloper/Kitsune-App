@@ -57,9 +57,11 @@ class AllAnimeSource : AnimeSource {
                     mapOf("Referer" to referer)
                 )!!.asJsonObject["data"].asJsonObject["queryPopular"].asJsonObject["recommendations"].asJsonArray
             for (json in res) {
+
                 val animeCard = json.asJsonObject["anyCard"].asJsonObject
                 val name = animeCard["name"].asString
                 val image = allAnimeImage(animeCard["thumbnail"].asString)
+                println(name.toString())
                 val id = animeCard["_id"].asString
                 animeList.add(Pair<String, String>(name, id))
             }
@@ -88,6 +90,8 @@ class AllAnimeSource : AnimeSource {
             val image = allAnimeImage(json.asJsonObject["thumbnail"].asString)
             val id = json.asJsonObject["_id"].asString
             animeList.add(Pair(name, id))
+            println(name.toString())
+            println(image .toString())
         }
         return@withContext animeList
     }

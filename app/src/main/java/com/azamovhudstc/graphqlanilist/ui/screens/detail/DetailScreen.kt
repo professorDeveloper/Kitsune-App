@@ -45,7 +45,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -148,7 +147,7 @@ class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChan
             itemCompactImage.setOnClickListener {
                 ImageViewerHelper.showSimpleImage(
                     requireContext(),
-                    ImageViewerHelper.ImageInfo(media.coverImage!!.large.toString()),
+                    ImageViewerHelper.ImageInfo(animeDetails.coverImage.extraLarge.toString()),
                     itemCompactBannerNoKen,
                     showDownLoadBtn = false
                 )
@@ -201,7 +200,7 @@ class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChan
     override fun onDestroyView() {
         super.onDestroyView()
         this.requireActivity().window.statusBarColor =
-            ContextCompat.getColor(requireContext(), R.color.statusBarColor)
+            ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
         binding = null
 
     }

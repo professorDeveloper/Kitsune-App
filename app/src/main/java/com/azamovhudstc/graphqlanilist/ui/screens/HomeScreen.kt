@@ -28,6 +28,7 @@ import com.azamovhudstc.graphqlanilist.utils.show
 import com.azamovhudstc.graphqlanilist.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -40,7 +41,9 @@ class HomeScreen : Fragment() {
     lateinit var result: SearchResults
     private lateinit var progressAdapter: ProgressAdapter
     private var screenWidth: Float = 0f
+    private lateinit var job: Job
     private lateinit var allAnimePageAdapter: AllAnimePageAdapter
+    private lateinit var allAnimePageAdapterForSearch: AllAnimePageAdapter
     private lateinit var concatAdapter: ConcatAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,13 +103,17 @@ class HomeScreen : Fragment() {
                 }
                 is Resource.Success -> {
                     binding.progress.hide()
-                    binding.searchRecycler.show()
+                    binding.searchRecycler.hide()
+                    binding.mainRv.show()
                     val it = it.data
                     if (it != null) {
-                        viewModel.searchResults.results!!.clear()
-                        allAnimePageAdapter.submitList(it!!.results!!)
+                        allAnimePageAdapterForSearch = AllAnimePageAdapter(
+                            it.results, true, activity = this
+                        )
                         progressAdapter.bar!!.hide()
-                        viewModel.searched = true
+                        binding.mainRv.adapter = allAnimePageAdapterForSearch
+                        binding.mainRv.layoutManager =
+                            GridLayoutManager(requireContext(), (screenWidth / 124f).toInt())
                     }
 
                 }
@@ -121,6 +128,7 @@ class HomeScreen : Fragment() {
                 is Resource.Success -> {
                     val it = it.data
                     if (it != null) {
+                        binding.mainRv.hide()
                         viewModel.searchResults.apply {
                             onList = it.onList
                             isAdult = it.isAdult
@@ -149,24 +157,47 @@ class HomeScreen : Fragment() {
 
                         binding.apply {
                             this.mainSearch.setOnCloseListener {
-                                viewModel.loadNextPage(viewModel.searchResults)
+                                viewModel.loadAllAnimeList()
                                 true
                             }
                             this.mainSearch.setOnQueryTextListener(object :
                                 androidx.appcompat.widget.SearchView.OnQueryTextListener {
                                 override fun onQueryTextSubmit(query: String?): Boolean {
-                                    if (query.toString().isNotEmpty())
-                                        viewModel.onSearchQueryChanged(query.toString())
-                                    else viewModel.loadNextPage(viewModel.searchResults)
+                                    if (query.toString().trim().isNotEmpty()) {
+                                        job = lifecycleScope.launchWhenCreated {
+                                            viewModel.onSearchQueryChanged(query.toString())
+                                        }
+
+                                        job.start()
+                                    } else {
+                                        if (::job.isInitialized) {
+                                            job.cancel()
+                                            binding.mainRv.hide()
+                                            binding.searchRecycler.show()
+                                            binding.mainRv.hide()
+                                            binding.searchRecycler.show()
+                                            binding.searchRecycler.scrollToPosition(0)
+                                        }
+                                    }
 
                                     return true
                                 }
 
                                 override fun onQueryTextChange(newText: String?): Boolean {
-                                    if (newText.toString().isNotEmpty())
-                                        viewModel.onSearchQueryChanged(newText.toString())
-                                    else viewModel.loadNextPage(viewModel.searchResults)
+                                    if (newText.toString().trim().isNotEmpty()) {
+                                        job = lifecycleScope.launchWhenCreated {
+                                            viewModel.onSearchQueryChanged(newText.toString())
+                                        }
+                                        job.start()
 
+                                    } else {
+                                        if (::job.isInitialized) {
+                                            job.cancel()
+                                            binding.mainRv.hide()
+                                            binding.searchRecycler.show()
+                                            binding.searchRecycler.scrollToPosition(0)
+                                        }
+                                    }
                                     return true
 
                                 }
@@ -184,7 +215,7 @@ class HomeScreen : Fragment() {
             RecyclerView.OnScrollListener() {
             override fun onScrolled(v: RecyclerView, dx: Int, dy: Int) {
                 if (!v.canScrollVertically(1)) {
-                    if (viewModel.searchResults.hasNextPage && viewModel.searchResults.results!!.isNotEmpty() && !loading && !viewModel.searched) {
+                    if (viewModel.searchResults.hasNextPage && viewModel.searchResults.results!!.isNotEmpty() && !loading) {
                         lifecycleScope.launch(Dispatchers.IO) {
                             viewModel.loadNextPage(viewModel.searchResults)
                         }

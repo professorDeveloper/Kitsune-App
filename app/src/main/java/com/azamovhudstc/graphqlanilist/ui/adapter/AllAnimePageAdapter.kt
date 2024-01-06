@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.SearchByAnyQuery
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AniListMedia
+import com.azamovhudstc.graphqlanilist.data.model.ui_models.MediaCoverImage
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.MediaTitle
 import com.azamovhudstc.graphqlanilist.databinding.CompatAllAnimeBinding
 import com.azamovhudstc.graphqlanilist.fragment.HomeMedia
@@ -53,12 +54,18 @@ class AllAnimePageAdapter(
     private fun clicked(bindingAdapterPosition: Int) {
         val bundle = Bundle()
         val anilistMedia = AniListMedia(
+
             list?.get(bindingAdapterPosition)!!.homeMedia.id,
             list!!.get(bindingAdapterPosition)!!.homeMedia.idMal ?: 0,
             MediaTitle(
                 list!!.get(bindingAdapterPosition)!!.homeMedia.title?.romaji ?: "",
                 list!!.get(bindingAdapterPosition)!!.homeMedia.title?.userPreferred ?: "",
                 list!!.get(bindingAdapterPosition)!!.homeMedia.title?.romaji.toString()
+            ),
+            coverImage = MediaCoverImage(
+                list?.get(bindingAdapterPosition)!!.homeMedia.coverImage?.extraLarge!!,
+                list?.get(bindingAdapterPosition)!!.homeMedia.coverImage?.large!!,
+                list?.get(bindingAdapterPosition)!!.homeMedia?.coverImage?.medium!!
             )
         )
         bundle.putSerializable("data", anilistMedia)
@@ -87,7 +94,7 @@ class AllAnimePageAdapter(
         return list!!.size
     }
 
-    fun submitList(newList: ArrayList<SearchByAnyQuery.Medium?>) {
+    fun submitList(newList: ArrayList<SearchByAnyQuery.Medium>) {
         list = newList
     }
 }

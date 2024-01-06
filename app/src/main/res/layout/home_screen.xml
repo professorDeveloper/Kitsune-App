@@ -3,7 +3,6 @@
   ~  Copyright (c) 2023 . All rights reserved.
   ~  Last modified 11/21/23, 2:02 AM
   ~
-  ~
   -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -29,7 +28,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:paddingHorizontal="10dp"
             android:paddingTop="4dp"
             app:layout_scrollEffect="compress"
@@ -80,6 +79,26 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:clipToPadding="false"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:requiresFadingEdge="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:spanCount="3"
+        tools:itemCount="12"
+        tools:listitem="@layout/item_vertical_layout" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mainRv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
