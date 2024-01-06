@@ -79,7 +79,7 @@ class HomeScreen : Fragment() {
         binding.toolbar.setOnMenuItemClickListener {
             var item = it.itemId
             when (item) {
-                R.id.more -> {
+                R.id.donate -> {
                     println("Bosildi")
 
                     return@setOnMenuItemClickListener true

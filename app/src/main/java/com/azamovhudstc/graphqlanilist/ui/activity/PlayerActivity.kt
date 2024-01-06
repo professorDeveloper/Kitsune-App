@@ -43,6 +43,7 @@ import com.azamovhudstc.graphqlanilist.viewmodel.PlayerViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.github.rubensousa.previewseekbar.PreviewBar
+import com.github.rubensousa.previewseekbar.PreviewLoader
 import com.github.rubensousa.previewseekbar.media3.PreviewTimeBar
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
@@ -69,6 +70,7 @@ class PlayerActivity : AppCompatActivity() {
     private val model by viewModels<PlayerViewModel>()
     private var quality: String = "Auto"
     private lateinit var animePlayingDetails: AnimePlayingDetails
+    private lateinit var binding: ActivityPlayerBinding
     private lateinit var exoTopControllers: LinearLayout
     private lateinit var exoMiddleControllers: LinearLayout
     private lateinit var exoBottomControllers: LinearLayout
@@ -87,7 +89,6 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var scaleBtn: ImageButton
     private lateinit var exoRotate: ImageButton
     private lateinit var qualityBtn: ImageButton
-    private lateinit var imageView: ImageView
     private lateinit var prevEpBtn: ImageButton
     private var doubleBackToExitPressedOnce: Boolean = false
     private lateinit var backPressSnackBar: Snackbar
@@ -105,7 +106,6 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var exoBrightnessCont: View
     private lateinit var exoVolumeCont: View
     var rotation = 0
-    private lateinit var previewTimeBar: PreviewTimeBar
 
 
     override fun onAttachedToWindow() {
@@ -899,7 +899,6 @@ class PlayerActivity : AppCompatActivity() {
         isEnabled = false
         isFocusable = false
     }
-
 
 
 }

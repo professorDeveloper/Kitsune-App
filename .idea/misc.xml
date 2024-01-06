@@ -13,6 +13,7 @@
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/ic_baseline_navigate_before_24.xml" value="0.2155" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/ic_baseline_zoom_out_map_24.xml" value="0.2155" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/ic_fast_forward_24.xml" value="0.1825" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/ic_round_accessible_forward_24.xml" value="0.2825" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/ic_round_grid_view_24.xml" value="0.2155" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/icon_triangle.xml" value="0.2155" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/drawable/search_background.xml" value="0.2155" />
@@ -34,7 +35,7 @@
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_detail_another_screen.xml" value="0.2988679352838745" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_episode_container.xml" value="0.321875" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/fragment_splash_screen.xml" value="0.24140625" />
-        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/home_screen.xml" value="0.19924529018924966" />
+        <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/home_screen.xml" value="0.2264151024877837" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_all_anime.xml" value="0.24140625" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_anime_details.xml" value="0.32083333333333336" />
         <entry key="..\:/gits/ApolloAndroid/app/src/main/res/layout/item_character.xml" value="0.32083333333333336" />
