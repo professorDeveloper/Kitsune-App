@@ -32,6 +32,7 @@ import com.azamovhudstc.graphqlanilist.ui.adapter.EpisodesAdapter
 import com.azamovhudstc.graphqlanilist.utils.*
 import com.azamovhudstc.graphqlanilist.viewmodel.AnimeWatchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.roundToInt
@@ -77,7 +78,6 @@ class AnimeWatchPage() :
                     binding.animeNotSupported.hide()
                     episodeAdapter.list = emptyList()
                     binding.mediaInfoProgressBar.show()
-                    val list = animeSource.searchAnime(media.title!!.native)
                     model.loadEpisodesImg(media.idMal!!)
                     model.imageList.observe(viewLifecycleOwner) {
                         when (it) {
@@ -89,6 +89,7 @@ class AnimeWatchPage() :
                             }
                             is Result.Success -> {
                                 lifecycleScope.launch {
+                                    val list = animeSource.searchAnime(media.title!!.native)
                                     val episodeListForAdapter = ArrayList<Data>()
                                     if (list.isNotEmpty()) {
                                         val animeEpisodesMap =
@@ -255,35 +256,6 @@ class AnimeWatchPage() :
         binding.animeSourceRecycler.layoutManager = gridLayoutManager
 
         binding.animeSourceRecycler.adapter = ConcatAdapter(headerAdapter, episodeAdapter)
-
-        model.episodeListLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is Result.Error -> {
-                    episodeAdapter.notifyDataSetChanged()
-                    binding.animeSourceRecycler.show()
-                    binding.animeNotSupported.show()
-                    binding.mediaInfoProgressBar.hide()
-
-                }
-                Result.Loading -> {
-                    binding.animeSourceRecycler.hide()
-                    binding.mediaInfoProgressBar.show()
-                }
-                is Result.Success -> {
-                    binding.animeSourceRecycler.show()
-                    binding.mediaInfoProgressBar.hide()
-                    binding.apply {
-                        list = it.data.data as ArrayList<Data>
-                        episodeAdapter.list = it.data.data
-                        episodeAdapter.list = list.reversed()
-                        episodeAdapter.notifyDataSetChanged()
-
-
-                    }
-                    logMessage(it.data.data.toString())
-                }
-            }
-        }
     }
 
     fun onIconPressed(style: Int, reversed: Boolean) {

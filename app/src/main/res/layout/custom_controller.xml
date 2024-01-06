@@ -389,6 +389,7 @@
             </LinearLayout>
 
 
+
             <view
                 android:id="@+id/exo_progress"
                 class="com.azamovhudstc.graphqlanilist.ui.activity.PlayerActivity$ExtendedTimeBar"

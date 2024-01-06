@@ -28,21 +28,26 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:layout_marginTop="16dp"
+
+            android:layout_marginTop="8dp"
             android:paddingHorizontal="10dp"
             android:paddingTop="4dp"
             app:layout_scrollEffect="compress"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap"
+            app:menu="@menu/home_menu"
             app:title="Kitsune"
             app:titleCentered="false"
+
             app:titleTextColor="@color/white" />
 
 
         <FrameLayout
             android:id="@+id/frameLayout"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/search_background"
             android:padding="5dp"
             android:requiresFadingEdge="vertical"
@@ -83,8 +88,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:clipToPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="4dp"
+
+        android:paddingEnd="4dp"
         android:requiresFadingEdge="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -103,8 +109,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:clipToPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:requiresFadingEdge="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

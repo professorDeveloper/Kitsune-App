@@ -8,14 +8,14 @@
 
 <resources>
 
-    <style name="Theme.GraphQLAnilist" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.GraphQLAnilist" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="windowActionBar">false</item>
         <item name="elevationOverlayEnabled">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:unfocusedMonthDateColor">@color/darkBlue</item>
-        <item name="colorAccent">#ADFFFFFF</item>
+        <item name="colorAccent">@color/colorPrimaryLight</item>
         <item name="android:statusBarColor">#25B8B8B8</item>
 
         <!-- Primary brand color. -->
@@ -41,6 +41,10 @@
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="android:colorBackground">@color/colorPrimaryDark
         </item>        <!-- Customize your theme here. -->
+        <item name="popupTheme">@style/PopupMenuTheme</item>
+    </style>
+    <style name="PopupMenuTheme" parent="Theme.AppCompat.Light">
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
 

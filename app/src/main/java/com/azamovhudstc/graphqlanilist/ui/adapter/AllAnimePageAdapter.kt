@@ -43,7 +43,6 @@ class AllAnimePageAdapter(
 
         fun onBind(media: HomeMedia) {
             binding.apply {
-                setAnimation(activity.requireActivity(), binding.root)
                 itemImg.loadImage(media.coverImage?.medium ?: Constants.IMAGE_URL)
                 titleItem.text = media.title?.userPreferred
             }

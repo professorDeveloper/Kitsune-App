@@ -37,12 +37,13 @@ import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.data.model.ui_models.AnimePlayingDetails
 import com.azamovhudstc.graphqlanilist.databinding.ActivityPlayerBinding
 import com.azamovhudstc.graphqlanilist.ui.adapter.CustomAdapter
-import com.azamovhudstc.graphqlanilist.utils.dp
-import com.azamovhudstc.graphqlanilist.utils.hideSystemBars
-import com.azamovhudstc.graphqlanilist.utils.px
-import com.azamovhudstc.graphqlanilist.utils.snackString
+import com.azamovhudstc.graphqlanilist.utils.*
 import com.azamovhudstc.graphqlanilist.utils.widgets.DoubleTapPlayerView
 import com.azamovhudstc.graphqlanilist.viewmodel.PlayerViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
+import com.github.rubensousa.previewseekbar.PreviewBar
+import com.github.rubensousa.previewseekbar.media3.PreviewTimeBar
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.CaptionStyleCompat
@@ -60,6 +61,7 @@ import java.net.CookieManager
 import java.net.CookiePolicy
 import kotlin.math.min
 
+
 @AndroidEntryPoint
 class PlayerActivity : AppCompatActivity() {
     private var notchHeight: Int = 0
@@ -67,7 +69,6 @@ class PlayerActivity : AppCompatActivity() {
     private val model by viewModels<PlayerViewModel>()
     private var quality: String = "Auto"
     private lateinit var animePlayingDetails: AnimePlayingDetails
-    private lateinit var binding: ActivityPlayerBinding
     private lateinit var exoTopControllers: LinearLayout
     private lateinit var exoMiddleControllers: LinearLayout
     private lateinit var exoBottomControllers: LinearLayout
@@ -86,6 +87,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var scaleBtn: ImageButton
     private lateinit var exoRotate: ImageButton
     private lateinit var qualityBtn: ImageButton
+    private lateinit var imageView: ImageView
     private lateinit var prevEpBtn: ImageButton
     private var doubleBackToExitPressedOnce: Boolean = false
     private lateinit var backPressSnackBar: Snackbar
@@ -103,6 +105,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var exoBrightnessCont: View
     private lateinit var exoVolumeCont: View
     var rotation = 0
+    private lateinit var previewTimeBar: PreviewTimeBar
 
 
     override fun onAttachedToWindow() {
@@ -175,6 +178,7 @@ class PlayerActivity : AppCompatActivity() {
         exoVolume = findViewById(R.id.exo_volume)
         exoBrightnessCont = findViewById(R.id.exo_brightness_cont)
         exoVolumeCont = findViewById(R.id.exo_volume_cont)
+        imageView = findViewById(R.id.imageView)
         exoProgress = findViewById(R.id.exo_progress)
         updateEpisodeName()
         playerView.keepScreenOn = true
@@ -896,6 +900,7 @@ class PlayerActivity : AppCompatActivity() {
         isEnabled = false
         isFocusable = false
     }
+
 
 
 }

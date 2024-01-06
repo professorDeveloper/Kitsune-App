@@ -8,6 +8,7 @@
 
 package com.azamovhudstc.graphqlanilist.ui.screens
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.data.model.SearchResults
 import com.azamovhudstc.graphqlanilist.databinding.HomeScreenBinding
 import com.azamovhudstc.graphqlanilist.ui.adapter.AllAnimePageAdapter
@@ -74,6 +76,20 @@ class HomeScreen : Fragment() {
 
         initPagination()
         observerLoadData()
+        binding.toolbar.setOnMenuItemClickListener {
+            var item = it.itemId
+            when (item) {
+                R.id.more -> {
+                    println("Bosildi")
+
+                    return@setOnMenuItemClickListener true
+                }
+                else -> {
+
+                    return@setOnMenuItemClickListener true
+                }
+            }
+        }
     }
 
     private fun initUIWithLocalData() {
@@ -110,7 +126,7 @@ class HomeScreen : Fragment() {
                         allAnimePageAdapterForSearch = AllAnimePageAdapter(
                             it.results, true, activity = this
                         )
-                        progressAdapter.bar!!.hide()
+//                        progressAdapter.bar!!.hide()
                         binding.mainRv.adapter = allAnimePageAdapterForSearch
                         binding.mainRv.layoutManager =
                             GridLayoutManager(requireContext(), (screenWidth / 124f).toInt())
@@ -176,7 +192,6 @@ class HomeScreen : Fragment() {
                                             binding.searchRecycler.show()
                                             binding.mainRv.hide()
                                             binding.searchRecycler.show()
-                                            binding.searchRecycler.scrollToPosition(0)
                                         }
                                     }
 
@@ -195,7 +210,6 @@ class HomeScreen : Fragment() {
                                             job.cancel()
                                             binding.mainRv.hide()
                                             binding.searchRecycler.show()
-                                            binding.searchRecycler.scrollToPosition(0)
                                         }
                                     }
                                     return true
@@ -246,6 +260,21 @@ class HomeScreen : Fragment() {
 
     private var searchTimer = Timer()
     private var loading = false
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onResume() {
+        super.onResume()
+        if (::allAnimePageAdapter.isInitialized) {
+            println("Tushdiiii :!:!:!:!")
+            binding.searchRecycler.layoutManager =
+                GridLayoutManager(requireContext(), (screenWidth / 124f).toInt())
+
+            allAnimePageAdapter.notifyDataSetChanged()
+
+        }
+        viewModel.loadAllAnimeList()
+    }
 
     fun loadData() {
         val size = viewModel.searchResults.results!!.size

@@ -58,7 +58,7 @@
                 android:inputType="none"
 
                 android:padding="8dp"
-                android:text="YUGEN"
+                android:text="SELECT SOURCE"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="14sp"
