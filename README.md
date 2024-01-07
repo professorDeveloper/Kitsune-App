@@ -44,6 +44,7 @@ Kitsune is crafted based on simplistic yet state-of-the-art elegance. It is an [
 
 # Photos
 <img width="4619" alt="Kitsune (3)" src="https://github.com/professorDeveloper/Kitsune-App/assets/88382789/210d6a63-45c4-4d43-84d7-f315e8fe5c4d">
+
 ![Kitsune details (2)](https://github.com/professorDeveloper/Kitsune-App/assets/88382789/8abb6841-5712-49dc-b228-45f52b847d52)
 
 
