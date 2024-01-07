@@ -142,7 +142,7 @@ class AllAnimeSource : AnimeSource {
             if (data != null) {
                 val subNum = data["lastEpisodeInfo"].asJsonObject["sub"].asJsonObject["episodeString"].asString
                 val subEpMap = (1..subNum.toInt()).associate { it.toString() to it.toString() }
-                 allEps = mutableMapOf("SUB" to subEpMap)
+                allEps = mutableMapOf("SUB" to subEpMap)
                 try {
                     val dubNum =
                         data["lastEpisodeInfo"].asJsonObject["dub"].asJsonObject["episodeString"].asString

@@ -238,7 +238,7 @@ fun snackString(s: String?, activity: Activity? = null, clipboard: String? = nul
                         Color.parseColor("#9E120F0F") // Set the background color if needed
                     shapeDrawable.paint.style = Paint.Style.FILL
                     shapeDrawable.shape = RoundRectShape(
-                        floatArrayOf(20f, 20f, 20f, 20f, 20f, 20f, 20f, 20f),
+                        floatArrayOf(120f, 120f, 120f, 120f, 120f, 120f, 120f, 120f),
                         null,
                         null
                     )

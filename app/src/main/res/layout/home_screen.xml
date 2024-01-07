@@ -37,17 +37,14 @@
             app:menu="@menu/home_menu"
             app:title="Kitsune"
             app:titleCentered="false"
-
             app:titleTextColor="@color/white" />
 
 
         <FrameLayout
             android:id="@+id/frameLayout"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="16dp"
+            android:layout_margin="20dp"
             android:background="@drawable/search_background"
             android:padding="5dp"
             android:requiresFadingEdge="vertical"
@@ -88,9 +85,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:clipToPadding="false"
-        android:paddingStart="4dp"
-
-        android:paddingEnd="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:requiresFadingEdge="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

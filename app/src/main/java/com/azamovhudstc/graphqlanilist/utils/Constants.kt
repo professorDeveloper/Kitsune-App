@@ -16,9 +16,9 @@ import coil.map.Mapper
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.google.android.material.snackbar.Snackbar
-import dev.brahmkshatriya.nicehttp.Requests
-import dev.brahmkshatriya.nicehttp.ResponseParser
-import dev.brahmkshatriya.nicehttp.addGenericDns
+import com.lagradost.nicehttp.Requests
+import com.lagradost.nicehttp.ResponseParser
+import com.lagradost.nicehttp.addGenericDns
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.decodeFromString
@@ -79,6 +79,7 @@ fun initializeNetwork(context: Context) {
     )
 }
 
+
 object Mapper : ResponseParser {
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -99,6 +100,10 @@ object Mapper : ResponseParser {
         } catch (e: Exception) {
             null
         }
+    }
+
+    override fun writeValueAsString(obj: Any): String {
+        TODO("Not yet implemented")
     }
 
     inline fun <reified T> parse(text: String): T {
