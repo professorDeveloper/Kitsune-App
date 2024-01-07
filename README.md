@@ -48,8 +48,7 @@ Kitsune is crafted based on simplistic yet state-of-the-art elegance. It is an [
 
 
 
-## VISITORS
-<img src="https://count.getloli.com/get/@:professorDeveloperkitsune-app" alt=":professorDeveloperkitsune-app" />
+
   
 
 ## License
