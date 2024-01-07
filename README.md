@@ -23,7 +23,7 @@ Kitsune is crafted based on simplistic yet state-of-the-art elegance. It is an [
 </p>
 
 
-#  🎯Main Features 🛠
+#  🎯 Main Features 🛠
   
   - 📌 Comfort Search 
   - 📌 Get Anime FullData By AniList 
