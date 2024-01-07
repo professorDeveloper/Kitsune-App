@@ -9,10 +9,13 @@
 package com.azamovhudstc.graphqlanilist.ui.screens
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,9 +27,7 @@ import com.azamovhudstc.graphqlanilist.data.model.SearchResults
 import com.azamovhudstc.graphqlanilist.databinding.HomeScreenBinding
 import com.azamovhudstc.graphqlanilist.ui.adapter.AllAnimePageAdapter
 import com.azamovhudstc.graphqlanilist.ui.adapter.ProgressAdapter
-import com.azamovhudstc.graphqlanilist.utils.Resource
-import com.azamovhudstc.graphqlanilist.utils.hide
-import com.azamovhudstc.graphqlanilist.utils.show
+import com.azamovhudstc.graphqlanilist.utils.*
 import com.azamovhudstc.graphqlanilist.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -60,6 +61,7 @@ class HomeScreen : Fragment() {
         return _binding?.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         screenWidth = resources.displayMetrics.run { widthPixels / density }
         initUIWithLocalData()
@@ -80,8 +82,34 @@ class HomeScreen : Fragment() {
             var item = it.itemId
             when (item) {
                 R.id.donate -> {
-                    println("Bosildi")
+                    var dialog = CustomBottomDialog.newInstance().apply {
+                        title = "Enjoying the App"
+                        addView(TextView(binding.root.context).apply {
+                            textSize = 18f
+                            text =
+                                "If the number of Our Users exceeds 1000\n\n" +
+                                        "- User Search\n" +
+                                        "- Chat\n" +
+                                        "- Download Menu\n" +
+                                        "\nSome Project all   >_<"
+                        })
 
+                        setNegativeButton("Not now :(") {
+                            dismiss()
+                        }
+
+                        setPositiveButton("Donate :)") {
+                            tryWith {
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("https://www.buymeacoffee.com/chihaku")
+                                )
+                                binding.root.context.startActivity(intent)
+                            }
+                            dismiss()
+                        }
+                    }
+                    dialog.show(parentFragmentManager, "justDialog")
                     return@setOnMenuItemClickListener true
                 }
                 else -> {

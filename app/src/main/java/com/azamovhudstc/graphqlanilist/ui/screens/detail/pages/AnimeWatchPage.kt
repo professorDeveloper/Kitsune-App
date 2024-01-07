@@ -29,10 +29,12 @@ import com.azamovhudstc.graphqlanilist.source.source_imp.YugenSource
 import com.azamovhudstc.graphqlanilist.ui.activity.PlayerActivity
 import com.azamovhudstc.graphqlanilist.ui.adapter.AnimeWatchAdapter
 import com.azamovhudstc.graphqlanilist.ui.adapter.EpisodesAdapter
-import com.azamovhudstc.graphqlanilist.utils.*
+import com.azamovhudstc.graphqlanilist.utils.Result
+import com.azamovhudstc.graphqlanilist.utils.dp
+import com.azamovhudstc.graphqlanilist.utils.hide
+import com.azamovhudstc.graphqlanilist.utils.show
 import com.azamovhudstc.graphqlanilist.viewmodel.AnimeWatchViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.roundToInt
@@ -100,11 +102,11 @@ class AnimeWatchPage() :
                                         var count = 0
                                         for (s in 0 until epList.size) {
                                             var data = epList.get(s)
-                                            if (it.data.data.size > s) {
+                                            if (it.data.data.size > s && it.data.data.get(s).images != null) {
                                                 episodeListForAdapter.add(
                                                     Data(
                                                         " Episode ${data}",
-                                                        Images(Jpg(it.data.data.get(s).images.jpg.image_url)),
+                                                        Images(Jpg(it.data.data.get(s).images!!.jpg.image_url)),
                                                         data.toInt(),
                                                         "${list.get(0).first} $data",
                                                         "?NIULLLLAAABLEEE"
