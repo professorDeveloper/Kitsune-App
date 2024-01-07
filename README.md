@@ -43,7 +43,7 @@ Kitsune is crafted based on simplistic yet state-of-the-art elegance. It is an [
   - 📌 Change Video Speed and Quality
 
 # Photos
-<img width="5000" alt="Kitsune (2)" src="https://github.com/professorDeveloper/Kitsune-App/assets/88382789/6efa0c39-6272-4dd9-866f-8adb70a58929">
+<img width="4619" alt="Kitsune (3)" src="https://github.com/professorDeveloper/Kitsune-App/assets/88382789/210d6a63-45c4-4d43-84d7-f315e8fe5c4d">
 
 ![image](https://github.com/professorDeveloper/ApolloAndroid/assets/108933534/b6a4c965-32e5-4ad9-9460-a9866aaef82e)
 
