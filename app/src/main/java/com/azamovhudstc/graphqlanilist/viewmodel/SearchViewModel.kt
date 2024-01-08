@@ -35,6 +35,8 @@ class SearchViewModel @Inject constructor(
     val searchResult: MutableLiveData<com.azamovhudstc.graphqlanilist.utils.Resource<SearchResults>> =
         MutableLiveData()
     var searched = false
+    var searchedForMain = false
+    var query=""
     var notSet = true
     lateinit var searchResults: SearchResults
     private val _searchList = MutableStateFlow<PagingData<AniListMedia>>(PagingData.empty())

@@ -87,22 +87,18 @@ class HomeScreen : Fragment() {
                         addView(TextView(binding.root.context).apply {
                             textSize = 18f
                             text =
-                                "If the number of Our Users exceeds 1000\n\n" +
+                                "If our Github project reaches 130 Likes I will add these\n\n" +
                                         "- User Search\n" +
                                         "- Chat\n" +
                                         "- Download Menu\n" +
-                                        "\nSome Project all   >_<"
+                                        "\nYour Like is a gift for us"
                         })
 
-                        setNegativeButton("Not now :(") {
-                            dismiss()
-                        }
-
-                        setPositiveButton("Donate :)") {
+                        setPositiveButton("Like Project :)") {
                             tryWith {
                                 val intent = Intent(
                                     Intent.ACTION_VIEW,
-                                    Uri.parse("https://www.buymeacoffee.com/chihaku")
+                                    Uri.parse("https://github.com/professorDeveloper/Kitsune-App")
                                 )
                                 binding.root.context.startActivity(intent)
                             }
@@ -210,6 +206,8 @@ class HomeScreen : Fragment() {
                                     if (query.toString().trim().isNotEmpty()) {
                                         job = lifecycleScope.launchWhenCreated {
                                             viewModel.onSearchQueryChanged(query.toString())
+                                            viewModel.searchedForMain = true
+                                            viewModel.query = query.toString()
                                         }
 
                                         job.start()
@@ -230,6 +228,8 @@ class HomeScreen : Fragment() {
                                     if (newText.toString().trim().isNotEmpty()) {
                                         job = lifecycleScope.launchWhenCreated {
                                             viewModel.onSearchQueryChanged(newText.toString())
+                                            viewModel.searchedForMain = true
+                                            viewModel.query = newText.toString()
                                         }
                                         job.start()
 
@@ -293,15 +293,14 @@ class HomeScreen : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
-        if (::allAnimePageAdapter.isInitialized) {
-            println("Tushdiiii :!:!:!:!")
-            binding.searchRecycler.layoutManager =
-                GridLayoutManager(requireContext(), (screenWidth / 124f).toInt())
-
-            allAnimePageAdapter.notifyDataSetChanged()
-
+        if (viewModel.searchedForMain && viewModel.query.isNotEmpty()) {
+            viewModel.onSearchQueryChanged(viewModel.query)
+            println("tushdi")
+            viewModel.query=""
+            viewModel.searchedForMain=false
+        } else {
+            loadData()
         }
-        viewModel.loadAllAnimeList()
     }
 
     fun loadData() {

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
   ~  Copyright (c) 2023 . All rights reserved.
   ~  Last modified 11/21/23, 2:02 AM
@@ -64,7 +63,8 @@
                 android:backgroundTintMode="multiply"
                 android:orientation="horizontal"
                 android:paddingStart="8dp"
-                android:paddingEnd="6dp">
+                android:paddingEnd="6dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/itemCompactScore"

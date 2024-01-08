@@ -38,7 +38,7 @@ class EpisodesRepositoryImpl @Inject constructor(private val api: JikanApi) : Ep
         response.enqueue(object : Callback<JikanResponse> {
             override fun onResponse(call: Call<JikanResponse>, response: Response<JikanResponse>) {
                 if (response.isSuccessful) {
-                    if (response.body() != null) {
+                    if (response.body() != null ) {
                         pageSuccessListener.invoke(response.body()!!)
                     }
                 } else {
@@ -60,7 +60,7 @@ class EpisodesRepositoryImpl @Inject constructor(private val api: JikanApi) : Ep
 
         response.enqueue(object : Callback<JikanResponse> {
             override fun onResponse(call: Call<JikanResponse>, response: Response<JikanResponse>) {
-                if (response.isSuccessful) {
+                if (response.isSuccessful && response.body() != null) {
                     successListener.invoke(response.body()!!)
                 } else {
                     logError(Exception(response.errorBody()!!.string()))

@@ -175,6 +175,8 @@ class DetailScreen : Fragment(R.layout.detail_screen), AppBarLayout.OnOffsetChan
 
         binding?.apply {
 
+            logMessage(media.id!!.toString())
+
             mMaxScrollSize = binding!!.mediaAppBar.totalScrollRange
             binding!!.mediaAppBar.addOnOffsetChangedListener(this@DetailScreen)
             adapter = TabAdapter(media = data, uiData = uiData, requireActivity())
