@@ -55,6 +55,10 @@ fun DetailFullDataQuery.StartDate.toSortString(): String {
     val a = if (month != null) DateFormatSymbols().months[month - 1] else ""
     return (if (day != null) "$day " else "") + a + (if (year != null) ", $year" else "")
 }
+fun String.removeEmTagsWithRegex(): String {
+    val regex = Regex("<em>(.*?)</em>")
+    return regex.replace(this, "$1")
+}
 
 suspend fun <T> tryWithSuspend(
     post: Boolean = false,

@@ -149,7 +149,7 @@ class PlayerViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 println("STREAM GET LINK")
                 val animeSource: AnimeSource = SourceSelector(app).getSelectedSource(PlayerActivity.sourceType)
-                animeSource.streamLink(animeUrl, animeEpCode, extras).apply {
+                animeSource.streamLink(animeEpCode, animeUrl, extras).apply {
                     _animeStreamLink.postValue(this@apply)
                     withContext(Dispatchers.Main) {
                         if (!savedDone.value || getNextEp) {
