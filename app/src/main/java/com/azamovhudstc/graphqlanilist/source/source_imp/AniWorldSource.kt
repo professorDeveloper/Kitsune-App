@@ -17,12 +17,14 @@ import com.azamovhudstc.scarpingtutorial.aniworld.AniworldSearchData
 import com.azamovhudstc.graphqlanilist.data.model.EpisodeData
 import com.azamovhudstc.graphqlanilist.utils.logMessage
 import com.azamovhudstc.graphqlanilist.utils.removeEmTagsWithRegex
+import com.azamovhudstc.scarpingtutorial.aniworld.AniworldSearchDataItem
 import com.azamovhudstc.scarpingtutorial.aniworld.EpisodeFullData
 import com.lagradost.nicehttp.Requests
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.lang.Exception
 
 class AniWorldSource : AnimeSource {
     private val mainUrl = "https://aniworld.to"
@@ -37,28 +39,32 @@ class AniWorldSource : AnimeSource {
 
 
     private suspend fun searchAnimeInAniWord(keyWord: String) =withContext(Dispatchers.IO){
-        val request = Requests(baseClient = okHttpClient)
-        val requestBody: RequestBody = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart(
-                "keyword",
-                keyWord,
-            )
-            .build()
+        try {
+            val request = Requests(baseClient = okHttpClient)
+            val requestBody: RequestBody = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart(
+                    "keyword",
+                    keyWord,
+                )
+                .build()
 
-        val data = request.post(
-            "https://aniworld.to/ajax/search",
-            requestBody = requestBody,
-            responseParser = parser
-        )
-        return@withContext data.parsed<AniworldSearchData>()
+            val data = request.post(
+                "https://aniworld.to/ajax/search",
+                requestBody = requestBody,
+                responseParser = parser
+            )
+            return@withContext data.parsed<AniworldSearchData>()
+        }catch (e:Exception){
+            return@withContext emptyList<AniworldSearchDataItem>()
+        }
     }
 
     override suspend fun searchAnime(text: String) =        withContext(Dispatchers.IO){
         val list = arrayListOf<Pair<String, String>>()
 
         searchAnimeInAniWord(text).onEach {
-            list.add(Pair(it.title, it.link))
+            list.add(Pair(it.title.removeEmTagsWithRegex(), it.link))
         }
         return@withContext list
     }

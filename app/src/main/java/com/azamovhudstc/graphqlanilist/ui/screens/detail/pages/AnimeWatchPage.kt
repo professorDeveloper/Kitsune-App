@@ -109,7 +109,7 @@ class AnimeWatchPage() :
                                         var count = 0
                                         for (s in 0 until epList.size) {
                                             var data = epList.get(s)
-                                            if (it.data.data.size > s && it.data.data.get(s).images != null && media.idAniList != 1535) {
+                                            if (it.data.data.size > s && it.data.data.get(s).images != null && media.idAniList != 1535&&it.data.data.size!=0) {
                                                 episodeListForAdapter.add(
                                                     Data(
                                                         " Episode ${data}",
