@@ -51,7 +51,7 @@ class AnimeWatchPage() :
     private lateinit var epType: String
     private var _binding: FragmentAnimeWatchPageBinding? = null
     private val binding get() = _binding!!
-    private var isOnlyOne = false
+    private var isOnlyOne = true
     private var style = 0
     var screenWidth = 0
     private val model by activityViewModels<AnimeWatchViewModel>()
@@ -84,7 +84,10 @@ class AnimeWatchPage() :
                     binding.animeNotSupported.hide()
                     episodeAdapter.list = emptyList()
                     binding.mediaInfoProgressBar.show()
-                    model.loadEpisodesImg(media.idMal!!)
+                    if (isOnlyOne){
+                        model.loadEpisodesImg(media.idMal!!)
+                        isOnlyOne=false
+                    }
                     model.imageList.observe(viewLifecycleOwner) {
                         when (it) {
                             is Result.Error -> {
@@ -166,8 +169,6 @@ class AnimeWatchPage() :
                             }
                         }
                     }
-
-
                 }
             }
             else  if (it==1){
