@@ -11,6 +11,7 @@ package com.azamovhudstc.graphqlanilist.ui.activity
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.*
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -40,11 +41,6 @@ import com.azamovhudstc.graphqlanilist.ui.adapter.CustomAdapter
 import com.azamovhudstc.graphqlanilist.utils.*
 import com.azamovhudstc.graphqlanilist.utils.widgets.DoubleTapPlayerView
 import com.azamovhudstc.graphqlanilist.viewmodel.PlayerViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
-import com.github.rubensousa.previewseekbar.PreviewBar
-import com.github.rubensousa.previewseekbar.PreviewLoader
-import com.github.rubensousa.previewseekbar.media3.PreviewTimeBar
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.CaptionStyleCompat
@@ -71,6 +67,7 @@ class PlayerActivity : AppCompatActivity() {
     private var quality: String = "Auto"
     private lateinit var animePlayingDetails: AnimePlayingDetails
     private lateinit var binding: ActivityPlayerBinding
+    private var mBackstackLost =true
     private lateinit var exoTopControllers: LinearLayout
     private lateinit var exoMiddleControllers: LinearLayout
     private lateinit var exoBottomControllers: LinearLayout
@@ -153,7 +150,7 @@ class PlayerActivity : AppCompatActivity() {
         //Initialize
         hideSystemBars()
         onBackPressedDispatcher.addCallback(this) {
-            finishAndRemoveTask()
+            finish()
         }
 
 
@@ -434,22 +431,26 @@ class PlayerActivity : AppCompatActivity() {
                         adapter.setSelected(0)
                         changeVideoSpeed(0.25f)
                     }
+
                     1 -> {
                         isNormal = false
                         adapter.setSelected(1)
                         changeVideoSpeed(0.5f)
                     }
+
                     2 -> {
                         isNormal = true
 
                         adapter.setSelected(2)
                         changeVideoSpeed(1f)
                     }
+
                     3 -> {
                         isNormal = false
                         adapter.setSelected(3)
                         changeVideoSpeed(1.5f)
                     }
+
                     else -> {
                         isNormal = false
                         adapter.setSelected(4)
@@ -483,7 +484,8 @@ class PlayerActivity : AppCompatActivity() {
             // API >= 26 check
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 if (status) {
-                    this.enterPictureInPictureMode(PictureInPictureParams.Builder().build())
+                    this.enterPictureInPictureMode(
+                        PictureInPictureParams.Builder().build())
                     playerView.useController = false
                     pipStatus = false
                 } else {
@@ -510,6 +512,7 @@ class PlayerActivity : AppCompatActivity() {
                     playerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH
                 }
             }
+
             1 -> {
                 playerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
             }
@@ -528,6 +531,7 @@ class PlayerActivity : AppCompatActivity() {
                         playerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH
                     }
                 }
+
                 1 -> {
                     playerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL
 
@@ -574,6 +578,12 @@ class PlayerActivity : AppCompatActivity() {
         handleController()
 
     }
+    override fun onUserLeaveHint() {
+        // Handle leaving PiP mode using the home button
+        finishAndRemoveTask()
+    }
+
+
 
     private fun checkNotch() {
         if (notchHeight != 0) {
@@ -731,6 +741,7 @@ class PlayerActivity : AppCompatActivity() {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
             orientationListener?.disable()
         } else {
+            mBackstackLost = true;
             orientationListener?.enable()
         }
         if (isInit) {
@@ -861,6 +872,14 @@ class PlayerActivity : AppCompatActivity() {
     public override fun onPause() {
         super.onPause()
         if (pipStatus) pauseVideo()
+    }
+
+    override fun finish() {
+        if (mBackstackLost) {
+            finishAndRemoveTask()
+        } else {
+            super.finish()
+        }
     }
 
     override fun onDestroy() {
