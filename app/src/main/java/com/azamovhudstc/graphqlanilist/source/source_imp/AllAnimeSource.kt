@@ -91,7 +91,7 @@ class AllAnimeSource : AnimeSource {
             val id = json.asJsonObject["_id"].asString
             animeList.add(Pair(name, id))
             println(name.toString())
-            println(image .toString())
+            println(image.toString())
         }
         return@withContext animeList
     }
@@ -131,29 +131,31 @@ class AllAnimeSource : AnimeSource {
             val url =
                 "$mainAPIUrl?variables=%7B%22_id%22%3A%22${contentLink}%22%7D&extensions=%7B%22persistedQuery%22%3A%7B%22version%22%3A1%2C%22" +
                         """sha256Hash%22%3A%22$hash%22%7D%7D"""
+            try {
 
-            println(url)
-            var allEps = emptyMap<String,Map<String,String>>()
-            val res = getJson(url, mapOf("Referer" to referer))!!.asJsonObject
-            val data = res.asJsonObject["data"].asJsonObject["show"].asJsonObject
-            val animeCover = allAnimeImage(data["thumbnail"].asString)
-            println(animeCover)
+                println(url)
+                var allEps = emptyMap<String, Map<String, String>>()
+                val res = getJson(url, mapOf("Referer" to referer))!!.asJsonObject
+                val data = res.asJsonObject["data"].asJsonObject["show"].asJsonObject
+                val animeCover = allAnimeImage(data["thumbnail"].asString)
+                println(animeCover)
 
-            if (data != null) {
-                val subNum = data["lastEpisodeInfo"].asJsonObject["sub"].asJsonObject["episodeString"].asString
-                val subEpMap = (1..subNum.toInt()).associate { it.toString() to it.toString() }
-                allEps = mutableMapOf("SUB" to subEpMap)
-                try {
+                if (data != null) {
+                    val subNum =
+                        data["lastEpisodeInfo"].asJsonObject["sub"].asJsonObject["episodeString"].asString
+                    val subEpMap = (1..subNum.toInt()).associate { it.toString() to it.toString() }
+                    allEps = mutableMapOf("SUB" to subEpMap)
                     val dubNum =
                         data["lastEpisodeInfo"].asJsonObject["dub"].asJsonObject["episodeString"].asString
                     val dubEpMap = (1..dubNum.toInt()).associate { it.toString() to it.toString() }
                     allEps["DUB"] = dubEpMap
-                } catch (_: Exception) {
+
                 }
+                return@withContext allEps
+            } catch (_: Exception) {
 
+                return@withContext emptyMap()
             }
-
-            return@withContext allEps
         }
 
     override suspend fun streamLink(

@@ -148,17 +148,32 @@ class PlayerViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 println("STREAM GET LINK")
-                val animeSource: AnimeSource = SourceSelector(app).getSelectedSource(PlayerActivity.sourceType)
-                animeSource.streamLink(animeEpCode, animeUrl, extras).apply {
-                    _animeStreamLink.postValue(this@apply)
-                    withContext(Dispatchers.Main) {
-                        if (!savedDone.value || getNextEp) {
-                            println("prepare Media Source")
-                            prepareMediaSource()
-                            savedStateHandle["done"] = true
-                        }
-                    }
-                }
+              if ("aniworld"!= PlayerActivity.sourceType){
+                  val animeSource: AnimeSource = SourceSelector(app).getSelectedSource(PlayerActivity.sourceType)
+                  animeSource.streamLink(animeUrl, animeEpCode, extras).apply {
+                      _animeStreamLink.postValue(this@apply)
+                      withContext(Dispatchers.Main) {
+                          if (!savedDone.value || getNextEp) {
+                              println("prepare Media Source")
+                              prepareMediaSource()
+                              savedStateHandle["done"] = true
+                          }
+                      }
+                  }
+              }else{
+                  val animeSource: AnimeSource = SourceSelector(app).getSelectedSource(PlayerActivity.sourceType)
+                  animeSource.streamLink(animeEpCode, animeUrl, extras).apply {
+                      _animeStreamLink.postValue(this@apply)
+                      withContext(Dispatchers.Main) {
+                          if (!savedDone.value || getNextEp) {
+                              println("prepare Media Source")
+                              prepareMediaSource()
+                              savedStateHandle["done"] = true
+                          }
+                      }
+                  }
+
+              }
             }
         }
 

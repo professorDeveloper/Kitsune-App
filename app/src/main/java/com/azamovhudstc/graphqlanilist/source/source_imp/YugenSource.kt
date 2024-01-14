@@ -12,7 +12,6 @@ import com.azamovhudstc.graphqlanilist.data.model.AnimeStreamLink
 import com.azamovhudstc.graphqlanilist.source.AnimeSource
 import com.azamovhudstc.graphqlanilist.utils.Utils.getJsoup
 import com.azamovhudstc.graphqlanilist.utils.Utils.postJson
-import com.azamovhudstc.graphqlanilist.utils.logMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -94,7 +93,6 @@ class YugenSource : AnimeSource {
         extras: List<String>?
     ): AnimeStreamLink =
         withContext(Dispatchers.IO) {
-
             // Get the link of episode
             val watchLink = animeUrl.replace("anime", "watch")
 
@@ -120,9 +118,6 @@ class YugenSource : AnimeSource {
 
             val linkDetails = postJson(apiRequest, mapOfHeaders, dataMap)!!.asJsonObject
             val link = linkDetails["hls"].asJsonArray.first().asString
-
-            logMessage(link)
-
             return@withContext AnimeStreamLink(link, "", true)
 
         }
