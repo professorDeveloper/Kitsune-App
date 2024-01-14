@@ -76,6 +76,11 @@ class HomeScreen : Fragment() {
         binding.searchRecycler.layoutManager =
             GridLayoutManager(requireContext(), (screenWidth / 124f).toInt())
 
+
+        lifecycleScope.launch{
+            if (readData<Boolean>("check_update") != false) AppUpdater.check(requireActivity())
+        }
+
         initPagination()
         observerLoadData()
         binding.toolbar.setOnMenuItemClickListener {

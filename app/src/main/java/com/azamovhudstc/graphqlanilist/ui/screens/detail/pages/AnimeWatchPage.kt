@@ -84,19 +84,6 @@ class AnimeWatchPage() :
                     binding.animeNotSupported.hide()
                     episodeAdapter.list = emptyList()
                     binding.mediaInfoProgressBar.show()
-                    if (isOnlyOne){
-                        model.loadEpisodesImg(media.idMal!!)
-                        isOnlyOne=false
-                    }
-                    model.imageList.observe(viewLifecycleOwner) {
-                        when (it) {
-                            is Result.Error -> {
-
-                            }
-                            Result.Loading -> {
-
-                            }
-                            is Result.Success -> {
                                 lifecycleScope.launch {
                                     val list = animeSource.searchAnime(media.title!!.native)
                                     val episodeListForAdapter = ArrayList<Data>()
@@ -108,28 +95,16 @@ class AnimeWatchPage() :
                                         epIndex = epList.first()
                                         var count = 0
                                         for (s in 0 until epList.size) {
-                                            var data = epList.get(s)
-                                            if (it.data.data.size > s && it.data.data.get(s).images != null && media.idAniList != 1535&&it.data.data.size!=0) {
+                                            var data =epList.get(s)
                                                 episodeListForAdapter.add(
                                                     Data(
-                                                        " Episode ${data}",
-                                                        Images(Jpg(it.data.data.get(s).images!!.jpg.image_url)),
-                                                        data.toInt(),
-                                                        "${list.get(0).first} $data",
-                                                        "?NIULLLLAAABLEEE"
-                                                    )
-                                                )
-                                            } else {
-                                                episodeListForAdapter.add(
-                                                    Data(
-                                                        " Episode ${data}",
+                                                        " Episode ${epList.get(s)}",
                                                         Images(Jpg(media.coverImage.medium)),
-                                                        data.toInt(),
+                                                        data.toString().toInt(),
                                                         "${list.get(0).first} $data",
                                                         "?NIULLLLAAABLEEE"
                                                     )
                                                 )
-                                            }
                                         }
                                         binding.animeSourceRecycler.show()
                                         binding.animeNotSupported.hide()
@@ -165,13 +140,9 @@ class AnimeWatchPage() :
                                         episodeAdapter.list = emptyList()
                                         episodeAdapter.notifyDataSetChanged()
                                     }
-                                }
-                            }
-                        }
                     }
                 }
-            }
-            else  if (it==1){
+            } else  if (it==1){
                 lifecycleScope.launch {
                     val animeSource: AnimeSource =
                         SourceSelector(requireContext()).getSelectedSource("allanime")

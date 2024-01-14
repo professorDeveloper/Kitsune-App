@@ -18,6 +18,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RoundRectShape
+import android.net.Uri
 import android.os.*
 import android.provider.Settings
 import android.text.Html
@@ -39,6 +40,10 @@ import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.application.App
 import com.google.android.material.snackbar.Snackbar
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.lang.reflect.Field
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
@@ -74,6 +79,47 @@ suspend fun <T> tryWithSuspend(
         null
     }
 }
+fun openLinkInBrowser(link: String?) {
+    tryWith {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        App.instance?.startActivity(intent)
+    }
+}
+
+fun <T> readData(fileName: String, context: Context? = null, toast: Boolean = true): T? {
+    val a = context ?: App.instance
+    try {
+        if (a?.fileList() != null)
+            if (fileName in a.fileList()) {
+                val fileIS: FileInputStream = a.openFileInput(fileName)
+                val objIS = ObjectInputStream(fileIS)
+                val data = objIS.readObject() as T
+                objIS.close()
+                fileIS.close()
+                return data
+            }
+    } catch (e: Exception) {
+        if (toast) snackString("Error loading data $fileName")
+        e.printStackTrace()
+    }
+    return null
+}
+
+
+
+fun saveData(fileName: String, data: Any?, context: Context? = null) {
+    tryWith {
+        val a = context ?: App.instance
+        if (a != null) {
+            val fos: FileOutputStream = a.openFileOutput(fileName, Context.MODE_PRIVATE)
+            val os = ObjectOutputStream(fos)
+            os.writeObject(data)
+            os.close()
+            fos.close()
+        }
+    }
+}
+
 
 fun randomColor(): Int {
     val color = listOf(
