@@ -12,7 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.azamovhudstc.graphqlanilist.R
+import com.azamovhudstc.graphqlanilist.application.App
 import com.azamovhudstc.graphqlanilist.utils.hideSystemBars
+import com.github.javiersantos.appupdater.enums.Display
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -23,5 +26,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContentView(R.layout.activity_main)
+        checkForUpdates()
     }
+}
+
+private fun checkForUpdates() {
+    val appUpdater=     com.github.javiersantos.appupdater.AppUpdater(App.instance)
+        .setUpdateFrom(UpdateFrom.GITHUB)
+        .setGitHubUserAndRepo("professorDeveloper", "Kitsune-App")
+        .showAppUpdated(true)
+        .setButtonUpdate("Download New Version")
+        .setDisplay(Display.SNACKBAR)
+        .setDisplay(Display.SNACKBAR)
+
+    appUpdater.start();
+
 }
