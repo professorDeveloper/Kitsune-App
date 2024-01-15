@@ -29,8 +29,9 @@ android {
         minSdk 23
         //noinspection ExpiredTargetSdkVersion
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode ((System.currentTimeMillis() / 60000).toInteger())
+
+        versionName "1.2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -169,6 +170,9 @@ dependencies {
     // Media3 extension that contains a TimeBar.
     implementation 'com.github.rubensousa:previewseekbar-media3:1.1.1.0'
     api "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1"
+    implementation 'com.github.supersu-man:GitHubAPKUpdater-Library:v1.6'
+
+    implementation 'com.github.javiersantos:AppUpdater:2.7'
 
 }
 

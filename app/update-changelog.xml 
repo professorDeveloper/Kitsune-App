@@ -1,0 +1,14 @@
+<AppUpdater>
+  <update>
+    <latestVersion>1.3.1</latestVersion>
+    <latestVersionCode>3</latestVersionCode>
+    <url>https://github.com/professorDeveloper/Kitsune-App/releases/</url>
+    <releaseNotes>
+- First evolution
+- Add New Source
+- Add AppUpdater
+- Second evolution
+- Bug fixes
+    </releaseNotes>
+  </update>
+</AppUpdater>

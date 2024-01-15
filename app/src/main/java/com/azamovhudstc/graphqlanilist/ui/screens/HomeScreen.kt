@@ -29,6 +29,8 @@ import com.azamovhudstc.graphqlanilist.ui.adapter.AllAnimePageAdapter
 import com.azamovhudstc.graphqlanilist.ui.adapter.ProgressAdapter
 import com.azamovhudstc.graphqlanilist.utils.*
 import com.azamovhudstc.graphqlanilist.viewmodel.SearchViewModel
+import com.github.javiersantos.appupdater.enums.Display
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -78,7 +80,7 @@ class HomeScreen : Fragment() {
 
 
         lifecycleScope.launch{
-            if (readData<Boolean>("check_update") != false) AppUpdater.check(requireActivity())
+//            AppUpdater.check(requireActivity(),post = true)
         }
 
         initPagination()
@@ -136,7 +138,8 @@ class HomeScreen : Fragment() {
     }
 
 
-    private fun observerLoadData() {
+
+private fun observerLoadData() {
         viewModel.searchResult.observe(viewLifecycleOwner) {
             when (it) {
                 Resource.Loading -> {

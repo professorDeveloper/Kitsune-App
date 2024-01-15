@@ -38,7 +38,9 @@ object AppUpdater {
         val repo = "professorDeveloper/Kitsune-App"
         tryWithSuspend {
             val md =
-                client.get("https://raw.githubusercontent.com/$repo/main/${if (!BuildConfig.DEBUG) "stable" else "beta"}.md").text
+                client.get("https://raw.githubusercontent.com/$repo/master/${if (!BuildConfig.DEBUG) "stable" else "stable"}.md").text
+
+            //https://raw.githubusercontent.com/professorDeveloper/Kitsune-App/master/
 
             val version = md.substringAfter("# ").substringBefore("\n")
             logMessage("Git Version : $version")
