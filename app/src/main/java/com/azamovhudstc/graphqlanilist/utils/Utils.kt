@@ -21,6 +21,7 @@ object Utils {
 
     var httpClient = OkHttpClient.Builder()
         .cookieJar(AndroidCookieJar())
+
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
         .callTimeout(2, TimeUnit.MINUTES)

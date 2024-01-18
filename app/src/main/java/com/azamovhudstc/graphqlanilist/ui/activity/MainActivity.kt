@@ -26,19 +26,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         setContentView(R.layout.activity_main)
-        checkForUpdates()
     }
 }
 
-private fun checkForUpdates() {
-    val appUpdater=     com.github.javiersantos.appupdater.AppUpdater(App.instance)
-        .setUpdateFrom(UpdateFrom.GITHUB)
-        .setGitHubUserAndRepo("professorDeveloper", "Kitsune-App")
-        .showAppUpdated(true)
-        .setButtonUpdate("Download New Version")
-        .setDisplay(Display.SNACKBAR)
-        .setDisplay(Display.SNACKBAR)
-
-    appUpdater.start();
-
-}

@@ -176,4 +176,14 @@
     <string name="hash_tag">HashTag</string>
 
 
+    <string name="repo">professorDeveloper/Kitsune-App</string>
+    <string name="checking_for_update">Checking for Update</string>
+    <string name="available">Available</string>
+    <string name="lets_go">Download</string>
+    <string name="cope">Dissmis</string>
+    <string name="dont_show_again">Don\'t show again for version %1$s</string>
+    <string name="no_update_found">No Update Found</string>
+    <string name="downloading_update">Downloading Update %1$s</string>
+
+
 </resources>

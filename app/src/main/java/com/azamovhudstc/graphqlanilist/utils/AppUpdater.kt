@@ -1,11 +1,3 @@
-/*
- *  Created by Azamov X ㋡ on 1/14/24, 10:11 PM
- *  Copyright (c) 2024 . All rights reserved.
- *  Last modified 1/14/24, 10:11 PM
- *
- *
- */
-
 package com.azamovhudstc.graphqlanilist.utils
 
 import android.annotation.SuppressLint
@@ -18,11 +10,13 @@ import android.content.IntentFilter
 import android.net.Uri
 import android.os.Environment
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import androidx.fragment.app.FragmentActivity
 import com.azamovhudstc.graphqlanilist.BuildConfig
 import com.azamovhudstc.graphqlanilist.R
+import com.azamovhudstc.graphqlanilist.application.App
 import io.noties.markwon.Markwon
 import io.noties.markwon.SoftBreakAddsNewLinePlugin
 import kotlinx.coroutines.Dispatchers
@@ -30,84 +24,113 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.decodeFromJsonElement
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 object AppUpdater {
-    suspend fun check(activity: FragmentActivity,post:Boolean=false) {
-        if(post) snackString("Checking for Update")
-        val repo = "professorDeveloper/Kitsune-App"
+    suspend fun check(activity: FragmentActivity, post: Boolean = false) {
+        if (post) snackString(App.instance?.getString(R.string.checking_for_update))
+        val repo = activity.getString(R.string.repo)
         tryWithSuspend {
-            val md =
-                client.get("https://raw.githubusercontent.com/$repo/master/${if (!BuildConfig.DEBUG) "stable" else "stable"}.md").text
+            val (md, version) = if (BuildConfig.DEBUG) {
+                val res = client.get("https://api.github.com/repos/$repo/releases")
+                    .parsed<JsonArray>().map {
+                        Mapper.json.decodeFromJsonElement<GithubResponse>(it)
+                    }
+                val r = res.filter { it.prerelease }.maxByOrNull {
+                    it.timeStamp()
+                } ?: throw Exception("No Pre Release Found")
+                val v = r.tagName.substringAfter("v", "")
+                (r.body ?: "") to v.ifEmpty { throw Exception("Weird Version : ${r.tagName}") }
+            } else {
+                val res =
+                    client.get("https://raw.githubusercontent.com/$repo/main/stable.md").text
+                res to res.substringAfter("# ").substringBefore("\n")
+            }
 
-            //https://raw.githubusercontent.com/professorDeveloper/Kitsune-App/master/
-
-            val version = md.substringAfter("# ").substringBefore("\n")
             logMessage("Git Version : $version")
             val dontShow = readData("dont_ask_for_update_$version") ?: false
             if (compareVersion(version) && !dontShow && !activity.isDestroyed) activity.runOnUiThread {
                 CustomBottomDialog.newInstance().apply {
-                    setTitleText("${if (!BuildConfig.DEBUG) "" else "Beta "}Update Available")
+                    setTitleText(
+                        "${if (BuildConfig.DEBUG) "Beta " else ""}Update " + App.instance!!.getString(
+                            R.string.available
+                        )
+                    )
                     addView(
                         TextView(activity).apply {
-                            val markWon = Markwon.builder(activity).usePlugin(SoftBreakAddsNewLinePlugin.create()).build()
+                            val markWon = Markwon.builder(activity)
+                                .usePlugin(SoftBreakAddsNewLinePlugin.create()).build()
                             markWon.setMarkdown(this, md)
                         }
                     )
 
-                    setCheck("Don't show again for version $version", false) { isChecked ->
+                    setCheck(
+                        App.instance!!.getString(R.string.dont_show_again, version),
+                        false
+                    ) { isChecked ->
                         if (isChecked) {
-                            saveData("dont_ask_for_update_$version", isChecked)
+                            saveData("dont_ask_for_update_$version", true)
                         }
                     }
-                    setPositiveButton("Let's Go") {
+                    setPositiveButton(App.instance!!.getString(R.string.lets_go)) {
                         MainScope().launch(Dispatchers.IO) {
                             try {
                                 client.get("https://api.github.com/repos/$repo/releases/tags/v$version")
                                     .parsed<GithubResponse>().assets?.find {
-                                    it.browserDownloadURL.endsWith("apk")
-                                }?.browserDownloadURL.apply {
-                                    if (this != null) activity.downloadUpdate(version, this)
-                                    else openLinkInBrowser("https://github.com/repos/$repo/releases/tag/v$version")
-                                }
+                                        it.browserDownloadURL.endsWith("apk")
+                                    }?.browserDownloadURL.apply {
+                                        if (this != null) activity.downloadUpdate(version, this)
+                                        else openLinkInBrowser("https://github.com/repos/$repo/releases/tag/v$version")
+                                    }
                             } catch (e: Exception) {
                                 logError(e)
                             }
                         }
                         dismiss()
                     }
+                    setNegativeButton(App.instance!!.getString(R.string.cope)) {
+                        dismiss()
+                    }
                     show(activity.supportFragmentManager, "dialog")
                 }
             }
-            else{
-                if(post) snackString("No Update Found")
+            else {
+                if (post) snackString(App.instance?.getString(R.string.no_update_found))
             }
         }
     }
 
     private fun compareVersion(version: String): Boolean {
 
-        fun toDouble(list: List<String>): Double {
-            return list.mapIndexed { i: Int, s: String ->
-                when (i) {
-                    0 -> s.toDouble() * 100
-                    1 -> s.toDouble() * 10
-                    2 -> s.toDouble()
-                    3 -> "0.$s".toDouble()
-                    else -> s.toDouble()
-                }
-            }.sum()
-        }
+        if (BuildConfig.DEBUG) {
+            return BuildConfig.VERSION_NAME != version
+        } else {
+            fun toDouble(list: List<String>): Double {
+                return list.mapIndexed { i: Int, s: String ->
+                    when (i) {
+                        0 -> s.toDouble() * 100
+                        1 -> s.toDouble() * 10
+                        2 -> s.toDouble()
+                        else -> s.toDoubleOrNull() ?: 0.0
+                    }
+                }.sum()
+            }
 
-        val new = toDouble(version.split("."))
-        val curr = toDouble(BuildConfig.VERSION_NAME.split("."))
-        return new > curr
+            val new = toDouble(version.split("."))
+            val curr = toDouble(BuildConfig.VERSION_NAME.split("."))
+            return new > curr
+        }
     }
 
 
+    //Blatantly kanged from https://github.com/LagradOst/CloudStream-3/blob/master/app/src/main/java/com/lagradost/cloudstream3/utils/InAppUpdater.kt
     private fun Activity.downloadUpdate(version: String, url: String): Boolean {
 
-        snackString("Downloading Update $version")
+        snackString(getString(R.string.downloading_update, version))
 
         val downloadManager = this.getSystemService<DownloadManager>()!!
 
@@ -129,9 +152,10 @@ object AppUpdater {
             -1
         }
         if (id == -1L) return true
-        registerReceiver(
+        ContextCompat.registerReceiver(
+            this,
             object : BroadcastReceiver() {
-                @SuppressLint("Range", "UnspecifiedRegisterReceiverFlag")
+                @SuppressLint("Range")
                 override fun onReceive(context: Context?, intent: Intent?) {
                     try {
                         val downloadId = intent?.getLongExtra(
@@ -158,7 +182,8 @@ object AppUpdater {
                         logError(e)
                     }
                 }
-            }, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+            }, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+            ContextCompat.RECEIVER_EXPORTED
         )
         return true
     }
@@ -184,8 +209,18 @@ object AppUpdater {
         }
     }
 
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
+
     @Serializable
     data class GithubResponse(
+        @SerialName("html_url")
+        val htmlUrl: String,
+        @SerialName("tag_name")
+        val tagName: String,
+        val prerelease: Boolean,
+        @SerialName("created_at")
+        val createdAt: String,
+        val body: String? = null,
         val assets: List<Asset>? = null
     ) {
         @Serializable
@@ -193,5 +228,9 @@ object AppUpdater {
             @SerialName("browser_download_url")
             val browserDownloadURL: String
         )
+
+        fun timeStamp(): Long {
+            return dateFormat.parse(createdAt)!!.time
+        }
     }
 }

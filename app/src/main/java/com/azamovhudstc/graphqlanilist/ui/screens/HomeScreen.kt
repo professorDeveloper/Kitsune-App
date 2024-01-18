@@ -35,6 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 
@@ -80,8 +81,9 @@ class HomeScreen : Fragment() {
 
 
         lifecycleScope.launch{
-//            AppUpdater.check(requireActivity(),post = true)
-        }
+//     checkForUpdates
+        //     AppUpdater.check(requireActivity(),post = true)
+            checkForUpdates()}
 
         initPagination()
         observerLoadData()
@@ -138,6 +140,21 @@ class HomeScreen : Fragment() {
     }
 
 
+    private fun checkForUpdates() {
+//        val appUpdater=     com.github.javiersantos.appupdater.AppUpdater(requireContext())
+//            .setUpdateFrom(UpdateFrom.GITHUB)
+//            .setGitHubUserAndRepo("professorDeveloper", "Kitsune-App")
+//            .showAppUpdated(true)
+//            .setButtonUpdate("Download New Version")
+//            .setDisplay(Display.SNACKBAR)
+//            .setDisplay(Display.SNACKBAR)
+//
+//        appUpdater.start();
+
+        runBlocking {
+            if (readData<Boolean>("check_update") != false) AppUpdater.check(requireActivity())
+        }
+    }
 
 private fun observerLoadData() {
         viewModel.searchResult.observe(viewLifecycleOwner) {
