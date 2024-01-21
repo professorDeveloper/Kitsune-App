@@ -12,6 +12,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Theme.GraphQLAnilist.Detail"
     android:layout_width="match_parent"
+    android:background="?attr/colorOnBackground"
 
     android:layout_height="match_parent">
 
@@ -21,7 +22,7 @@
         android:id="@+id/mediaAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="?attr/colorOnBackground"
         android:translationZ="5dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -34,7 +35,7 @@
             app:layout_scrollEffect="compress"
             app:contentInsetRight="0dp"
             app:contentInsetStart="0dp"
-            app:contentScrim="@color/colorPrimaryDark"
+            app:contentScrim="?attr/colorOnBackground"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
 
@@ -71,7 +72,7 @@
                     android:id="@+id/itemCompactBannerNoKenCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/colorPrimaryDark"
+                    app:cardBackgroundColor="?attr/colorOnBackground"
                     app:cardCornerRadius="4dp"
                     app:cardElevation="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -214,7 +215,7 @@
             android:id="@+id/page_type"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimaryDark"
+            android:background="?attr/colorOnBackground"
             android:clipToPadding="false"
             android:requiresFadingEdge="vertical"
             android:translationZ="12dp"
@@ -222,7 +223,7 @@
             android:layout_marginTop="10dp"
 
             app:tabBackground="@null"
-            app:tabIndicator="@color/colorPrimaryDark"
+            app:tabIndicator="?attr/colorOnBackground"
             app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorColor="@color/fav"
             app:tabIndicatorHeight="2dp"

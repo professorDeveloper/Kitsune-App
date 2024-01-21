@@ -33,7 +33,7 @@
         android:layout_marginVertical="4dp"
         android:background="?selectableItemBackgroundBorderless"
         android:onClick="@{clickListener}"
-        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:cardCornerRadius="8dp"
         app:cardElevation="1dp">
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkBlue"
+    android:background="?attr/colorOnBackground"
     android:fillViewport="true">
 
     <LinearLayout
@@ -74,7 +74,7 @@
                 android:textSize="18sp"
 
                 android:visibility="gone"
-                app:backgroundTint="@color/colorPrimaryLight"
+                app:backgroundTint="?attr/colorOnPrimary"
                 app:cornerRadius="16dp"
                 tools:ignore="SpeakableTextPresentCheck"
                 tools:visibility="visible" />
@@ -93,7 +93,7 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:visibility="gone"
-                app:backgroundTint="@color/colorPrimaryLight"
+                app:backgroundTint="?attr/colorOnPrimary"
                 app:cornerRadius="16dp"
                 tools:ignore="SpeakableTextPresentCheck"
                 tools:visibility="visible" />

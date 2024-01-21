@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~  Created by Azamov X ㋡ on 11/21/23, 2:02 AM
-  ~  Copyright (c) 2023 . All rights reserved.
-  ~  Last modified 11/21/23, 2:02 AM
+  ~  Created by Azamov X ㋡ on 1/20/24, 10:41 PM
+  ~  Copyright (c) 2024 . All rights reserved.
+  ~  Last modified 1/20/24, 10:41 PM
   ~
   ~
   -->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="108dp"
     android:layout_height="wrap_content"
+    app:cardBackgroundColor="?attr/colorPrimaryContainer"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="8dp"
-    android:background="?attr/colorOnBackground"
-    tools:ignore="MissingDefaultResource">
+    android:onClick="@{clickListener}">
 
 
     <androidx.cardview.widget.CardView
@@ -45,7 +46,8 @@
             android:backgroundTintMode="multiply"
             android:orientation="horizontal"
             android:paddingStart="8dp"
-            android:paddingEnd="6dp">
+            android:paddingEnd="6dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/itemCompactScore"
@@ -54,6 +56,7 @@
                 android:layout_marginStart="2dp"
                 android:fontFamily="@font/animity"
                 android:paddingTop="2dp"
+                android:text="@{animeInfo.getAverageScoreToString()}"
                 android:textColor="@color/textColor"
                 android:textSize="13dp"
                 tools:ignore="TextContrastCheck"
@@ -85,6 +88,7 @@
         android:includeFontPadding="false"
         android:lineSpacingExtra="-4dp"
         android:maxLines="2"
+        android:text="@{animeInfo.title.userPreferred}"
         android:textColor="@color/textColor"
         android:textFontWeight="400"
         android:textSize="14dp"

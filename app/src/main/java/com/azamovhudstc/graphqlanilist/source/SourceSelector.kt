@@ -10,13 +10,15 @@ package com.azamovhudstc.graphqlanilist.source
 
 import android.content.Context
 import com.azamovhudstc.graphqlanilist.source.source_imp.AllAnimeSource
+import com.azamovhudstc.graphqlanilist.source.source_imp.AniWaveSource
 import com.azamovhudstc.graphqlanilist.source.source_imp.AniWorldSource
 import com.azamovhudstc.graphqlanilist.source.source_imp.YugenSource
+import com.azamovhudstc.graphqlanilist.source.source_imp.ZoroSource
 
 class SourceSelector(context: Context) {
     val sourceMap: Map<String, AnimeSource> = mapOf(
         "yugen" to YugenSource(),
-        "allanime" to AllAnimeSource(),
+        "allanime" to ZoroSource(),
         "aniworld" to AniWorldSource(),
 
         )

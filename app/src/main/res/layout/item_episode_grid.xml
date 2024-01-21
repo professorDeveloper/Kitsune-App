@@ -16,7 +16,7 @@
     android:layout_margin="8dp"
     android:clipToPadding="false"
     android:translationZ="8dp"
-    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardBackgroundColor="?attr/colorPrimaryContainer"
     app:cardCornerRadius="16dp"
     app:cardElevation="4dp">
 
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0.6"
-        android:background="@color/colorPrimaryDark" />
+        android:background="?attr/colorOnBackground" />
 
     <View
         android:id="@+id/itemEpisodeFillerView"
@@ -119,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.33"
-        android:background="@color/colorPrimaryDark"
+        android:background="?attr/colorOnBackground"
         android:visibility="gone" />
 
 </androidx.cardview.widget.CardView>

@@ -15,6 +15,7 @@
     android:ellipsize="marquee"
     android:marqueeRepeatLimit="marquee_forever"
     android:padding="16dp"
+
     android:textColor="@color/black"
     tools:text="Item"
     android:singleLine="true" />

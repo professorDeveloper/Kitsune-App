@@ -8,6 +8,7 @@
 
 package com.azamovhudstc.graphqlanilist.ui.screens.detail.pages
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
@@ -27,10 +28,13 @@ import com.azamovhudstc.graphqlanilist.data.network.rest.jikan.Jpg
 import com.azamovhudstc.graphqlanilist.databinding.FragmentAnimeWatchPageBinding
 import com.azamovhudstc.graphqlanilist.source.AnimeSource
 import com.azamovhudstc.graphqlanilist.source.SourceSelector
+import com.azamovhudstc.graphqlanilist.source.source_imp.AllAnimeSource
+import com.azamovhudstc.graphqlanilist.source.source_imp.AniWaveSource
 import com.azamovhudstc.graphqlanilist.source.source_imp.YugenSource
 import com.azamovhudstc.graphqlanilist.ui.activity.PlayerActivity
 import com.azamovhudstc.graphqlanilist.ui.adapter.AnimeWatchAdapter
 import com.azamovhudstc.graphqlanilist.ui.adapter.EpisodesAdapter
+import com.azamovhudstc.graphqlanilist.ui.screens.wrong_title.SourceSearchDialogFragment
 import com.azamovhudstc.graphqlanilist.utils.Result
 import com.azamovhudstc.graphqlanilist.utils.dp
 import com.azamovhudstc.graphqlanilist.utils.hide
@@ -42,14 +46,15 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
-class AnimeWatchPage() :
-    Fragment() {
+class AnimeWatchPage() : Fragment() {
     private var end: Int? = null
     private lateinit var epList: MutableList<String>
     private lateinit var epType: String
     private var _binding: FragmentAnimeWatchPageBinding? = null
     private val binding get() = _binding!!
     private var isOnlyOne = false
+    lateinit var media:AniListMedia
+    lateinit var source:AnimeSource
     private var style = 0
     var screenWidth = 0
     private val model by activityViewModels<AnimeWatchViewModel>()
@@ -69,15 +74,17 @@ class AnimeWatchPage() :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var media = requireArguments().getSerializable("data") as AniListMedia
+         media = requireArguments().getSerializable("data") as AniListMedia
         headerAdapter = AnimeWatchAdapter(this)
         episodeAdapter = EpisodesAdapter(emptyList(), 0)
 
         headerAdapter.setItemClickListener {
             if (it == 0) {
                 lifecycleScope.launch {
+
                     val animeSource: YugenSource =
                         SourceSelector(requireContext()).getSelectedSource("yugen") as YugenSource
+                    source =animeSource
                     binding.animeSourceRecycler.hide()
                     binding.animeNotSupported.hide()
                     episodeAdapter.list = emptyList()
@@ -90,16 +97,18 @@ class AnimeWatchPage() :
                             }
 
                             is Result.Loading -> {
+                                headerAdapter.changeWrongTitleVisibility(false)
 
                             }
 
                             is Result.Success -> {
+
                                 lifecycleScope.launch {
                                     val list = animeSource.searchAnime(media.title!!.native)
                                     val episodeListForAdapter = ArrayList<Data>()
                                     if (list.isNotEmpty()) {
                                         val animeEpisodesMap =
-                                            animeSource.animeDetails(list.get(0).second)
+                                            animeSource.animeDetails(list.get(0).href)
                                         epType = animeEpisodesMap.keys.first()
                                         epList = animeEpisodesMap[epType]!!.keys.toMutableList()
                                         epIndex = epList.first()
@@ -112,7 +121,7 @@ class AnimeWatchPage() :
                                                         " Episode ${data}",
                                                         Images(Jpg(it.data.data.get(s).images!!.jpg.image_url)),
                                                         data.toInt(),
-                                                        "${list.get(0).first} $data",
+                                                        "${list.get(0).title} $data",
                                                         "?NIULLLLAAABLEEE"
                                                     )
                                                 )
@@ -122,7 +131,7 @@ class AnimeWatchPage() :
                                                         " Episode ${data}",
                                                         Images(Jpg(media.coverImage.medium)),
                                                         data.toInt(),
-                                                        "${list.get(0).first} $data",
+                                                        "${list.get(0).title} $data",
                                                         "?NIULLLLAAABLEEE"
                                                     )
                                                 )
@@ -133,12 +142,13 @@ class AnimeWatchPage() :
                                         binding.mediaInfoProgressBar.hide()
                                         episodeAdapter.list = episodeListForAdapter
                                         episodeAdapter.notifyDataSetChanged()
+                                        headerAdapter.changeWrongTitleVisibility(true)
 
                                         episodeAdapter.setItemClickListener {
                                             epIndex = epList[it.mal_id - 1]
                                             val data = AnimePlayingDetails(
                                                 animeName = media.title!!.userPreferred!!,
-                                                animeUrl = list.get(0).second!!,
+                                                animeUrl = list.get(0).href!!,
                                                 animeEpisodeIndex = epIndex,
                                                 animeEpisodeMap = animeEpisodesMap[epType] as HashMap<String, String>,
                                                 animeTotalEpisode = animeEpisodesMap[epType]!!.size.toString(),
@@ -171,81 +181,12 @@ class AnimeWatchPage() :
 
 
                 }
-            } else if (it == 1) {
-                lifecycleScope.launch {
-                    val animeSource: AnimeSource =
-                        SourceSelector(requireContext()).getSelectedSource("allanime")
-
-                    binding.animeSourceRecycler.hide()
-                    binding.animeNotSupported.hide()
-                    episodeAdapter.list = emptyList()
-                    binding.mediaInfoProgressBar.show()
-                    val list = animeSource.searchAnime("${media.title!!.userPreferred}")
-                    val episodeListForAdapter = ArrayList<Data>()
-                    if (list.isNotEmpty()) {
-                        val animeEpisodesMap = animeSource.animeDetails(list.get(0).second)
-                        if (animeEpisodesMap.isNotEmpty()) {
-                            epType = animeEpisodesMap.keys.first()
-                            epList = animeEpisodesMap[epType]!!.keys.toMutableList()
-                            epIndex = epList.first()
-                            epList.onEach {
-                                episodeListForAdapter.add(
-                                    Data(
-                                        " Episode ${it}",
-                                        Images(Jpg(media.coverImage!!.large!!)),
-                                        it.toInt(),
-                                        "${list.get(0).first} $it",
-                                        "?NIULLLLAAABLEEE"
-                                    )
-                                )
-                            }
-                            binding.animeSourceRecycler.show()
-                            binding.animeNotSupported.hide()
-                            binding.mediaInfoProgressBar.hide()
-                            episodeAdapter.list = episodeListForAdapter
-                            episodeAdapter.notifyDataSetChanged()
-
-                            episodeAdapter.setItemClickListener {
-                                epIndex = epList[it.mal_id - 1]
-                                val data = AnimePlayingDetails(
-                                    animeName = media.title!!.userPreferred!!,
-                                    animeUrl = list.get(0).second!!,
-                                    animeEpisodeIndex = epIndex,
-                                    animeEpisodeMap = animeEpisodesMap[epType] as HashMap<String, String>,
-                                    animeTotalEpisode = animeEpisodesMap[epType]!!.size.toString(),
-                                    epType = epType
-                                )
-                                PlayerActivity.pipStatus = true
-                                PlayerActivity.sourceType = "allanime"
-
-                                val intent = PlayerActivity.newIntent(
-                                    requireContext(),
-                                    data
-                                )
-                                startActivity(intent)
-
-                            }
-                        } else {
-                            binding.animeSourceRecycler.show()
-                            binding.animeNotSupported.show()
-                            binding.mediaInfoProgressBar.hide()
-                            episodeAdapter.list = emptyList()
-                            episodeAdapter.notifyDataSetChanged()
-                        }
-
-                    } else {
-                        binding.animeSourceRecycler.show()
-                        binding.animeNotSupported.show()
-                        binding.mediaInfoProgressBar.hide()
-                        episodeAdapter.list = emptyList()
-                        episodeAdapter.notifyDataSetChanged()
-                    }
-
-                }
             } else {
                 lifecycleScope.launch {
                     val animeSource: AnimeSource =
                         SourceSelector(requireContext()).getSelectedSource("aniworld")
+                    source =animeSource
+                    headerAdapter.changeWrongTitleVisibility(false)
 
                     binding.animeSourceRecycler.hide()
                     binding.animeNotSupported.hide()
@@ -254,7 +195,7 @@ class AnimeWatchPage() :
                     val list = animeSource.searchAnime(media.title!!.english)
                     val episodeListForAdapter = ArrayList<Data>()
                     if (list.isNotEmpty()) {
-                        val animeEpisodesMap = animeSource.animeDetails(list.get(0).second)
+                        val animeEpisodesMap = animeSource.animeDetails(list.get(0).href)
                         epType = animeEpisodesMap.keys.first()
                         epList = animeEpisodesMap[epType]!!.keys.toMutableList()
                         val linkList = animeEpisodesMap[epType]!!.values.toMutableList()
@@ -265,7 +206,7 @@ class AnimeWatchPage() :
                                     " Episode ${it}",
                                     Images(Jpg(media.coverImage!!.large!!)),
                                     it.toInt(),
-                                    "${list.get(0).first} $it",
+                                    "${list.get(0).title} $it",
                                     "?NIULLLLAAABLEEE"
                                 )
                             )
@@ -342,7 +283,65 @@ class AnimeWatchPage() :
         episodeAdapter.list = episodeAdapter.list.reversed()
         episodeAdapter.notifyDataSetChanged()
     }
+@SuppressLint("SuspiciousIndentation")
+fun onWrongSelected(){
+  val dialog =  SourceSearchDialogFragment(source =source ,media)
+      dialog.show(requireActivity().supportFragmentManager, null)
+    dialog.setItemSearchListener {sourceDAta ->
+        dialog.dismiss()
+     lifecycleScope.launch {
+         binding.animeSourceRecycler.hide()
+         binding.animeNotSupported.hide()
+         episodeAdapter.list = emptyList()
+         binding.mediaInfoProgressBar.show()
+         val episodeListForAdapter = ArrayList<Data>()
+             val animeEpisodesMap = source.animeDetails(sourceDAta.href)
+             epType = animeEpisodesMap.keys.first()
+             epList = animeEpisodesMap[epType]!!.keys.toMutableList()
+             val linkList = animeEpisodesMap[epType]!!.values.toMutableList()
+             epIndex = epList.first()
+             epList.onEach {
+                 episodeListForAdapter.add(
+                     Data(
+                         " Episode ${it}",
+                         Images(Jpg(sourceDAta.img!!)),
+                         it.toInt(),
+                         "${sourceDAta.title} $it",
+                         "?NIULLLLAAABLEEE"
+                     )
+                 )
+             }
+             binding.animeSourceRecycler.show()
+             binding.animeNotSupported.hide()
+             binding.mediaInfoProgressBar.hide()
+             episodeAdapter.list = episodeListForAdapter
+             episodeAdapter.notifyDataSetChanged()
 
+         episodeAdapter.setItemClickListener {
+             epIndex = epList[it.mal_id - 1]
+             val data = AnimePlayingDetails(
+                 animeName = media.title!!.userPreferred!!,
+                 animeUrl = sourceDAta.href!!,
+                 animeEpisodeIndex = epIndex,
+                 animeEpisodeMap = animeEpisodesMap[epType] as HashMap<String, String>,
+                 animeTotalEpisode = animeEpisodesMap[epType]!!.size.toString(),
+                 epType = epType
+             )
+             PlayerActivity.pipStatus = true
+             PlayerActivity.sourceType = "yugen"
+
+             val intent = PlayerActivity.newIntent(
+                 requireContext(),
+                 data
+             )
+             startActivity(intent)
+
+         }
+
+     }
+
+    }
+}
     fun onIconPressedForStyle(style: Int) {
         episodeAdapter.updateType(style)
         episodeAdapter.notifyDataSetChanged()

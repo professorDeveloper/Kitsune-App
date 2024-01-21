@@ -13,10 +13,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.databinding.AnimeWatchItemBinding
 import com.azamovhudstc.graphqlanilist.ui.screens.detail.pages.AnimeWatchPage
+import com.azamovhudstc.graphqlanilist.ui.screens.wrong_title.SourceSearchDialogFragment
 
 class AnimeWatchAdapter(private val fragment: AnimeWatchPage) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -59,7 +61,7 @@ class AnimeWatchAdapter(private val fragment: AnimeWatchPage) :
             ArrayAdapter(
                 fragment.requireContext(),
                 R.layout.item_dropdown,
-                listOf("YUGEN", "ALLANIME","ANIWORLD (GERMAN)")
+                listOf("YUGEN","ANIWORLD (GERMAN)")
             )
         )
         binding.animeSource.setOnItemClickListener { _, view, i, _ ->
@@ -80,6 +82,13 @@ class AnimeWatchAdapter(private val fragment: AnimeWatchPage) :
             selected = it
             selected.alpha = 1f
         }
+
+        binding.animeSourceSearch.setOnClickListener {
+            fragment.onWrongSelected()
+        }
+
+
+
         binding.animeSourceList.setOnClickListener {
             selected(it as ImageView)
             style = 0
@@ -94,6 +103,9 @@ class AnimeWatchAdapter(private val fragment: AnimeWatchPage) :
 
     }
 
+    fun changeWrongTitleVisibility (visibility:Boolean){
+        _binding?.animeSourceSearch?.isVisible=visibility
+    }
     //Chips
     @SuppressLint("SetTextI18n")
     fun updateChips(totalPage: Int, defaultSize: Int, lastListSize: Int) {

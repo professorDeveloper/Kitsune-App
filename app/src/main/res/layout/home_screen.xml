@@ -11,14 +11,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@color/colorPrimaryDark"
+    android:background="?attr/colorOnBackground"
     android:orientation="vertical"
     tools:context=".ui.screens.HomeScreen">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="?attr/colorOnBackground"
         android:orientation="vertical"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:elevation="0dp">
@@ -128,7 +128,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_colorFilter="@color/colorPrimaryLight"
+        app:lottie_colorFilter="?attr/colorPrimaryContainer"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading" />
 

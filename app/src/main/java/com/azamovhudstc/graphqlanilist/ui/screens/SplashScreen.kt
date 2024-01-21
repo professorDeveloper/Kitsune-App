@@ -24,6 +24,7 @@ import com.azamovhudstc.graphqlanilist.databinding.FragmentSplashScreenBinding
 import com.azamovhudstc.graphqlanilist.utils.animationTransactionClearStack
 import com.azamovhudstc.graphqlanilist.utils.slideUp
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class SplashScreen : Fragment(R.layout.fragment_splash_screen) {
@@ -38,7 +39,7 @@ class SplashScreen : Fragment(R.layout.fragment_splash_screen) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSplashScreenBinding.bind(view)
 
-        lifecycleScope.launchWhenCreated {
+        lifecycleScope.launch {
             binding?.apply {
                 splashContainer.slideUp(900,1)
                 splashLogo.slideUp(900,1,)

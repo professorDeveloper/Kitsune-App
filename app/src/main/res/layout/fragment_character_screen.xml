@@ -17,7 +17,7 @@
         android:id="@+id/characterAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:background="?attr/colorOnBackground">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/characterCollapsing"
@@ -103,7 +103,7 @@
         android:layout_gravity="end"
         android:layout_margin="16dp"
         android:translationZ="2dp"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardBackgroundColor="?attr/colorOnBackground"
         app:cardCornerRadius="16dp">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView

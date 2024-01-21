@@ -10,11 +10,11 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:strokeColor="@color/darkBlue"
+    app:strokeColor="?attr/colorOnBackground"
     app:strokeWidth="0dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:cardBackgroundColor="@color/colorPrimaryDark"
+    app:cardBackgroundColor="?attr/colorOnBackground"
     app:cardCornerRadius="0dp"
 
     app:cardElevation="0dp"

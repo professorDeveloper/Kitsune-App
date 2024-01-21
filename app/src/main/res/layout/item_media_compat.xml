@@ -11,6 +11,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
+    android:background="?attr/colorOnBackground"
     android:layout_height="wrap_content"
     android:layout_marginStart="-16dp"
     android:layout_marginEnd="-16dp"
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:translationZ="8dp"
             app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="?attr/colorPrimaryContainer"
             app:cardElevation="4dp">
 
             <com.google.android.material.imageview.ShapeableImageView

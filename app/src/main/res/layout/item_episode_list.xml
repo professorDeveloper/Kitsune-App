@@ -16,14 +16,14 @@
     android:layout_margin="6dp"
     android:backgroundTintMode="src_atop"
     android:longClickable="true"
-    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardBackgroundColor="?attr/colorPrimaryContainer"
     app:cardCornerRadius="16dp">
 
     <View
         android:id="@+id/itemEpisodeFillerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
+        android:background="?attr/colorOnBackground"
         android:visibility="gone" />
 
     <LinearLayout
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="-10dp"
                     android:layout_marginTop="-18dp"
-                    app:cardBackgroundColor="@color/colorPrimaryLight"
+                    app:cardBackgroundColor="?attr/colorPrimaryContainer"
                     app:cardCornerRadius="16dp">
 
                     <TextView
@@ -149,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.33"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorPrimaryContainer"
         android:visibility="gone" />
 
     <ImageView

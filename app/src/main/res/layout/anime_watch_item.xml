@@ -121,6 +121,33 @@
             tools:ignore="ContentDescription,ImageContrastCheck" />
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+
+        <TextView
+            android:id="@+id/animeSourceSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:layout_gravity="end"
+            android:clickable="true"
+            android:visibility="gone"
+            android:focusable="true"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="12dp"
+            android:text="Wrong title"
+            android:textAlignment="textEnd"
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck" />
+    </FrameLayout>
+
     <HorizontalScrollView
         android:id="@+id/animeWatchChipScroll"
         android:layout_width="match_parent"

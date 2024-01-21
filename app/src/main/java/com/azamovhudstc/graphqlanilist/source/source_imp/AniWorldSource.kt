@@ -15,6 +15,7 @@ import com.azamovhudstc.graphqlanilist.utils.okHttpClient
 import com.azamovhudstc.graphqlanilist.utils.parser
 import com.azamovhudstc.scarpingtutorial.aniworld.AniworldSearchData
 import com.azamovhudstc.graphqlanilist.data.model.EpisodeData
+import com.azamovhudstc.graphqlanilist.data.model.SourceModel
 import com.azamovhudstc.graphqlanilist.utils.logMessage
 import com.azamovhudstc.graphqlanilist.utils.removeEmTagsWithRegex
 import com.azamovhudstc.scarpingtutorial.aniworld.AniworldSearchDataItem
@@ -28,9 +29,6 @@ import java.lang.Exception
 
 class AniWorldSource : AnimeSource {
     private val mainUrl = "https://aniworld.to"
-    override suspend fun getEpisodeInfos(showId: String): List<AllAnimeSource.EpisodeInfo>? {
-        TODO("Not yet implemented")
-    }
 
 
     override suspend fun trendingAnime(): ArrayList<Pair<String, String>> {
@@ -61,10 +59,10 @@ class AniWorldSource : AnimeSource {
     }
 
     override suspend fun searchAnime(text: String) =        withContext(Dispatchers.IO){
-        val list = arrayListOf<Pair<String, String>>()
+        val list = arrayListOf<SourceModel>()
 
         searchAnimeInAniWord(text).onEach {
-            list.add(Pair(it.title.removeEmTagsWithRegex(), it.link))
+            list.add(SourceModel(it.title.removeEmTagsWithRegex(), it.link,""))
         }
         return@withContext list
     }
