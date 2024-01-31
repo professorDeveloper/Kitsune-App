@@ -45,6 +45,7 @@
         </item>        <!-- Customize your theme here. -->
         <item name="popupTheme">@style/PopupMenuTheme</item>
     </style>
+
     <style name="PopupMenuTheme" parent="Theme.AppCompat.Light">
         <item name="android:background">@color/colorPrimary</item>
     </style>
@@ -110,6 +111,7 @@
         <item name="android:windowFullscreen">true</item>
 
     </style>
+
     <style name="ThemeOverlay.SearchView" parent="">
         <item name="android:editTextColor">@color/white</item>
         <item name="android:ambientShadowAlpha">0.08</item>

@@ -11,7 +11,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">gogoanime.gr</domain>
         <domain includeSubdomains="true">uzmovi.com</domain>
-        <domain includeSubdomains="true">http://uzmovi.com</domain>
+        <domain includeSubdomains="true">htttp://uzmovi.com</domain>
         <domain includeSubdomains="true">gogoanimehd.to</domain>
         <domain includeSubdomains="true">5.182.6.13</domain>
         <domain includeSubdomains="true">212.41.14.155</domain>

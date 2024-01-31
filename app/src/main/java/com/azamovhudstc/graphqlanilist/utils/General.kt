@@ -11,8 +11,10 @@ package com.azamovhudstc.graphqlanilist.utils
 
 import android.animation.ObjectAnimator
 import android.app.Activity
+import android.app.UiModeManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.Paint
@@ -39,7 +41,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.azamovhudstc.graphqlanilist.DetailFullDataQuery
 import com.azamovhudstc.graphqlanilist.R
 import com.azamovhudstc.graphqlanilist.application.App
+import com.azamovhudstc.graphqlanilist.tv.MainTvActivity
+import com.azamovhudstc.graphqlanilist.ui.activity.MainActivity
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.ObjectInputStream
@@ -78,6 +83,20 @@ suspend fun <T> tryWithSuspend(
     } catch (e: CancellationException) {
         null
     }
+}
+fun isOnTV(activity: Activity): Boolean {
+    val uiModeManager = activity.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+    return uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
+}
+@OptIn(ExperimentalCoroutinesApi::class)
+fun startMainActivity(activity: Activity) {
+    activity.finishAffinity()
+    activity.startActivity(
+        Intent(
+            activity,
+            if (isOnTV(activity)) MainTvActivity::class.java else MainActivity::class.java
+        ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+    )
 }
 fun openLinkInBrowser(link: String?) {
     tryWith {

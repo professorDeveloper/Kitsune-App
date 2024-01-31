@@ -14,6 +14,8 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlinx-serialization'
     id "com.apollographql.apollo3" version("3.7.0")
+    id("com.google.firebase.crashlytics")
+
 
 }
 
@@ -71,6 +73,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.media3:media3-database:1.1.0'
     implementation 'androidx.media3:media3-common:1.1.0'
+    implementation 'androidx.leanback:leanback:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -174,6 +177,13 @@ dependencies {
     implementation 'com.github.supersu-man:GitHubAPKUpdater-Library:v1.6'
 
     implementation 'com.github.javiersantos:AppUpdater:2.7'
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-analytics")
 
 }
 

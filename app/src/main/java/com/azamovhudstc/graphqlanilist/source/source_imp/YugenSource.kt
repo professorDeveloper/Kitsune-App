@@ -117,7 +117,7 @@ class YugenSource : AnimeSource {
 
             val linkDetails = postJson(apiRequest, mapOfHeaders, dataMap)!!.asJsonObject
             val link = linkDetails["hls"].asJsonArray.first().asString
-            return@withContext AnimeStreamLink(link, "", true)
+            return@withContext AnimeStreamLink("https://anibla.uz/content/stream/anime/dr_stone/s01/1qism_716/hls/index.m3u8", "", true)
 
         }
 

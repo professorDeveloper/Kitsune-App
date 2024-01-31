@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  Created by Azamov X ㋡ on 2/1/24, 12:23 AM
+  ~  Copyright (c) 2024 . All rights reserved.
+  ~  Last modified 2/1/24, 12:22 AM
+  ~
+  ~
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/details_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tv.DetailsActivity"
+    tools:deviceIds="tv" />

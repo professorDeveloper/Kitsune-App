@@ -13,6 +13,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.azamovhudstc.graphqlanilist.utils.Constants
 import com.azamovhudstc.graphqlanilist.utils.initializeNetwork
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
