@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "231868409259",
+    "project_id": "kitsune-app",
+    "storage_bucket": "kitsune-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231868409259:android:787d534fdc28cb1362deee",
+        "android_client_info": {
+          "package_name": "com.azamovhudstc.graphqlanilist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAysL1k3GlxTBZ40QrLhRfWH5XW8O5CHzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
