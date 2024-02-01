@@ -8,7 +8,7 @@ github: [professorDeveloper] # Replace with up to 4 GitHub Sponsors-enabled user
 
 open_collective: kitsune-app # Replace with a single Open Collective username
 
-custom: https://www.buymeacoffee.com/chihaku # Replace with a single custom sponsorship URL
+custom: custom: ['https://www.buymeacoffee.com/chihaku'] # Replace with a single custom sponsorship URL
 ko_fi: # Replace with a single Ko-fi username
 tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
 community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
