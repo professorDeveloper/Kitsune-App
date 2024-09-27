@@ -17,7 +17,7 @@ Kitsune is crafted based on simplistic yet state-of-the-art elegance. It is an [
 ### Official Discord Server
  
 <p align="center">
- <a href="https://discord.gg/7fUhW6taS9">
+ <a href="https://discord.gg/n22URhYvMR">
   <img src="https://invidget.switchblade.xyz/7fUhW6taS9">
  </a>
 </p>
