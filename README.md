@@ -14,16 +14,21 @@ Kitsune is crafted based on simplistic yet state-of-the-art elegance. It is an [
 <br>
 <a href="https://bmc.link/chihaku"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=chihaku&button_colour=FFDD00&font_colour=000000&font_family=Poppins&outline_colour=000000&coffee_colour=ffffff" /></a>
 <br>
+
+</p>
+ <summary>Star History</summary>
+  <a href="https://github.com/professorDeveloper/Kitsune-App/stargazers">
+      <img alt="Star History Chart" src="https://starchart.cc/professorDeveloper/Kitsune-App.svg?variant=adaptive" width="450" height="300" />
+  </a>
+
 ### Official Discord Server
  
 <p align="center">
  <a href="https://discord.gg/n22URhYvMR">
   <img src="https://invidget.switchblade.xyz/n22URhYvMR">
  </a>
-</p>
 
-
-#  🎯 Main Features 🛠
+# 🎯 Main Features 🛠
   
   - 📌 Comfort Search 
   - 📌 Get Anime FullData By AniList 
