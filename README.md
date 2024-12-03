@@ -1,7 +1,7 @@
 
 # Kitsune App  
 <img width="4619" alt="Kitsune (3)" src="https://github.com/user-attachments/assets/d61c0303-6175-4038-b3d2-6ce5eaca18a9">
-
+<br> </br>
 <p align="center">
    <a href="https://discord.gg/n22URhYvMR"><img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"></a>
    <a href="https://telegram.me/kitsune_app" ><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"></a> 
